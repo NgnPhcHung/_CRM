@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="mysql-connector-java-8.0.26">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../IDE/mysql-connector-java-8.0.26.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../IDE/jfoenix-8.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Java/IDE/jfoenix-8.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Java/IDE/mysql-connector-java-8.0.26.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Java/IDE/scenebuilder-8.5.0-all.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Java/IDE/fontawesomefx-8.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,52 @@
+/*.tag{*/
+/*    -fx-background-color: #ffca28;*/
+/*    -fx-background-radius: 30;*/
+/*}*/
+
+/*.progress-bar {*/
+/*    -fx-text-box-border: #64b5f6;*/
+/*    -fx-control-inner-background:#b3e5fc;*/
+/*}*/
+
+/*.pgr{*/
+/*    -fx-accent: #64b5f6;*/
+/*}*/
+
+/*.jfx-text-field {*/
+/*    -fx-prompt-text-fill: #989898;*/
+/*}*/
+/*.jfx-list-cell:focused {*/
+/*    -fx-background-insets:0px;*/
+/*    -fx-background-color: #b39ddb;*/
+/*}*/
+
+.header{
+    -fx-effect: dropshadow(one-pass-box, #b0bec5, 20, 0 , 0, 5);
+    -fx-background-color:  #e0f7fa;
+    -fx-font-family: Calibri;
+    -fx-font-size: 15;
+}
+
+.title{
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.label{
+    -fx-text-fill: #686868;
+}
+
+
+.jfx-text-field {
+    -fx-prompt-text-fill: #989898;
+    -fx-text-fill: #686868;
+
+}
+
+.button{
+    -fx-background-color:  #64b5f6;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}

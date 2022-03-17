@@ -1,0 +1,33 @@
+.header{
+    -fx-background-color:  #4fc3f7;
+    -fx-effect: dropshadow(two-pass-box, #455a64, 20, .09 , 5, 2);
+}
+.text-field{
+    -fx-prompt-text-fill: #686868;
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+}
+
+.button{
+    -fx-background-color: transparent;
+    -fx-border-color:  #2196f3;
+    -fx-border-radius:  10px;
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+.color-picker{
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+    -fx-padding: 0px 20px 0 20px;
+}
+.title{
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+    -fx-font-size: 40;
+}

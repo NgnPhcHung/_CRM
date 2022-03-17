@@ -1,0 +1,31 @@
+.label{
+    -fx-font-family: Calibri;
+    -fx-font-size: 20px;
+    -fx-text-fill: #686868;
+}
+
+.tag{
+    -fx-background-radius: 20;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 15px;
+    -fx-padding: 0px 20px  0px 20px;
+}
+
+.container{
+    -fx-background-color: #e0f7fa;
+}
+
+.container:hover{
+    -fx-background-color: #e1bee7;
+    -fx-background-radius: 10px;
+    -fx-font-weight: bold;
+}
+
+.button{
+    -fx-background-color: transparent;
+}
+
+.date{
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}

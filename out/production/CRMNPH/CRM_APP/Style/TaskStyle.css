@@ -1,0 +1,62 @@
+.container{
+    -fx-effect: dropshadow(two-pass-box, #b0bec5, 20, .09 , 5, 2);
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-border-insets: 10px 10px 10px 10px;
+    -fx-background-insets: 10px 10px 10px 10px;
+    -fx-background-radius: 5px;
+}
+
+.datePane{
+    -fx-border-width: 1px;
+    -fx-border-color:#b0bec5;
+}
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #686868;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #42a5f5;
+    -fx-font-size: 25;
+    -fx-pref-height: 30px;
+    -fx-pref-width: 50;
+    -fx-text-fill: #42a5f5;
+}
+
+.button:pressed{
+    -fx-background-color: #81d4fa;
+}
+
+.title{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 200px;
+    -fx-font-family: Calibri;
+    -fx-alignment: center;
+}
+
+.month{
+    -fx-font-size: 30;
+}
+.year{
+    -fx-font-size: 20;
+}
+
+.dayNames{
+    -fx-text-fill: #546e7a;
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+}
+
+.thisMonth{
+    -fx-background-color: none;
+}
+.notMonth{
+    -fx-background-color: #cfd8dc;
+}
+.taskText{
+    -fx-text-fill: #eceff1;
+    -fx-font-weight: bold
+}
+.subTask{
+    -fx-background-color:  #f4511e;
+}

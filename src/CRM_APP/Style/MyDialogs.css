@@ -1,0 +1,36 @@
+.myDialog{
+    /*-fx-background-radius: 20px;*/
+    /*-fx-padding: 10px 40px 10px 50px;*/
+}
+.myDialog > *.button-bar > *.container{
+
+}
+.button{
+    -fx-background-color: #ff8f00;
+    -fx-background-radius: 15px;
+    -fx-border-color: #ffcdd2;
+    -fx-border-radius: 10px;
+    -fx-border-width: 3px;
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+    -fx-pref-width: 150;
+    -fx-text-fill: #686868;
+}
+.button:hover{
+    -fx-background-color: #ffc046;
+}
+/*.myDialog > *.label.content{*/
+/*    -fx-font-size: 14px;*/
+/*    -fx-font-weight: bold;*/
+/*}*/
+/*.myDialog:header *.header-panel{*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-opacity: 0.5;*/
+/*}*/
+/*.myDialog:header *.header-panel *.label{*/
+/*    -fx-font-size: 18px;*/
+/*    -fx-font-style: italic;*/
+/*    -fx-fill: #292929;*/
+/*}*/

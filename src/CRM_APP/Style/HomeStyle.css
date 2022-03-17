@@ -1,0 +1,61 @@
+.container{
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.tab{
+    /*-fx-pref-width: 350;*/
+    /*-fx-pref-height: 60;*/
+    -fx-background-color: #455a64;
+}
+.tab-header-background{
+    -fx-background-color: #455a64;
+
+}
+
+.tab-close-button{
+    -fx-background-color: #cfd8dc;
+}
+
+.tab-label {
+    -fx-text-fill: #cfd8dc;
+    -fx-font-weight: bold;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+ }
+.tab-header{
+    -tab-text-color: -fx-text-base-color ;
+}
+.opt{
+    -fx-border-width: 2px;
+    -fx-border-color: #1565c0;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #cfd8dc;
+}
+.opt:hover{
+    -fx-background-color: #b2ebf2;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(one-pass-box, #e2f1f8, 20, 0 , 2, 2);
+    -fx-border-width: 3px;
+    -fx-border-color: #64b5f6;
+    -fx-border-radius: 15px;
+    -fx-text-fill: #455a64;
+}
+.esc{
+    -fx-background-color: #ff6e40;
+    -fx-background-radius: 15px;
+    -fx-border-color:  #ed0935;
+    -fx-border-radius:  10px;
+    -fx-border-width: 5px;
+    -fx-text-fill: #eceff1;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+.esc:hover{
+    -fx-background-color: #ff595f;
+}

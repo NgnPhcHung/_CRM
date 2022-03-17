@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="880.0" stylesheets="@../../Style/LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Login.LoginController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #bbdefb;">
+         <children>
+            <ImageView fitHeight="201.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Asset/Image/Logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label text="Work Hard For The Money" textFill="#43a047">
+               <font>
+                  <Font name="Calibri Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox prefHeight="600.0" prefWidth="484.0">
+         <children>
+            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0">
+               <children>
+                  <Button fx:id="btn_close" mnemonicParsing="false" onAction="#closeEvent" styleClass="transparent">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../../Asset/Icon/icon_close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="156.0" prefWidth="482.0">
+               <children>
+                  <Label fx:id="lbl_invalid" textFill="#ee3939">
+                     <font>
+                        <Font name="Calibri Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="482.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Asset/Icon/icon_user.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="ADH13322" unFocusColor="#76b3ff">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXTextField>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="120.0" prefHeight="50.0" prefWidth="482.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Asset/Icon/icon_password.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Password" text="123aa" unFocusColor="#76b3ff" />
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="50.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <JFXButton fx:id="btn_login" onAction="#loginEvent" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #2196f3;" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="20.0" />
+                     </font></JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
