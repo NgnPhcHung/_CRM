@@ -49,4 +49,6 @@
     -fx-background-color:  #64b5f6;
     -fx-font-weight: bold;
     -fx-font-style: italic;
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
 }

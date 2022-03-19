@@ -1,13 +1,13 @@
 package CRM_APP.Controller.Billing;
 
 import com.jfoenix.controls.JFXListCell;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
 
 public class BillCellController extends JFXListCell {
     @FXML

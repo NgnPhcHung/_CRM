@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Sora';
+    src: url("../Asset/Font/Sora-Bold.ttf");
+}
+
+.label {
+    -fx-font-family: 'Sora';
+    -fx-font-size: 20;
+}
+
+.button .text {
+    -fx-font-family: 'Sora';
+}

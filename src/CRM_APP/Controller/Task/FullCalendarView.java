@@ -1,13 +1,11 @@
 package CRM_APP.Controller.Task;
 
-import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 

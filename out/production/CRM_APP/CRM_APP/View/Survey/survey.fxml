@@ -28,7 +28,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <JFXButton fx:id="btn_add" text="Add Document" textFill="#515151">
+                  <JFXButton fx:id="btn_add" text="Create Survey" textFill="#515151">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>

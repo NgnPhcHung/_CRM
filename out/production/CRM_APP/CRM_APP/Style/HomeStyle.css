@@ -1,3 +1,8 @@
+.container{
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
 .tab{
     /*-fx-pref-width: 350;*/
     /*-fx-pref-height: 60;*/
@@ -37,4 +42,20 @@
     -fx-border-color: #64b5f6;
     -fx-border-radius: 15px;
     -fx-text-fill: #455a64;
+}
+.esc{
+    -fx-background-color: #ff6e40;
+    -fx-background-radius: 15px;
+    -fx-border-color:  #ed0935;
+    -fx-border-radius:  10px;
+    -fx-border-width: 5px;
+    -fx-text-fill: #eceff1;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+.esc:hover{
+    -fx-background-color: #ff595f;
 }

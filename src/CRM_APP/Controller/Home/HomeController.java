@@ -6,31 +6,25 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import CRM_APP.Controller.Task.Controller;
 import CRM_APP.Controller.Task.FullCalendarView;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
+import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
@@ -77,7 +71,6 @@ public class HomeController {
     @FXML
     void initialize() {
         HomeController.userId = getUserId();
-        System.out.println("my name is " + userId);
     }
 
     //when user logout
@@ -95,11 +88,12 @@ public class HomeController {
         System.exit(0);
     }
     private void userLogout(String uid) throws SQLException, ClassNotFoundException {
-        String deviceName = getDevice();
-        String aid = generateId();
+        String deviceName = OtherHandler.getDevice();
+        String aid = OtherHandler.generateId();
+
         ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
         while(rs.next()){
-            aid = generateId();
+            aid = OtherHandler.generateId();
             rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -107,7 +101,8 @@ public class HomeController {
         String logTime = dtf.format(now);
         database.authen("logout", aid, uid, logTime, deviceName);
     }
-    //check value is in arrat
+
+    //check value is in array (now is tab)
     private boolean check(String arr[], String valueCheck){
         boolean test = false;
         for(int i  = 0; i < arr.length;i++){
@@ -119,20 +114,22 @@ public class HomeController {
         }
         return test;
     }
+
     //add tab to tabs
     private String[] addElement(String[] a, String e) {
         a  = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;
     }
-    //show confirm when buttion survey fired
+
+    //show confirm when button survey fired (only survey)
     private void showConfirmation(Tab tab) throws IOException {
         Label label = new Label();
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setTitle("Select type");
-//        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-//        alert.setX(bounds.getMaxX() - 1240);//vertical
-//        alert.setY(bounds.getMaxY() - 900); //horizontal
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        alert.setX(bounds.getMaxX() - 1240);//vertical
+        alert.setY(bounds.getMaxY() - 900); //horizontal
         alert.getDialogPane().setStyle(
                 "-fx-background-radius: 10px;"+
                 "-fx-background-color: transparent;");
@@ -173,27 +170,32 @@ public class HomeController {
             label.setText("No selection!");
         } else if (option.get() == Result) {
             GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getChooseFileFxml("result", "Survey")));
-            tab.setContent(newPane);
-            tp_homeMain.getTabs().add(tab);
+            if(tabManage("Result")){
+                tab.setContent(newPane);
+                tab.setText("Result");
+                tp_homeMain.getTabs().add(tab);
+            }
         } else if (option.get() == Question) {
             GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getChooseFileFxml("question", "Survey")));
-            tab.setContent(newPane);
-            tp_homeMain.getTabs().add(tab);
+            if(tabManage("Question")){
+                tab.setContent(newPane);
+                tab.setText("Question");
+                tp_homeMain.getTabs().add(tab);
+            }
         }else if (option.get() == Close) {
            alert.close();
         } else {
             label.setText("-");
         }
     }
-    //set new tab when press button
-    @FXML
-    void mouseClickEvent(MouseEvent event) throws IOException {
+
+    //this will get all opened tab
+    private boolean tabManage(String btn){
         boolean isOpen = false;
 
         String temp[] = new String[]{};
+        String btnName = btn;
 
-        Button button = (Button)event.getSource();
-        String btnName = button.getText().trim();
         //if tab not in tabs, add tab
         for(Tab tabs: tp_homeMain.getTabs()){
             if(check(temp,tabs.getText())==false){
@@ -201,19 +203,23 @@ public class HomeController {
             }
         }
 
-        if(check(temp,btnName)) isOpen=false;
-        else isOpen=true;
+        if(check(temp,btnName)) return isOpen=false;
+        else return isOpen=true;
+    }
 
-        if(isOpen){
+    //set new tab when press button
+    @FXML
+    void mouseClickEvent(MouseEvent event) throws IOException {
+        Button button = (Button)event.getSource();
+        String btnName = button.getText().trim();
+
+        if(tabManage(btnName)){
             Tab tab = new Tab(btnName);
 
             tp_homeMain.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
             tp_homeMain.getStylesheets().add("/CRM_APP/Style/HomeStyle.css");
             tp_homeMain.setStyle("tab-close-button: #cfd8dc");
-            tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
-                    "    -fx-font-weight: bold;\n" +
-                    "    -fx-font-family: Calibri;\n" +
-                    "    -fx-font-size: 20;");
+
             if (btnName.equals("Survey")){
                 showConfirmation(tab);
             }else {
@@ -223,56 +229,22 @@ public class HomeController {
                     GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
                     tab.setContent(newPane);
                 }
+
+                tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-font-family: Calibri;\n" +
+                        "    -fx-font-size: 20;");
+
                 tp_homeMain.getTabs().add(tab);
             }
         }
     }
+
+    //get set
     public void setUserId(String userId){
         this.userId = userId;
     }
     public String getUserId(){
         return this.userId;
-    }
-    //get current device name
-    private String getDevice(){
-        String name = "Unknown";
-
-        try
-        {
-            InetAddress addr;
-            addr = InetAddress.getLocalHost();
-            name = addr.getHostName();
-        }
-        catch (UnknownHostException ex)
-        {
-            System.out.println("Hostname can not be resolved");
-        }
-        return name;
-    }
-    //auto generate random string - id when fire
-    private String generateId(){
-        int n=9;
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(n);
-
-        for (int i = 0; i < n; i++) {
-
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                    = (int)(AlphaNumericString.length()
-                    * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                    .charAt(index));
-        }
-
-        return sb.toString();
     }
 }

@@ -13,10 +13,11 @@
 
 .container{
     -fx-background-color: #e0f7fa;
+    -fx-background-radius: 10px;
 }
 
 .container:hover{
-    -fx-background-color: #e1bee7;
+    -fx-background-color: #9fa8da;
     -fx-background-radius: 10px;
     -fx-font-weight: bold;
 }

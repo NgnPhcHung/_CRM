@@ -2,12 +2,9 @@ package CRM_APP.Controller.Task;
 
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**

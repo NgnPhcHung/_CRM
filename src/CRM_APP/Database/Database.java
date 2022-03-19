@@ -23,4 +23,11 @@ public class Database extends Configs{
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+    public ResultSet getAllTableValue(String tableName) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM " + tableName ;
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }

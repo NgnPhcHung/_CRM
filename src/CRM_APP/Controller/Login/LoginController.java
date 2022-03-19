@@ -4,6 +4,7 @@ import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
+import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Employee;
 import com.jfoenix.controls.JFXButton;
@@ -124,58 +125,17 @@ public class LoginController {
     }
     //this func will fire when login success and be4 change scene
     private void userLogin(String uid) throws SQLException, ClassNotFoundException {
-        String deviceName = getDevice();
-        String aid = generateId();
+        String deviceName = OtherHandler.getDevice();
+        String aid = OtherHandler.generateId();
+
         ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
         while(rs.next()){
-            aid = generateId();
+            aid = OtherHandler.generateId();
             rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String logTime = dtf.format(now);
         database.authen("login", aid, uid, logTime, deviceName);
-    }
-    //get current device name
-    private String getDevice(){
-        String name = "Unknown";
-
-        try
-        {
-            InetAddress addr;
-            addr = InetAddress.getLocalHost();
-            name = addr.getHostName();
-        }
-        catch (UnknownHostException ex)
-        {
-            System.out.println("Hostname can not be resolved");
-        }
-        return name;
-    }
-    //auto generate random string - id when fire
-    private String generateId(){
-        int n=9;
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(n);
-
-        for (int i = 0; i < n; i++) {
-
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                    = (int)(AlphaNumericString.length()
-                    * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                    .charAt(index));
-        }
-
-        return sb.toString();
     }
 }

@@ -80,9 +80,9 @@ public class SurveyCellController extends JFXListCell<Survey> {
                     e.printStackTrace();
                 }
             }
-            lbl_name.setText(item.getName());
-            lbl_staff.setText(item.getStaff());
-            lbl_version.setText(item.getVersion());
+//            lbl_name.setText(item.getName());
+//            lbl_staff.setText(item.getStaff());
+//            lbl_version.setText(item.getVersion());
 
             setText(null);
             setGraphic(main_pane);

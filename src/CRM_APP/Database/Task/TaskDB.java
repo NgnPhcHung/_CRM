@@ -4,7 +4,6 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TaskDB {

@@ -36,9 +36,9 @@ public class SurveyController {
     void initialize() {
         sceneHandler = new SceneHandler();
         Survey document = new Survey();
-        document.setName("ASDAS");
-        document.setStaff("Staff A");
-        document.setVersion("0.3");
+//        document.setName("ASDAS");
+//        document.setStaff("Staff A");
+//        document.setVersion("0.3");
         documents = FXCollections.observableArrayList(document);
         documents.addAll();
         lv_product.setItems(documents);

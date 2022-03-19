@@ -1,9 +1,9 @@
 package CRM_APP.Controller.Billing;
-import CRM_APP.Model.Import;
+
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import CRM_APP.Model.Bill;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,18 +20,18 @@ public class BillController {
     private GridPane main_pane;
 
     @FXML
-    private JFXListView<Import> lv_detail;
+    private JFXListView<Bill> lv_detail;
 
-    ObservableList<Import> imports;
+    ObservableList<Bill> bills;
 
     @FXML
     void initialize() {
-        Import imp = new Import();
+        Bill imp = new Bill();
         imp.setName("");
-        imports = FXCollections.observableArrayList(imp);
-        imports.addAll(imp);
-        lv_detail.setItems(imports);
-        lv_detail.setCellFactory(ImportCellController -> new BillCellController());
+        bills = FXCollections.observableArrayList(imp);
+        bills.addAll(imp);
+        lv_detail.setItems(bills);
+        lv_detail.setCellFactory(BillCellController -> new BillCellController());
     }
 
 }
