@@ -1,25 +1,3 @@
-/*.tag{*/
-/*    -fx-background-color: #ffca28;*/
-/*    -fx-background-radius: 30;*/
-/*}*/
-
-/*.progress-bar {*/
-/*    -fx-text-box-border: #64b5f6;*/
-/*    -fx-control-inner-background:#b3e5fc;*/
-/*}*/
-
-/*.pgr{*/
-/*    -fx-accent: #64b5f6;*/
-/*}*/
-
-/*.jfx-text-field {*/
-/*    -fx-prompt-text-fill: #989898;*/
-/*}*/
-/*.jfx-list-cell:focused {*/
-/*    -fx-background-insets:0px;*/
-/*    -fx-background-color: #b39ddb;*/
-/*}*/
-
 .header{
     -fx-effect: dropshadow(one-pass-box, #b0bec5, 20, 0 , 0, 5);
     -fx-background-color:  #e0f7fa;
@@ -46,9 +24,82 @@
 }
 
 .button{
-    -fx-background-color:  #64b5f6;
+    -fx-background-color: #42a5f5;
     -fx-font-weight: bold;
     -fx-font-style: italic;
     -fx-text-fill: #686868;
     -fx-font-family: Calibri;
+}
+.button:hover{
+    -fx-background-color: #64b5f6;
+}
+.cardContainer{
+    -fx-background-radius: 30px;
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-border-width: 0px 5px 0px 5px;
+    -fx-border-radius: 20px 20px 20px 20px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 70px;
+}
+
+.card1{
+    -fx-background-color: #ff844c;
+}
+.card2{
+    -fx-background-color: #6ec6ff;
+}
+.card3{
+    -fx-background-color: #b2fab4;
+}
+.card4{
+    -fx-background-color: #c7a4ff;
+}
+.card5{
+    -fx-background-color: #52c7b8;
+}
+
+.card1:hover{
+    -fx-background-color: #ff844c;
+    -fx-border-color: #f4511e;
+    -fx-border-insets: 4px;
+}
+.card2:hover{
+    -fx-background-color: #6ec6ff;
+    -fx-border-color: #2196f3;
+    -fx-border-insets: 4px;
+}
+.card3:hover{
+    -fx-background-color: #b2fab4;
+    -fx-border-color: #519657;
+    -fx-border-insets: 4px;
+}
+.card4:hover{
+    -fx-background-color: #c7a4ff;
+    -fx-border-color: #9575cb;
+    -fx-border-insets: 4px;
+}
+.card5:hover{
+    -fx-background-color: #52c7b8;
+    -fx-border-color: #009688;
+    -fx-border-insets: 4px;
+}
+
+
+.cardNum{
+    -fx-background-radius: 50%;
+    -fx-background-color: #eceff1;
+    -fx-pref-height: 60px;
+    -fx-pref-width: 60px;
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-font-size: 15px;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+}
+.cardNumContainer{
+    -fx-pref-height: 60px;
+    -fx-pref-width: 60px;
 }

@@ -82,7 +82,7 @@ public class SurveyCellController extends JFXListCell<Survey> {
             }
 //            lbl_name.setText(item.getName());
 //            lbl_staff.setText(item.getStaff());
-//            lbl_version.setText(item.getVersion());
+//            lbl_version.setText(item.getVersion()); 
 
             setText(null);
             setGraphic(main_pane);

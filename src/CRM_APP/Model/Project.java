@@ -1,11 +1,22 @@
 package CRM_APP.Model;
 
 public class Project {
+    private String id;
     private String name;
-    private String tag;
-    private String startDate;
-    private String endDate;
-    private float process;
+    private String beginTime;
+    private String endTime;
+    private String manager;
+    private int totalEmployee;
+    private int totalAmount;
+    private String CusId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -15,35 +26,51 @@ public class Project {
         this.name = name;
     }
 
-    public String getTag() {
-        return tag;
+    public String getBeginTime() {
+        return beginTime;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getManager() {
+        return manager;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 
-    public float getProcess() {
-        return process;
+    public int getTotalEmployee() {
+        return totalEmployee;
     }
 
-    public void setProcess(float process) {
-        this.process = process;
+    public void setTotalEmployee(int totalEmployee) {
+        this.totalEmployee = totalEmployee;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getCusId() {
+        return CusId;
+    }
+
+    public void setCusId(String cusId) {
+        CusId = cusId;
     }
 }

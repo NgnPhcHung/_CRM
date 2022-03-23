@@ -28,6 +28,7 @@ public class Database extends Configs{
         String query = "SELECT * FROM " + tableName ;
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
+
         return resultSet;
     }
 }

@@ -124,18 +124,24 @@ public class LoginController {
         }
     }
     //this func will fire when login success and be4 change scene
-    private void userLogin(String uid) throws SQLException, ClassNotFoundException {
+    private void userLogin(String uid){
         String deviceName = OtherHandler.getDevice();
         String aid = OtherHandler.generateId();
-
-        ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-        while(rs.next()){
-            aid = OtherHandler.generateId();
-            rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-        }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String logTime = dtf.format(now);
-        database.authen("login", aid, uid, logTime, deviceName);
+        ResultSet rs = null;
+        try {
+//            rs= mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
+//            while(rs.next()){
+//                aid = OtherHandler.generateId();
+//                rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
+//            }
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            String logTime = dtf.format(now);
+            database.authen("login", aid, uid, logTime, deviceName);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }catch (Exception e){}
     }
 }

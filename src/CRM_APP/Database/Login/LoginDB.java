@@ -31,7 +31,6 @@ public class LoginDB {
 
     //add login time
     public void authen(String action, String aid,String id, String time, String device) throws SQLException, ClassNotFoundException {
-
         if(action.equals("login")){
             String login ="INSERT INTO "+ Const.AUTHEN_TABLE + " ( "
                     + Const.AUTHEN_AUTHENID +", "
@@ -39,7 +38,6 @@ public class LoginDB {
                     + Const.AUTHEN_LOGTIME + ", "
                     + Const.AUTHEN_DEVICE+ " )"
                     + "VALUES(?,?,?,?)";
-            System.out.println("login!");
             PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(login);
             preparedStatement.setString(1, aid);
             preparedStatement.setString(2, id);
@@ -54,7 +52,6 @@ public class LoginDB {
                     + Const.AUTHEN_OUTTIME + ", "
                     + Const.AUTHEN_DEVICE+ " )"
                     + "VALUES(?,?,?,?)";
-            System.out.println("logout!");
             PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(login);
             preparedStatement.setString(1, aid);
             preparedStatement.setString(2, id);

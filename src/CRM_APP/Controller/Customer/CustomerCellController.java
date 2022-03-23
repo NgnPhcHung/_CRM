@@ -78,8 +78,7 @@ public class CustomerCellController extends JFXListCell<Customer> {
                     e.printStackTrace();
                 }
             }
-            lbl_name.setText(item.getTestName());
-            lbl_email.setText(item.getTestEmail());
+            lbl_name.setText(item.getCusName());
 
             setText(null);
             setGraphic(main_pane);

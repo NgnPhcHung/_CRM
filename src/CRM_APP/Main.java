@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
     private static Stage primaryStage;
@@ -13,6 +14,7 @@ public class Main extends Application {
         setPrimaryStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("View/Login/login.fxml"));
         primaryStage.setTitle("NphCRM");
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.setResizable(false);
         primaryStage.show();

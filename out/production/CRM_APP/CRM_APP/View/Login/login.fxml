@@ -13,23 +13,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="880.0" stylesheets="@../../Style/LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Login.LoginController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="880.0" styleClass="container" stylesheets="@../../Style/LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Login.LoginController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #bbdefb;">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="400.0" styleClass="left_side">
          <children>
-            <ImageView fitHeight="201.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Asset/Image/Logo.png" />
+                  <Image url="@../../Asset/Image/CRM-logos_white.png" />
                </image>
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </ImageView>
-            <Label text="Work Hard For The Money" textFill="#43a047">
-               <font>
-                  <Font name="Calibri Bold" size="30.0" />
-               </font>
-            </Label>
          </children>
       </VBox>
       <VBox prefHeight="600.0" prefWidth="484.0">
@@ -38,7 +33,7 @@
                <children>
                   <Button fx:id="btn_close" mnemonicParsing="false" onAction="#closeEvent" styleClass="transparent">
                      <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Asset/Icon/icon_close.png" />
                            </image>
@@ -100,7 +95,7 @@
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
-                  <JFXButton fx:id="btn_login" onAction="#loginEvent" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #2196f3;" text="Login" textFill="WHITE">
+                  <JFXButton fx:id="btn_login" onAction="#loginEvent" prefHeight="40.0" prefWidth="230.0" styleClass="buttonLogin" text="Login" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font></JFXButton>

@@ -1,0 +1,15 @@
+.pending{
+    -fx-text-fill: #f4511e;
+}
+.assigned{
+    -fx-text-fill: #2196f3;
+}
+.working{
+    -fx-text-fill: #81c784;
+}
+.review{
+    -fx-text-fill: #6a1b9a;
+}
+.done{
+    -fx-text-fill: #f57c00;
+}

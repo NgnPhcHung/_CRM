@@ -1,16 +1,33 @@
 package CRM_APP.Controller.Project;
 
+import CRM_APP.Controller.Project.Module.ModuleController;
+import CRM_APP.Database.Const;
+import CRM_APP.Database.Database;
+import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Model.Customer;
+import CRM_APP.Model.Module;
 import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXListCell;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ProjectCellController extends JFXListCell<Project> {
@@ -22,39 +39,56 @@ public class ProjectCellController extends JFXListCell<Project> {
     private URL location;
 
     @FXML
-    private Label lbl_projectName;
-
-    @FXML
-    private AnchorPane pane_tag;
-
-    @FXML
-    private Label lbl_startDate;
-
-    @FXML
-    private Label lbl_endDate;
-
-    @FXML
-    private ProgressBar pgr_process;
-
-    @FXML
     private HBox main_pane;
 
-    FXMLLoader fxmlLoader ;
+    @FXML
+    private Label lbl_name;
+
+    @FXML
+    private Label lbl_customer;
+
+    @FXML
+    private Label lbl_manager;
+
+    @FXML
+    private Label lbl_totalEmp;
+
+    @FXML
+    private Label lbl_totalAmout;
+
+    @FXML
+    private Button btn_edit;
+
+    @FXML
+    private Label lbl_beginTime;
+
+    @FXML
+    private Label lbl_endTime;
+
+
+    private FXMLLoader fxmlLoader;
+    private Database database;
+    private SceneHandler sceneHandler;
 
     @FXML
     void initialize() {
+        database = new Database();
+    }
+
+    @FXML
+    void editEvent(ActionEvent event) {
 
     }
 
     @Override
     protected void updateItem(Project item, boolean empty) {
         super.updateItem(item, empty);
-        String tag;
+
         if (empty || item == null) {
             setText(null);
             setGraphic(null);
-        }else{
-            if(fxmlLoader == null){
+        } else {
+            if (fxmlLoader == null) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/CRM_APP/View/Project/projectCell.fxml"));
                 fxmlLoader.setController(this);
 
@@ -64,14 +98,37 @@ public class ProjectCellController extends JFXListCell<Project> {
                     e.printStackTrace();
                 }
             }
-            lbl_projectName.setText(item.getName());
-            lbl_endDate.setText(item.getEndDate());
-            lbl_startDate.setText(item.getStartDate());
-            pgr_process.setProgress((double) item.getProcess());
-            tag = item.getTag();
-            if(tag == "first"){
-                pane_tag.setStyle("-fx-background-color: #ffca28");
+
+
+            //handle customer
+            ResultSet crow = null;
+            try {
+                crow = database.getSomeID(item.getCusId(), "customer", "CusID");
+                if (crow.next()) {
+                    String cusName = crow.getString("CusName");
+                    lbl_customer.setText(cusName);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
+
+            lbl_name.setText(item.getName());
+            lbl_beginTime.setText(item.getBeginTime());
+            lbl_endTime.setText(item.getEndTime());
+            lbl_manager.setText(item.getManager());
+            lbl_totalEmp.setText(item.getTotalEmployee() + "");
+            String projectID = item.getId();
+            DecimalFormat df = new DecimalFormat("#,##0");
+            df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ITALY));
+            lbl_totalAmout.setText(df.format(item.getTotalAmount()));
+
+            btn_edit.setOnAction(e ->{
+                sceneHandler = new SceneHandler();
+                ModuleController.projectID = projectID;
+                sceneHandler.newScene("/CRM_APP/View/Module/module.fxml");
+            });
 
             setText(null);
             setGraphic(main_pane);

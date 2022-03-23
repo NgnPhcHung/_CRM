@@ -1,5 +1,7 @@
 package CRM_APP.Handler;
 
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -12,9 +14,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneHandler {
+    FXMLLoader loader ;
     //handle button change scene
     public void newScene(String url){
-        FXMLLoader loader = new FXMLLoader();
+        loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(url));
         try {
             loader.load();
@@ -28,11 +31,11 @@ public class SceneHandler {
         stage.showAndWait();
     }
 
-    protected void handleScene(BorderPane main_pane, String url) throws IOException {
+    protected void handleScene(GridPane main_pane, String url) throws IOException {
         GridPane pane = new FXMLLoader().load(getClass().getResource(url));
         pane.prefWidthProperty().bind(main_pane.widthProperty());
         pane.prefHeightProperty().bind(main_pane.heightProperty());
-        main_pane.setCenter(pane);
+//        main_pane.setSc(pane);
     }
 
     public static String getFileFXML(String name){

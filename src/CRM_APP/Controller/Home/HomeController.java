@@ -90,12 +90,16 @@ public class HomeController {
     private void userLogout(String uid) throws SQLException, ClassNotFoundException {
         String deviceName = OtherHandler.getDevice();
         String aid = OtherHandler.generateId();
+        database = new LoginDB();
+        mydb = new Database();
 
-        ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-        while(rs.next()){
-            aid = OtherHandler.generateId();
-            rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-        }
+//        try{
+//            ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
+//            while(rs.next()){
+//                aid = OtherHandler.generateId();
+//                rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
+//            }
+//        }catch (Exception e){}
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String logTime = dtf.format(now);

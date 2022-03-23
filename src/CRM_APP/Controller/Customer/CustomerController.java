@@ -30,8 +30,7 @@ public class CustomerController {
     void initialize() {
         sceneHandler= new SceneHandler();
         Customer customer = new Customer();
-        customer.setTestName("MyName");
-        customer.setTestEmail("myemail@gmail.com");
+        customer.setCusName("MyName");
         customers = FXCollections.observableArrayList();
         customers.addAll(customer);
         lv_customer.setItems(customers);

@@ -1,29 +1,28 @@
 package CRM_APP.Model;
 
 public class Customer {
-    private String testName;
-    private String  testEmail;
+    private String id;
+    private String cusName;
 
     public Customer(){}
-
-    public Customer(String testName, String testEmail) {
-        this.testName = testName;
-        this.testEmail = testEmail;
+    public Customer(String cusName){
+        this.cusName = cusName;
     }
 
-    public String getTestName() {
-        return testName;
+
+    public String getId() {
+        return id;
     }
 
-    public void setTestName(String testName) {
-        this.testName = testName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTestEmail() {
-        return testEmail;
+    public String getCusName() {
+        return cusName;
     }
 
-    public void setTestEmail(String testEmail) {
-        this.testEmail = testEmail;
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
     }
 }
