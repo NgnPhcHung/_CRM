@@ -14,17 +14,23 @@ import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import static CRM_APP.Controller.Project.ProjectCellController.cellStack;
 
 public class ProjectController {
     @FXML
@@ -37,7 +43,16 @@ public class ProjectController {
     private ScrollPane lst_detail;
 
     @FXML
+    private Button btn_new;
+
+    @FXML
     private JFXListView lv_project;
+
+    @FXML
+    private StackPane main_stack;
+
+    @FXML
+    private JFXTextField txt_findName;
 
     private SceneHandler sceneHandler;
     private ObservableList<Project> projects;
@@ -70,10 +85,14 @@ public class ProjectController {
             project.setTotalEmployee(row.getInt("TotalEmployee"));
             project.setTotalAmount(row.getInt("TotalAmount"));
             project.setCusId(row.getString("CusID"));
-
+            cellStack = main_stack;
             projects.add(project);
         }
         lv_project.setItems(projects);
         lv_project.setCellFactory(ProjectCellController -> new ProjectCellController());
+    }
+    @FXML
+    void newProjectEvent(ActionEvent event) {
+        sceneHandler.slideScene(btn_new, cellStack, "-Y","/CRM_APP/View/Project/projectDetail.fxml");
     }
 }

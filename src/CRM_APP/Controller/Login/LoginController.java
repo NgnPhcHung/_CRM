@@ -18,19 +18,23 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import javafx.util.Duration;
 
 public class LoginController {
     @FXML
@@ -54,6 +58,13 @@ public class LoginController {
     @FXML
     private JFXButton btn_login;
 
+    @FXML
+    private VBox left_pane;
+
+    @FXML
+    private VBox right_pane;
+    private Executor exec ;
+
     private SceneHandler sceneHandler;
     private LoginDB database = new LoginDB();
     private Database mydb = new Database();
@@ -70,6 +81,7 @@ public class LoginController {
     }
     @FXML
     void loginEvent(ActionEvent event) {
+
         sceneHandler = new SceneHandler();
         String loginText = txt_username.getText().trim();
         String loginPwd = txt_password.getText().trim();
@@ -87,11 +99,10 @@ public class LoginController {
 
             }
             if(counter == 1){
-                System.out.println("Welcome "+userId);
                 userLogin(userId);
                 loginSuccess();
             }else{
-                System.out.println("counter : " + counter);
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -100,10 +111,9 @@ public class LoginController {
         }
     }
     //login event
-    private void loginSuccess(){
+    private void loginSuccess() {
         try {
             btn_login.getScene().getWindow().hide();
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/CRM_APP/View/Home/home.fxml"));
             loader.load();
@@ -129,11 +139,13 @@ public class LoginController {
         String aid = OtherHandler.generateId();
         ResultSet rs = null;
         try {
-//            rs= mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-//            while(rs.next()){
-//                aid = OtherHandler.generateId();
-//                rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-//            }
+
+            rs= mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
+            while(rs.next()) {
+                aid = OtherHandler.generateId();
+                rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
+
+            }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             String logTime = dtf.format(now);
@@ -144,4 +156,5 @@ public class LoginController {
             e.printStackTrace();
         }catch (Exception e){}
     }
+    //animation login succes
 }

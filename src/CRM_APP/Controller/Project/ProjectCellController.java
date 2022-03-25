@@ -8,6 +8,10 @@ import CRM_APP.Model.Customer;
 import CRM_APP.Model.Module;
 import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXListCell;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +23,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -69,7 +75,7 @@ public class ProjectCellController extends JFXListCell<Project> {
     private FXMLLoader fxmlLoader;
     private Database database;
     private SceneHandler sceneHandler;
-
+    public static StackPane cellStack;
     @FXML
     void initialize() {
         database = new Database();
@@ -125,9 +131,9 @@ public class ProjectCellController extends JFXListCell<Project> {
             lbl_totalAmout.setText(df.format(item.getTotalAmount()));
 
             btn_edit.setOnAction(e ->{
-                sceneHandler = new SceneHandler();
+                sceneHandler =  new SceneHandler();
                 ModuleController.projectID = projectID;
-                sceneHandler.newScene("/CRM_APP/View/Module/module.fxml");
+                sceneHandler.slideScene(btn_edit, cellStack, "Y","/CRM_APP/View/Module/module.fxml");
             });
 
             setText(null);

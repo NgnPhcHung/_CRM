@@ -29,6 +29,7 @@
     -fx-font-style: italic;
     -fx-text-fill: #686868;
     -fx-font-family: Calibri;
+
 }
 .button:hover{
     -fx-background-color: #64b5f6;
@@ -102,4 +103,12 @@
 .cardNumContainer{
     -fx-pref-height: 60px;
     -fx-pref-width: 60px;
+}
+.container{
+    -fx-background-color: #eceff1;
+}
+.prevButton{
+    -fx-rotate: 90;
+    -fx-pref-width: 35;
+    -fx-pref-height: 30;
 }

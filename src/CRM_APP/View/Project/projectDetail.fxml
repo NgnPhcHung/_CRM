@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane prefHeight="500.0" prefWidth="800.0" styleClass="container" stylesheets="@../../Style/DetailStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Project.ProjectDetailsController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #4fc3f7;" styleClass="header" GridPane.columnSpan="2147483647">
+         <children>
+            <Label text="Project Details" textFill="#455a64">
+               <font>
+                  <Font name="Calibri Bold" size="35.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow color="#404040" />
+         </effect>
+      </HBox>
+      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <JFXTextField fx:id="txt_name" focusColor="#7898f8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Title" unFocusColor="#ff7d7d">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXComboBox fx:id="cb_customer" focusColor="#7e9df8" prefHeight="31.0" prefWidth="349.0" promptText="Customer" styleClass="jfx-text-field" unFocusColor="#f89494" />
+            <JFXComboBox fx:id="cb_manager" focusColor="#7e9df8" layoutX="136.0" layoutY="107.0" prefHeight="31.0" prefWidth="349.0" promptText="Manager" styleClass="jfx-text-field" unFocusColor="#f89494" />
+            <JFXDatePicker fx:id="dp_start" defaultColor="#1083d0" prefHeight="31.0" prefWidth="331.0" promptText="Start Date" />
+            <JFXDatePicker fx:id="dp_end" defaultColor="#1083d0" layoutX="208.0" layoutY="145.0" prefHeight="31.0" prefWidth="332.0" promptText="End Date" />
+            <JFXTextField fx:id="txt_amount" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="37.0" promptText="Amount" unFocusColor="#ff7d7d">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </JFXTextField>
+            <Label fx:id="lbl_noti" styleClass="notification" text="This is notification" textFill="#ff6b6b">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btn_save" onAction="#changeScene" prefWidth="100.0" text="Save" textFill="#686868">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="btn_back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#changeScene" styleClass="imgButton">
+               <graphic>
+                  <Label text="➜" />
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</GridPane>

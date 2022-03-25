@@ -15,16 +15,13 @@ public class ModuleDB {
         String query = "SELECT COUNT(CASE WHEN Status = \"0\" THEN 1\n" +
                 "                  ELSE NULL\n" +
                 "             END) AS Pending\n" +
-                "        ,COUNT(CASE WHEN Status = \"1\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Assigned\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"2\" THEN 1\n" +
+                "\t\t,COUNT(CASE WHEN Status = \"1\" THEN 1\n" +
                 "                   ELSE NULL\n" +
                 "              END) AS Working\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"3\" THEN 1\n" +
+                "\t\t,COUNT(CASE WHEN Status = \"2\" THEN 1\n" +
                 "                   ELSE NULL\n" +
                 "              END) AS Reviewing\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"4\" THEN 1\n" +
+                "\t\t,COUNT(CASE WHEN Status = \"3\" THEN 1\n" +
                 "                   ELSE NULL\n" +
                 "              END) AS Done\n" +
                 "    FROM crm.module WHERE " + Const.PROJECT_ID +"=?";

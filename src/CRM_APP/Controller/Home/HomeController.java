@@ -25,6 +25,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
@@ -230,7 +231,7 @@ public class HomeController {
                 if(btnName.equals("Task")){
                     tab.setContent(new FullCalendarView(YearMonth.now()).getView());
                 }else{
-                    GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
+                    StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
                     tab.setContent(newPane);
                 }
 

@@ -84,18 +84,14 @@ public class ModuleCellController extends JFXListCell<Module> {
                 lbl_status.getStyleClass().add("pending");
                 break;
             case "1":
-                lbl_status.setText("Assigned");
-                lbl_status.getStyleClass().add("assigned");
-                break;
-            case "2":
                 lbl_status.setText("Working");
                 lbl_status.getStyleClass().add("working");
                 break;
-            case "3":
+            case "2":
                 lbl_status.setText("Reviewing");
                 lbl_status.getStyleClass().add("review");
                 break;
-            case "4":
+            case "3":
                 lbl_status.setText("Done");
                 lbl_status.getStyleClass().add("done");
                 break;

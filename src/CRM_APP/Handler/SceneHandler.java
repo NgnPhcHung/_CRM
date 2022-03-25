@@ -1,15 +1,20 @@
 package CRM_APP.Handler;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -29,6 +34,60 @@ public class SceneHandler {
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.showAndWait();
+    }
+
+    public void slideScene(Button btn, StackPane stack_parentContainer, String dir,String url) {
+        Parent root = null;
+        try {
+            if(dir.equals("Y")){
+                root = FXMLLoader.load(getClass().getResource(url));
+                Scene scene = btn.getScene();
+                root.translateYProperty().set(scene.getHeight());
+                stack_parentContainer.getChildren().add(root);
+
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+            }else if(dir.equals("X")){
+                root = FXMLLoader.load(getClass().getResource(url));
+                Scene scene = btn.getScene();
+                root.translateXProperty().set(scene.getWidth());
+                stack_parentContainer.getChildren().add(root);
+
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+            }else if(dir.equals("-Y")){
+                root = FXMLLoader.load(getClass().getResource(url));
+                Scene scene = btn.getScene();
+                root.translateYProperty().set(scene.getHeight()*-1);
+                stack_parentContainer.getChildren().add(root);
+
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+            }else if(dir.equals("-X")){
+                root = FXMLLoader.load(getClass().getResource(url));
+                Scene scene = btn.getScene();
+                root.translateXProperty().set(scene.getWidth()*-1);
+                stack_parentContainer.getChildren().add(root);
+
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void handleScene(GridPane main_pane, String url) throws IOException {

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="610.0" prefWidth="850.0" stylesheets="@../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Project.Module.ModuleController">
+<GridPane prefHeight="610.0" prefWidth="850.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Project.Module.ModuleController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,6 +36,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
+                  <Button fx:id="btn_back" mnemonicParsing="false" styleClass="prevButton" text="▼" />
                   <Button fx:id="btn_addNew" mnemonicParsing="false" text="Add new Module" />
                </children>
                <padding>
@@ -67,23 +68,6 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
                            <children>
                               <Label fx:id="lbl_pending" text="11500" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btn_total" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="125.0" layoutY="10.0" onAction="#filterEvent" text="Assigned">
-               <styleClass>
-                  <String fx:value="cardContainer" />
-                  <String fx:value="card4" />
-               </styleClass>
-               <graphic>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                           <children>
-                              <Label fx:id="lbl_assigned" text="11500" />
                            </children>
                         </HBox>
                      </children>
@@ -124,7 +108,7 @@
                   </HBox>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_revewing1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="Done">
+            <JFXButton fx:id="btn_done" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="Done">
                <styleClass>
                   <String fx:value="cardContainer" />
                   <String fx:value="card5" />

@@ -1,0 +1,42 @@
+.container{
+    -fx-background-color: #fff;
+}
+.contentContainer{
+    -fx-border-color:  #b0bec5;
+    -fx-border-radius:  10;
+    -fx-border-width: 5;
+    -fx-padding: -20 50 -20 50;
+}
+.button{
+    -fx-border-color:  #2196f3;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+.notification{
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff6b6b;
+}
+.header{
+    -fx-background-color:  #4fc3f7;
+    -fx-text-fill: #686868;
+    -fx-font-size: 35;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, #b0bec5, 20, 0 , 0, 5);
+}
+.imgButton{
+    -fx-background-color: #9fa8da;
+    -fx-border-width: 0;
+    -fx-background-radius: 50%;
+    -fx-pref-height: 50;
+    -fx-pref-width: 50;
+}
+.imgButton:pressed{
+    -fx-background-color: #c5cae9;
+}
+.jfx-text-field{
+    -fx-prompt-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+}

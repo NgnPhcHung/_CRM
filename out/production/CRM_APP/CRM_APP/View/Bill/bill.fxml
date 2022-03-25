@@ -11,25 +11,29 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="main_pane" prefHeight="610.0" prefWidth="820.0" stylesheets="@../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Billing.BillController">
-  <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-      <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Billing.BillController">
    <children>
-      <HBox styleClass="header" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+      <GridPane fx:id="main_pane" prefHeight="610.0" prefWidth="820.0" stylesheets="@../../Style/TabFormStyle.css">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <HBox styleClass="header">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
@@ -50,10 +54,7 @@
             </HBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="5.0" styleClass="title" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
-         <GridPane.margin>
-            <Insets left="15.0" />
-         </GridPane.margin>
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="5.0" styleClass="title">
          <children>
             <Label text="Name">
                <HBox.margin>
@@ -116,13 +117,11 @@
             </HBox>
          </children>
       </HBox>
-      <ScrollPane fx:id="scroll_listContainer" fitToHeight="true" fitToWidth="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" GridPane.rowSpan="2147483647">
-         <GridPane.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </GridPane.margin>
+      <ScrollPane fx:id="scroll_listContainer" fitToHeight="true" fitToWidth="true">
          <content>
             <JFXListView fx:id="lv_detail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
          </content>
       </ScrollPane>
+      <JFXListView fx:id="lv_detail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
    </children>
-</GridPane>
+</StackPane>
