@@ -1,17 +1,25 @@
 package CRM_APP.Controller.Project.Module;
 
+import CRM_APP.Controller.Project.ProjectCellController;
+import CRM_APP.Database.Const;
+import CRM_APP.Database.Database;
+import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Module;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+
+import static CRM_APP.Controller.Project.ProjectCellController.cellStack;
 
 public class ModuleCellController extends JFXListCell<Module> {
     @FXML
@@ -33,17 +41,25 @@ public class ModuleCellController extends JFXListCell<Module> {
     private Button btn_edit;
 
     @FXML
+    private Button btn_details;
+
+    @FXML
     private Label lbl_status;
 
     private FXMLLoader fxmlLoader;
     private Module module;
+    private Database database;
+    SceneHandler sceneHandler = new SceneHandler();
+
     @FXML
     void editEvent(ActionEvent event) {
-
+        sceneHandler.slideScene(btn_edit, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/moduleDetail.fxml");
     }
 
     @FXML
     void initialize() {
+        sceneHandler = new SceneHandler();
+        database = new Database();
 
     }
 
@@ -68,7 +84,27 @@ public class ModuleCellController extends JFXListCell<Module> {
             }
 
             lbl_name.setText(item.getModName());
-            lbl_project.setText(item.getProjectID());
+            try {
+                ResultSet pro = database.getSomeID(item.getProjectID(), Const.PROJECT_TABLE, "ProjectID");
+                if(pro.next()){
+                    lbl_project.setText(pro.getString("ProjectName"));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            String modID = item.getModuleID();
+            btn_edit.setOnAction(e -> {
+                sceneHandler =  new SceneHandler();
+                ModuleDetailController.modID = modID;
+
+                ModuleDetailController.projectID = item.getProjectID();
+                sceneHandler.slideScene(btn_details, cellStack, "Y","/CRM_APP/View/Module/moduleDetail.fxml");
+            });
+            btn_details.setOnAction(e ->{
+
+            });
             handleStatus(item.getStatus());
 
             setText(null);
@@ -77,7 +113,7 @@ public class ModuleCellController extends JFXListCell<Module> {
     }
 
     private void handleStatus(String stt){
-        lbl_status.getStylesheets().add("/CRM_APP/Style/ModuleStyle.css");
+        lbl_status.getStylesheets().add("/CRM_APP/Style/DetailStyle.css");
         switch (stt) {
             case "0":
                 lbl_status.setText("Pending");
@@ -97,6 +133,5 @@ public class ModuleCellController extends JFXListCell<Module> {
                 break;
             default: break;
         }
-
     }
 }

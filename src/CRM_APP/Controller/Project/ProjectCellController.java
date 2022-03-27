@@ -57,13 +57,10 @@ public class ProjectCellController extends JFXListCell<Project> {
     private Label lbl_manager;
 
     @FXML
-    private Label lbl_totalEmp;
-
-    @FXML
-    private Label lbl_totalAmout;
-
-    @FXML
     private Button btn_edit;
+
+    @FXML
+    private Button btn_details;
 
     @FXML
     private Label lbl_beginTime;
@@ -123,17 +120,31 @@ public class ProjectCellController extends JFXListCell<Project> {
             lbl_name.setText(item.getName());
             lbl_beginTime.setText(item.getBeginTime());
             lbl_endTime.setText(item.getEndTime());
-            lbl_manager.setText(item.getManager());
-            lbl_totalEmp.setText(item.getTotalEmployee() + "");
-            String projectID = item.getId();
-            DecimalFormat df = new DecimalFormat("#,##0");
-            df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ITALY));
-            lbl_totalAmout.setText(df.format(item.getTotalAmount()));
 
-            btn_edit.setOnAction(e ->{
+            try {
+                ResultSet manager = database.getSomeID(item.getManager(), Const.EMPLOYEE_TABLE, "EmpID");
+                if(manager.next()){
+                    lbl_manager.setText(manager.getString("EmpName"));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+            String projectID = item.getId();
+
+
+            btn_details.setOnAction(e ->{
                 sceneHandler =  new SceneHandler();
                 ModuleController.projectID = projectID;
                 sceneHandler.slideScene(btn_edit, cellStack, "Y","/CRM_APP/View/Module/module.fxml");
+            });
+
+            btn_edit.setOnAction(e -> {
+                sceneHandler =  new SceneHandler();
+                sceneHandler.slideScene(btn_edit, cellStack, "X","/CRM_APP/View/Project/projectDetail.fxml");
             });
 
             setText(null);

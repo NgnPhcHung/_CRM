@@ -131,7 +131,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="820.0">
                <children>
-                  <Label layoutX="25.0" layoutY="28.0" maxWidth="1.7976931348623157E308" styleClass="title" text="Project Name" textFill="#686868" HBox.hgrow="ALWAYS">
+                  <Label layoutX="25.0" layoutY="28.0" maxWidth="1.7976931348623157E308" styleClass="title" text="Module Name" textFill="#686868" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
@@ -141,7 +141,7 @@
                   </Label>
                   <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefWidth="300.0">
                      <children>
-                        <Label styleClass="title" text="Project" textFill="#686868">
+                        <Label styleClass="title" text="Project Name" textFill="#686868">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>

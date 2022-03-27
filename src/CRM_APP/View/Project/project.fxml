@@ -67,7 +67,7 @@
                               <Insets left="25.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefWidth="220.0">
                            <children>
                               <Label styleClass="title" text="Customer" textFill="#686868">
                                  <font>
@@ -76,33 +76,12 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="150.0" HBox.hgrow="SOMETIMES">
+                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="250.0" HBox.hgrow="SOMETIMES">
                            <children>
                               <Label styleClass="title" text="Manager" textFill="#686868">
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="120.0" HBox.hgrow="SOMETIMES">
-                           <children>
-                              <Label styleClass="title" text="Total Emp" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri" size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefWidth="250.0" HBox.hgrow="SOMETIMES">
-                           <children>
-                              <Label styleClass="title" text="Total Amount" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri" size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
                               </Label>
                            </children>
                         </HBox>

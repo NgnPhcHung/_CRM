@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -72,3 +73,6 @@ public class OtherHandler {
         return sb.toString();
     }
 }
+    /*DecimalFormat df = new DecimalFormat("#,##0");
+            df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ITALY));
+                    lbl_totalAmout.setText(df.format(item.getTotalAmount()));*/

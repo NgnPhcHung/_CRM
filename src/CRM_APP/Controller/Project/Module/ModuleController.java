@@ -99,9 +99,9 @@ public class ModuleController {
 
     @FXML
     void initialize() {
+        populateList();
         try {
             fillCard();
-            populateList();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -109,6 +109,10 @@ public class ModuleController {
         }
         btn_back.setOnAction(e -> {
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
+        });
+        btn_addNew.setOnAction(e -> {
+            ModuleDetailController.modID=null;
+            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/moduleDetail.fxml");
         });
     }
 
@@ -131,21 +135,29 @@ public class ModuleController {
         lbl_done.setText(done);
     }
 
-    private void populateList() throws SQLException, ClassNotFoundException {
+    private void populateList() {
         sceneHandler= new SceneHandler();
         database = new Database();
         modules = FXCollections.observableArrayList();
-        ResultSet row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
-        while(row.next()){
-            Module module = new Module();
-            module.setProjectID(projectID);
-            module.setModuleID(OtherHandler.generateId());
-            module.setModName(row.getString("ModName"));
-            module.setStatus(row.getString("Status"));
+        ResultSet row = null;
+        try {
+            row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
+            while(row.next()){
+                Module module = new Module();
+                module.setProjectID(projectID);
+                module.setModuleID(row.getString("ModID"));
+                module.setModName(row.getString("ModName"));
+                module.setStatus(row.getString("Status"));
 
-            modules.add(module);
+                modules.add(module);
+            }
+            lv_modules.setItems(modules);
+            lv_modules.setCellFactory(ModuleCellController -> new ModuleCellController());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        lv_modules.setItems(modules);
-        lv_modules.setCellFactory(ModuleCellController -> new ModuleCellController());
+
     }
 }

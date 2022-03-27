@@ -58,7 +58,7 @@
                   <Font name="Calibri" size="20.0" />
                </font>
             </JFXTextField>
-            <Label fx:id="lbl_noti" styleClass="notification" text="This is notification" textFill="#ff6b6b">
+            <Label fx:id="lbl_noti" styleClass="notification" text="This is notification" textFill="#ff6b6b" visible="false">
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font>
@@ -73,7 +73,7 @@
             <Insets top="20.0" />
          </GridPane.margin>
       </VBox>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
          <children>
             <Button fx:id="btn_back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#changeScene" styleClass="imgButton">
                <graphic>

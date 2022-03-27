@@ -60,8 +60,7 @@ public class ProjectDetailsController {
     @FXML
     void changeScene(ActionEvent event) {
         sceneHandler =  new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-X", "/CRM_APP/View/Project/project.fxml");
-        txt_amount.setText("");
+        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
         txt_name.setText("");
         cb_customer.getSelectionModel().clearSelection();
         cb_manager.getSelectionModel().clearSelection();

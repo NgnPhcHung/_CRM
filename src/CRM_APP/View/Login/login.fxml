@@ -31,14 +31,7 @@
          <children>
             <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0">
                <children>
-                  <Button fx:id="btn_close" mnemonicParsing="false" onAction="#closeEvent" styleClass="transparent">
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../Asset/Icon/icon_close.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Button fx:id="btn_close" mnemonicParsing="false" onAction="#closeEvent" styleClass="btnExit" text="X">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -64,7 +57,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </ImageView>
-                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="ADH13322" unFocusColor="#76b3ff">
+                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="EM6789" unFocusColor="#76b3ff">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -95,10 +88,17 @@
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
-                  <JFXButton fx:id="btn_login" onAction="#loginEvent" prefHeight="40.0" prefWidth="230.0" styleClass="buttonLogin" text="Login" textFill="WHITE">
+                  <JFXButton fx:id="btn_login" contentDisplay="RIGHT" onAction="#loginEvent" prefHeight="40.0" prefWidth="230.0" styleClass="buttonLogin" text="Login" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="20.0" />
-                     </font></JFXButton>
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="imgLogin">
+                           <image>
+                              <Image url="@../../Asset/Icon/up-arrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></JFXButton>
                </children>
             </HBox>
          </children>

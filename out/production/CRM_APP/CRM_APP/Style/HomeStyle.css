@@ -44,18 +44,29 @@
     -fx-text-fill: #455a64;
 }
 .esc{
-    -fx-background-color: #ff6e40;
-    -fx-background-radius: 15px;
+    -fx-background-color: transparent;
     -fx-border-color:  #ed0935;
     -fx-border-radius:  10px;
     -fx-border-width: 5px;
     -fx-text-fill: #eceff1;
     -fx-font-family: Calibri;
     -fx-font-weight: bold;
-    -fx-font-size: 15px;
-    -fx-pref-width: 50px;
-    -fx-pref-height: 50px;
+    -fx-font-size: 20px;
+    -fx-pref-width: 60px;
+    -fx-pref-height: 60px;
 }
 .esc:hover{
     -fx-background-color: #ff595f;
+    -fx-background-radius: 20;
+    -fx-border-width: 0;
+}
+.hello{
+    -fx-text-fill: #eceff1;
+    -fx-font-family: Calibri;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+}
+.career{
+    -fx-font-size: 15;
+    -fx-text-fill: #448aff;
 }

@@ -9,8 +9,12 @@
 }
 .button{
     -fx-border-color:  #2196f3;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+    -fx-text-fill: #686868;
 }
 .notification{
     -fx-font-family: Calibri;
@@ -29,8 +33,9 @@
     -fx-background-color: #9fa8da;
     -fx-border-width: 0;
     -fx-background-radius: 50%;
-    -fx-pref-height: 50;
-    -fx-pref-width: 50;
+    -fx-pref-height: 55;
+    -fx-pref-width: 55;
+    -fx-rotate: 180;
 }
 .imgButton:pressed{
     -fx-background-color: #c5cae9;
@@ -39,4 +44,27 @@
     -fx-prompt-text-fill: #686868;
     -fx-font-family: Calibri;
     -fx-font-size: 20;
+}
+
+.someText{
+    -fx-font-family: Calibri;
+    -fx-text-fill: #686868;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.pending{
+    -fx-text-fill: #f4511e;
+}
+.assigned{
+    -fx-text-fill: #2196f3;
+}
+.working{
+    -fx-text-fill: #81c784;
+}
+.review{
+    -fx-text-fill: #6a1b9a;
+}
+.done{
+    -fx-text-fill: #f57c00;
 }

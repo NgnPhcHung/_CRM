@@ -6,6 +6,7 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Handler.ShakerHandler;
 import CRM_APP.Model.Employee;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -31,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -63,6 +65,10 @@ public class LoginController {
 
     @FXML
     private VBox right_pane;
+
+    @FXML
+    private ImageView imgArrow;
+
     private Executor exec ;
 
     private SceneHandler sceneHandler;
@@ -70,9 +76,11 @@ public class LoginController {
     private Database mydb = new Database();
     private Employee em = new Employee();
     private String userId;
+
     @FXML
     void initialize() {
-
+        ShakerHandler loginShake = new ShakerHandler(imgArrow, Animation.INDEFINITE, 500);
+        loginShake.shake();
     }
     //close app event
     @FXML
@@ -94,15 +102,19 @@ public class LoginController {
             int counter = 0;
             while(userRow.next()){
                 counter++;
-                String name  = userRow.getString("EmpName");
                 userId=userRow.getString("EmpID");
-
+//                System.out.println(userId);
             }
             if(counter == 1){
                 userLogin(userId);
                 loginSuccess();
             }else{
-
+                ShakerHandler userShake = new ShakerHandler(txt_username, 2,50);
+                ShakerHandler passShake = new ShakerHandler(txt_password, 2,50);
+                userShake.shake();
+                passShake.shake();
+                txt_password.setText("");
+                txt_username.setText("");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -116,6 +128,7 @@ public class LoginController {
             btn_login.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/CRM_APP/View/Home/home.fxml"));
+            HomeController.userId = userId;
             loader.load();
 
             Parent root = loader.getRoot();
@@ -125,8 +138,6 @@ public class LoginController {
             stage.setHeight(sceneHandler.getScreen()[0]*0.7);
             stage.setWidth(sceneHandler.getScreen()[1]*0.7);
 
-            HomeController homeController = loader.getController();
-            homeController.setUserId(userId);
 
             stage.showAndWait();
         } catch (IOException e) {
@@ -156,5 +167,4 @@ public class LoginController {
             e.printStackTrace();
         }catch (Exception e){}
     }
-    //animation login succes
 }

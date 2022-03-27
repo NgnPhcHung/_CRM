@@ -17,6 +17,7 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Model.Employee;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,13 +66,21 @@ public class HomeController {
     @FXML
     private Button btn_exit;
 
+    @FXML
+    private Label lbl_name;
+
+    @FXML
+    private Label lbl_position;
+
+
+
     private LoginDB database = new LoginDB();
     public static String userId;
     private Database mydb = new Database();
 
     @FXML
     void initialize() {
-        HomeController.userId = getUserId();
+        getInfo();
     }
 
     //when user logout
@@ -245,6 +254,23 @@ public class HomeController {
         }
     }
 
+    private void getInfo() {
+        Database db = new Database();
+        ResultSet row = null;
+        try {
+            row = db.getSomeID(userId, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
+            if(row.next()){
+                System.out.println("Hi,"+row.getString(Const.EMPLOYEE_NAME));
+                lbl_name.setText("Welcome back, "+row.getString("EmpName"));
+                lbl_position.setText(row.getString("Position"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
     //get set
     public void setUserId(String userId){
         this.userId = userId;

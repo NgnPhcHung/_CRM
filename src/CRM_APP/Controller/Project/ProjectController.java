@@ -82,8 +82,6 @@ public class ProjectController {
             project.setBeginTime(row.getString("BeginTime"));
             project.setEndTime(row.getString("EndTime"));
             project.setManager(row.getString("Manager"));
-            project.setTotalEmployee(row.getInt("TotalEmployee"));
-            project.setTotalAmount(row.getInt("TotalAmount"));
             project.setCusId(row.getString("CusID"));
             cellStack = main_stack;
             projects.add(project);
