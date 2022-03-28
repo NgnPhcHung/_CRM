@@ -16,7 +16,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="300.0">
          <children>
-            <Label fx:id="lbl_name" text="module 1" textFill="#686868">
+            <Label fx:id="lbl_name" text="Task _1" textFill="#686868">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -34,7 +34,7 @@
                      <children>
                         <HBox alignment="CENTER" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
                            <children>
-                              <Label fx:id="lbl_project" text="Project Name" textFill="#686868" HBox.hgrow="ALWAYS">
+                              <Label fx:id="lbl_module" text="Module Name" textFill="#686868" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
@@ -49,9 +49,38 @@
                               <Insets left="5.0" />
                            </padding>
                         </Separator>
+                        <HBox alignment="CENTER" layoutX="189.0" layoutY="15.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lbl_emp" text="Employee " textFill="#686868" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator layoutX="389.0" layoutY="15.0" orientation="VERTICAL" prefHeight="200.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Separator>
                         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="btn_edit" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent" style="-fx-background-color: transparent;">
+                              <Button lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../Asset/Icon/icon_view.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="btn_edit" layoutX="30.0" layoutY="11.0" lineSpacing="10.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

@@ -58,5 +58,5 @@
     -fx-font-weight: bold
 }
 .subTask{
-    -fx-background-color:  #f4511e;
+    /*-fx-background-color:  #f4511e;*/
 }

@@ -1,6 +1,7 @@
 package CRM_APP.Controller.Project.Module;
 
 import CRM_APP.Controller.Project.ProjectCellController;
+import CRM_APP.Controller.Task.TaskListController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;
@@ -47,13 +48,13 @@ public class ModuleCellController extends JFXListCell<Module> {
     private Label lbl_status;
 
     private FXMLLoader fxmlLoader;
-    private Module module;
     private Database database;
-    SceneHandler sceneHandler = new SceneHandler();
+    SceneHandler sceneHandler;
+    private Module module;
 
     @FXML
     void editEvent(ActionEvent event) {
-        sceneHandler.slideScene(btn_edit, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/moduleDetail.fxml");
+
     }
 
     @FXML
@@ -95,6 +96,7 @@ public class ModuleCellController extends JFXListCell<Module> {
                 e.printStackTrace();
             }
             String modID = item.getModuleID();
+
             btn_edit.setOnAction(e -> {
                 sceneHandler =  new SceneHandler();
                 ModuleDetailController.modID = modID;
@@ -102,8 +104,13 @@ public class ModuleCellController extends JFXListCell<Module> {
                 ModuleDetailController.projectID = item.getProjectID();
                 sceneHandler.slideScene(btn_details, cellStack, "Y","/CRM_APP/View/Module/moduleDetail.fxml");
             });
-            btn_details.setOnAction(e ->{
 
+            //show task list
+            btn_details.setOnAction(e ->{
+                sceneHandler =  new SceneHandler();
+                TaskListController.modID = modID;
+
+                sceneHandler.slideScene(btn_details, cellStack, "Y","/CRM_APP/View/Task/taskList.fxml");
             });
             handleStatus(item.getStatus());
 

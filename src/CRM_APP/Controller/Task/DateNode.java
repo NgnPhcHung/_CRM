@@ -16,9 +16,6 @@ public class DateNode extends VBox {
     private LocalDate date;
     SceneHandler sceneHandler = new SceneHandler();
 
-//     Create a VBox node. Date is not assigned in the constructor.
-//     children children of the anchor pane
-
     public DateNode(Node... children) {
         super(children);
         // Add action handler for mouse clicked
@@ -27,9 +24,11 @@ public class DateNode extends VBox {
             if(!this.getStyleClass().contains("notMonth")){
 
                 //send data
-                Task.date = date;
-//                task.setDate(date);
+                task = new Task();
+                task.setStartDate(date);
+                TaskDetailController.dates= date;
                 sceneHandler.newScene("/CRM_APP/View/Task/taskDetail.fxml");
+
             }
         });
     }

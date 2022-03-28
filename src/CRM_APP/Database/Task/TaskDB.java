@@ -4,6 +4,7 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TaskDB {
@@ -34,5 +35,14 @@ public class TaskDB {
         }catch (SQLException e){
 
         }catch (ClassNotFoundException e){}
+    }
+    public ResultSet getSomeID(String id, String tableName, String colName) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM " + tableName +" WHERE " + colName + " =?";
+//        String query = "SELECT * FROM task where ModID = \"2IhZxMp0c\" LIMIT 3";
+        PreparedStatement preparedStatement = db.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, id);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
     }
 }

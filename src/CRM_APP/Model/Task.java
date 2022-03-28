@@ -3,43 +3,53 @@ package CRM_APP.Model;
 import java.time.LocalDate;
 
 public class Task {
-    public static String id;
-    public static String task;
-    public static String status;
-    public static String color;
-    public static LocalDate date;
-    public static LocalDate end;
+    private String taskID;
+    private String ModID;
+    private String taskName;
+    private String status;
+    private String empID;
+    private String color;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public Task()
-    {}
-    public Task(String color, String task, LocalDate date) {
-        this.color = color;
-        this.task = task;
-        this.date = date;
+    public String getTaskID() {
+        return taskID;
     }
 
-    public static LocalDate getEnd() {
-        return end;
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
     }
 
-    public static void setEnd(LocalDate end) {
-        Task.end = end;
+    public String getModID() {
+        return ModID;
     }
 
-    public static String getStatus() {
+    public void setModID(String modID) {
+        ModID = modID;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public static void setStatus(String status) {
-        Task.status = status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public static String getId() {
-        return id;
+    public String getEmpID() {
+        return empID;
     }
 
-    public static void setId(String id) {
-        Task.id = id;
+    public void setEmpID(String empID) {
+        this.empID = empID;
     }
 
     public String getColor() {
@@ -50,19 +60,19 @@ public class Task {
         this.color = color;
     }
 
-    public String getTask() {
-        return task;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }

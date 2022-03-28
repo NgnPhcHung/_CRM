@@ -31,9 +31,11 @@ public class Const {
     public static final String TEAM_STATUS = "Status";
     //task
     public static final String TASK_ID = "TaskID";
+    public static final String TASK_MOD_ID = "ModID";
     public static final String TASK_NAME = "TaskName";
     public static final String TASK_STATUS = "Status";
     public static final String TASK_COLOR = "Color";
+    public static final String TASK_EMP_ID = "EmpID";
     public static final String TASK_START = "start_date";
     public static final String TASK_END = "end_date";
     //authen
