@@ -91,6 +91,8 @@ public class ProjectController {
     }
     @FXML
     void newProjectEvent(ActionEvent event) {
+        sceneHandler = new SceneHandler();
+        ProjectDetailsController.projectID = "null";
         sceneHandler.slideScene(btn_new, cellStack, "-Y","/CRM_APP/View/Project/projectDetail.fxml");
     }
 }

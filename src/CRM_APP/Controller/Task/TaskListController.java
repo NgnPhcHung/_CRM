@@ -3,6 +3,7 @@ package CRM_APP.Controller.Task;
 import CRM_APP.Controller.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
 import com.jfoenix.controls.JFXButton;
@@ -58,7 +59,7 @@ public class TaskListController {
     private Label lbl_working;
 
     @FXML
-    private JFXButton btn_revewing;
+    private JFXButton btn_reviewing;
 
     @FXML
     private Label lbl_reviewing;
@@ -87,6 +88,10 @@ public class TaskListController {
         btn_back.setOnAction(e -> {
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
         });
+        populateTask();
+        btn_addNew.setOnAction(e->{
+            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
+        });
     }
 
     private void populateTask(){
@@ -98,16 +103,16 @@ public class TaskListController {
             row = database.getSomeID(modID, Const.TASK_TABLE, "ModID");
             while(row.next()){
                 Task task = new Task();
-                final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+
 
                 task.setTaskID(row.getString(Const.TASK_ID));
                 task.setTaskName(row.getString(Const.TASK_NAME));
                 task.setEmpID(row.getString(Const.TASK_EMP_ID));
                 task.setModID(row.getString(Const.TASK_MOD_ID));
-                final LocalDate dt = (LocalDate) dtf.parse(row.getString(Const.TASK_START));
-                task.setStartDate(dt);
-                final LocalDate dt2 = (LocalDate) dtf.parse(row.getString(Const.TASK_END));
-                task.setEndDate(dt2);
+                LocalDate start = DateTimePickerHandler.formatDate(row.getString("StartDate"));
+                task.setStartDate(start);
+                LocalDate end = DateTimePickerHandler.formatDate(row.getString("EndDate"));
+                task.setEndDate(end);
                 task.setStatus(row.getString(Const.TASK_STATUS));
                 task.setColor(row.getString(Const.TASK_COLOR));
 
@@ -121,4 +126,5 @@ public class TaskListController {
             e.printStackTrace();
         }
     }
+
 }

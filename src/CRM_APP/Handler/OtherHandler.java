@@ -3,27 +3,23 @@ package CRM_APP.Handler;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
+import javafx.scene.paint.Color;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OtherHandler {
-    public static void userLogin(String uid, Database mydb, LoginDB database) throws SQLException, ClassNotFoundException {
-        String deviceName = getDevice();
-        String aid = generateId();
-        ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-        while(rs.next()){
-            aid = generateId();
-            rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-        }
-        String logTime = curentDateTime();
-        database.authen("login", aid, uid, logTime, deviceName);
-    }
+
     public static String curentDateTime(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -72,7 +68,19 @@ public class OtherHandler {
 
         return sb.toString();
     }
+    //to color hex code
+    public static String toRGBCode( Color color ) {
+        return String.format( "#%02X%02X%02X",
+                (int)( color.getRed() * 255 ),
+                (int)( color.getGreen() * 255 ),
+                (int)( color.getBlue() * 255 ) );
+    }
+    //return date list from start to end
+    public static List<LocalDate> dateList(LocalDate dateStart, LocalDate dateEnd){
+        List<LocalDate> dates = Stream.iterate(dateStart, date -> date.plusDays(1))
+                .limit(ChronoUnit.DAYS.between(dateStart, dateEnd)+1)
+                .collect(Collectors.toList());
+        if(dates.size()>0);
+        return dates;
+    }
 }
-    /*DecimalFormat df = new DecimalFormat("#,##0");
-            df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ITALY));
-                    lbl_totalAmout.setText(df.format(item.getTotalAmount()));*/

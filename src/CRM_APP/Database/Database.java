@@ -5,6 +5,7 @@ import java.sql.*;
 public class Database extends Configs{
     public static Connection dbConnection;
 
+    //get connection to database
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://"+ dbHost + ":"
                 +dbPort +"/"
@@ -14,7 +15,8 @@ public class Database extends Configs{
         return dbConnection;
     }
 
-    //this use for auto generate id
+    //region ALL FUNC IN THIS REGION IS COMMON
+    //this is use for get data on condition
     public ResultSet getSomeID(String id, String tableName, String colName) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
         String query = "SELECT * FROM " + tableName +" WHERE " + colName + " =?";
@@ -23,6 +25,8 @@ public class Database extends Configs{
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+
+    //retrieve all data that has been given in tableName
     public ResultSet getAllTableValue(String tableName) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
         String query = "SELECT * FROM " + tableName ;
@@ -31,4 +35,19 @@ public class Database extends Configs{
 
         return resultSet;
     }
+
+    public void detele(String table, String colName, String id){
+        try {
+            String query = "DELETE FROM " + table + " WHERE " + colName + " =?";
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, id);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    //endregion
 }

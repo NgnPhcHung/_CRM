@@ -238,7 +238,12 @@ public class HomeController {
                 showConfirmation(tab);
             }else {
                 if(btnName.equals("Task")){
-                    tab.setContent(new FullCalendarView(YearMonth.now()).getView());
+                    if(userId.contains("AD")){
+                        StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/Task/taskList.fxml"));
+                        tab.setContent(newPane);
+                    }else {
+                        tab.setContent(new FullCalendarView(YearMonth.now()).getView());
+                    }
                 }else{
                     StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
                     tab.setContent(newPane);
@@ -260,7 +265,6 @@ public class HomeController {
         try {
             row = db.getSomeID(userId, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
             if(row.next()){
-                System.out.println("Hi,"+row.getString(Const.EMPLOYEE_NAME));
                 lbl_name.setText("Welcome back, "+row.getString("EmpName"));
                 lbl_position.setText(row.getString("Position"));
             }

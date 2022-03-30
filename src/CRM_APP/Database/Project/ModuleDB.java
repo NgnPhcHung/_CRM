@@ -44,8 +44,8 @@ public class ModuleDB {
             preparedStatement.setString(2, module.getModName());
             preparedStatement.setString(3, module.getStatus());
             preparedStatement.setString(4, module.getProjectID());
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -63,6 +63,7 @@ public class ModuleDB {
             preparedStatement.setString(3, module.getModuleID());
 
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

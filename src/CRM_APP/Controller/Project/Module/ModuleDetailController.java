@@ -61,6 +61,9 @@ public class ModuleDetailController {
     @FXML
     private Button btn_back;
 
+    @FXML
+    private Button btn_delete;
+
     private String status;
     private ToggleGroup group;
     private ModuleDB moduleDB;
@@ -81,9 +84,12 @@ public class ModuleDetailController {
         database = new Database();
         if(modID==null){
             cb_project.setDisable(false);
+            btn_delete.setVisible(false);
         }else{
+            btn_delete.setVisible(true);
             cb_project.setDisable(true);
             manageToggle();
+            //Lock current Project Name
             try {
                 ResultSet row = database.getSomeID(projectID, Const.PROJECT_TABLE, "ProjectID");
                 if(row.next()) {
@@ -95,6 +101,7 @@ public class ModuleDetailController {
                 e.printStackTrace();
             }
         }
+        //region SET TOGGLE DATA & HANDLE EVENT VALUE CHANGE
         group = new ToggleGroup();
         tog_pend.setUserData(0);
         tog_work.setUserData(1);
@@ -112,6 +119,7 @@ public class ModuleDetailController {
                 }
             }
         });
+        //endregion
 
         btn_save.setOnAction(e -> {
             if(modID.equals(null)){
@@ -126,10 +134,24 @@ public class ModuleDetailController {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/module.fxml");
         });
-
+        btn_delete.setOnAction(e-> {
+            delete();
+        });
         populateDetail();
     }
+    private void update(){
+        Module module = new Module();
+        moduleDB = new ModuleDB();
+        if(txt_name.getText().equals("")){
+            lbl_noti.setText("Invalid Name");
+        }else{
+            module.setModuleID(modID);
+            module.setModName(txt_name.getText());
+            module.setStatus(status);
 
+            moduleDB.updateModule(module);
+        }
+    }
     private void save(){
         moduleDB = new ModuleDB();
         Module module = new Module();
@@ -152,6 +174,12 @@ public class ModuleDetailController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    private void delete(){
+        database = new Database();
+        sceneHandler = new SceneHandler();
+        database.detele(Const.MODULE_TABLE, Const.MODULE_ID, modID);
+        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
     }
     private void manageToggle(){
         try {
@@ -207,17 +235,5 @@ public class ModuleDetailController {
             e.printStackTrace();
         }
     }
-    private void update(){
-        Module module = new Module();
-        moduleDB = new ModuleDB();
-        if(txt_name.getText().equals("")){
-            lbl_noti.setText("Invalid Name");
-        }else{
-            module.setModuleID(modID);
-            module.setModName(txt_name.getText());
-            module.setStatus(status);
 
-            moduleDB.updateModule(module);
-        }
-    }
 }

@@ -9,9 +9,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Control;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -36,7 +35,7 @@ public class SceneHandler {
         stage.showAndWait();
     }
 
-    public void slideScene(Button btn, StackPane stack_parentContainer, String dir,String url) {
+    public void slideScene(Control btn, StackPane stack_parentContainer, String dir, String url) {
         Parent root = null;
         try {
             if(dir.equals("Y")){
@@ -80,6 +79,27 @@ public class SceneHandler {
 
                 Timeline timeline = new Timeline();
                 KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.play();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void slideSceneForTask(VBox btn, StackPane stack_parentContainer, String dir, String url) {
+        Parent root = null;
+        try {
+            if(dir.equals("Y")){
+                root = FXMLLoader.load(getClass().getResource(url));
+                Scene scene = btn.getScene();
+                root.translateYProperty().set(scene.getHeight());
+                stack_parentContainer.getChildren().add(root);
+
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
                 KeyFrame kf = new KeyFrame(Duration.seconds(0.6), kv);
                 timeline.getKeyFrames().add(kf);
                 timeline.play();

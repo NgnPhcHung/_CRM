@@ -32,6 +32,7 @@ public class TaskDB {
             preparedStatement.setString(7, end);
 
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         }catch (SQLException e){
 
         }catch (ClassNotFoundException e){}

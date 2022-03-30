@@ -12,6 +12,7 @@ public class Const {
     public static final String SURVEY_TYPE_TABLE = "survey_type";
     public static final String PROJECT_TABLE = "project";
     public static final String MODULE_TABLE = "module";
+    public static final String CUSTOMER_TABLE = "customer";
 
 
     //columns name
@@ -36,8 +37,9 @@ public class Const {
     public static final String TASK_STATUS = "Status";
     public static final String TASK_COLOR = "Color";
     public static final String TASK_EMP_ID = "EmpID";
-    public static final String TASK_START = "start_date";
-    public static final String TASK_END = "end_date";
+    public static final String TASK_START = "StartDate";
+    public static final String TASK_END = "EndDate";
+    public static final String TASK_DES = "Description";
     //authen
     public static final String AUTHEN_AUTHENID = "AuthenID";
     public static final String AUTHEN_LOGTIME = "LoginTime";
@@ -60,7 +62,6 @@ public class Const {
     public static final String PROJECT_BEGIN_TIME = "BeginTime";
     public static final String PROJECT_END_TIME = "EndTime";
     public static final String PROJECT_MANAGER = "Manager";
-    public static final String PROJECT_TOTAL_EMP = "TotalEmployee";
     public static final String PROJECT_TOTAL_AMOUNT = "TotalAmount";
 
     //module
@@ -68,5 +69,11 @@ public class Const {
     public static final String MODULE_NAME = "ModName";
     public static final String MODULE_STATUS = "Status";
     public static final String MODULE_PROJECT_ID = "ProjectID";
+    //customer
+    public static final String CUSTOMER_ID = "CusID";
+    public static final String CUSTOMER_NAME = "CusName";
+    public static final String CUSTOMER_ADDRESS = "Address";
+    public static final String CUSTOMER_PHONE = "Phone";
+    public static final String CUSTOMER_TIN = "TIN";
 
 }

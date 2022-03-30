@@ -2,13 +2,20 @@ package CRM_APP.Model;
 
 public class Project {
     private String id;
+    private String CusId;
     private String name;
     private String beginTime;
     private String endTime;
     private String manager;
-    private int totalEmployee;
-    private int totalAmount;
-    private String CusId;
+    private int amount;
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
     public String getId() {
         return id;
@@ -48,22 +55,6 @@ public class Project {
 
     public void setManager(String manager) {
         this.manager = manager;
-    }
-
-    public int getTotalEmployee() {
-        return totalEmployee;
-    }
-
-    public void setTotalEmployee(int totalEmployee) {
-        this.totalEmployee = totalEmployee;
-    }
-
-    public int getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(int totalAmount) {
-        this.totalAmount = totalAmount;
     }
 
     public String getCusId() {

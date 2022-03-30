@@ -11,180 +11,187 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="610.0" prefWidth="850.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Task.TaskListController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="10.0" valignment="CENTER" />
-      <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="CENTER" />
-    <RowConstraints minHeight="10.0" valignment="CENTER" />
-      <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" valignment="CENTER" />
-      <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Task.TaskListController">
    <children>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+      <GridPane prefHeight="610.0" prefWidth="850.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="10.0" valignment="CENTER" />
+            <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="CENTER" />
+          <RowConstraints minHeight="10.0" valignment="CENTER" />
+            <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" valignment="CENTER" />
+            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="btn_back" mnemonicParsing="false" styleClass="prevButton" text="▼" />
-                  <Button fx:id="btn_addNew" mnemonicParsing="false" text="Add new Task" />
-               </children>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-            </HBox>
-            <JFXTextField fx:id="txt_task" focusColor="#7c9af2" labelFloat="true" promptText="Task find" unFocusColor="#eeb67a">
-               <font>
-                  <Font name="Calibri" size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="30.0" />
-               </HBox.margin>
-            </JFXTextField>
-         </children>
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin></HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
-         <children>
-            <JFXButton fx:id="btn_pending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#filterEvent" text="Pending">
-               <styleClass>
-                  <String fx:value="cardContainer" />
-                  <String fx:value="card1" />
-               </styleClass>
-               <graphic>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                           <children>
-                              <Label fx:id="lbl_pending" text="11500" />
-                           </children>
-                        </HBox>
+                        <Button fx:id="btn_back" mnemonicParsing="false" styleClass="prevButton" text="▼" />
+                        <Button fx:id="btn_addNew" mnemonicParsing="false" text="Add new Task" />
                      </children>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
                   </HBox>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btn_assign" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="120.0" layoutY="10.0" onAction="#filterEvent" text="Pending">
-               <styleClass>
-                  <String fx:value="cardContainer" />
-                  <String fx:value="card2" />
-               </styleClass>
-               <graphic>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                           <children>
-                              <Label fx:id="lbl_assign" text="11500" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btn_working" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="335.0" layoutY="10.0" onAction="#filterEvent" text="Working">
-               <styleClass>
-                  <String fx:value="cardContainer" />
-                  <String fx:value="card3" />
-               </styleClass>
-               <graphic>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                           <children>
-                              <Label fx:id="lbl_working" text="200" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btn_revewing" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="440.0" layoutY="10.0" onAction="#filterEvent" text=" Reviewing">
-               <styleClass>
-                  <String fx:value="cardContainer" />
-                  <String fx:value="card4" />
-               </styleClass>
-               <graphic>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumContainer">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                           <children>
-                              <Label fx:id="lbl_reviewing" text="5" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btn_done" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="Done">
-               <styleClass>
-                  <String fx:value="cardContainer" />
-                  <String fx:value="card5" />
-               </styleClass>
-               <graphic>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumContainer">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                           <children>
-                              <Label fx:id="lbl_done" text="5" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </graphic>
-            </JFXButton>
-         </children>
-      </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="820.0">
-               <children>
-                  <Label layoutX="25.0" layoutY="28.0" maxWidth="1.7976931348623157E308" styleClass="title" text="Task" textFill="#686868" HBox.hgrow="ALWAYS">
+                  <JFXTextField fx:id="txt_task" focusColor="#7c9af2" labelFloat="true" promptText="Task find" unFocusColor="#eeb67a">
                      <font>
-                        <Font name="Calibri" size="18.0" />
+                        <Font name="Calibri" size="15.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="25.0" right="10.0" />
+                        <Insets right="30.0" />
                      </HBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefWidth="250.0">
+                  </JFXTextField>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+               <children>
+                  <JFXButton fx:id="btn_pending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#filterEvent" text="Pending">
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="card1" />
+                     </styleClass>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
+                                 <children>
+                                    <Label fx:id="lbl_pending" text="11500" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_assign" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="120.0" layoutY="10.0" onAction="#filterEvent" text="Pending">
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="card2" />
+                     </styleClass>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
+                                 <children>
+                                    <Label fx:id="lbl_assign" text="11500" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_working" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="335.0" layoutY="10.0" onAction="#filterEvent" text="Working">
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="card3" />
+                     </styleClass>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
+                                 <children>
+                                    <Label fx:id="lbl_working" text="200" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_reviewing" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="440.0" layoutY="10.0" onAction="#filterEvent" text=" Reviewing">
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="card4" />
+                     </styleClass>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
+                                 <children>
+                                    <Label fx:id="lbl_reviewing" text="5" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_done" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="Done">
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="card5" />
+                     </styleClass>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
+                                 <children>
+                                    <Label fx:id="lbl_done" text="5" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="820.0">
                      <children>
-                        <Label styleClass="title" text="Module Name" textFill="#686868">
+                        <Label layoutX="25.0" layoutY="28.0" maxWidth="1.7976931348623157E308" styleClass="title" text="Task" textFill="#686868" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="25.0" right="10.0" />
+                           </HBox.margin>
                         </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="540.0" layoutY="10.0" maxWidth="-Infinity" prefWidth="300.0">
-                     <children>
-                        <Label styleClass="title" text="Employee" textFill="#686868">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefWidth="250.0">
+                           <children>
+                              <Label styleClass="title" text="Module Name" textFill="#686868">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="540.0" layoutY="10.0" maxWidth="-Infinity" prefWidth="300.0">
+                           <children>
+                              <Label styleClass="title" text="Employee" textFill="#686868">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                      </children>
                   </HBox>
                </children>
-            </HBox>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </VBox>
+            <JFXListView fx:id="lv_tasks" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
+               <GridPane.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </GridPane.margin>
+            </JFXListView>
          </children>
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin>
-      </VBox>
-      <JFXListView fx:id="lv_tasks" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
-         <GridPane.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </GridPane.margin>
-      </JFXListView>
+      </GridPane>
    </children>
-</GridPane>
+</StackPane>

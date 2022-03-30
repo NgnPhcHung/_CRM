@@ -1,8 +1,12 @@
 package CRM_APP.Controller.Task;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Task.TaskDB;
+import CRM_APP.Handler.DateTimePickerHandler;
+import CRM_APP.Handler.OtherHandler;
+import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -36,6 +40,9 @@ public class FullCalendarView {
     private VBox view;
     private Text calendarTitle;
     private Text calendarYear;
+    static StackPane main_pane = new StackPane();
+    public static Button previousMonth;
+    Button nextMonth;
     private YearMonth currentYearMonth;
     private boolean isDateInMonth = false;
     private Task task;
@@ -46,6 +53,7 @@ public class FullCalendarView {
     public FullCalendarView(YearMonth yearMonth) {
         currentYearMonth = yearMonth;
         // Create the calendar grid pane
+
         GridPane calendar = new GridPane();
         calendar.setMaxSize(Region.USE_PREF_SIZE, -1);
         calendar.setGridLinesVisible(true);
@@ -61,7 +69,7 @@ public class FullCalendarView {
                 allCalendarDays.add(ap);
             }
         }
-        // Days of the week labels
+        //region DAY OF THE WEEK LABEL
         Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
                                         new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
                                         new Text("Saturday") };
@@ -79,13 +87,13 @@ public class FullCalendarView {
             txt.setFill(Paint.valueOf("#546e7a"));
             dayLabels.add(ap, col++, 0);
         }
-
-        // Create & style calendar title and buttons to change current month
+        //endregion
+        //region DEFINE HEADER AREA
         calendarTitle = new Text();
         calendarYear = new Text();
 
-        Button previousMonth = new Button("\uD83E\uDC94");
-        Button nextMonth = new Button("\uD83E\uDC96");
+        previousMonth = new Button("\uD83E\uDC94");
+        nextMonth = new Button("\uD83E\uDC96");
 
         VBox monthBar= new VBox(calendarTitle, calendarYear);
 
@@ -96,10 +104,8 @@ public class FullCalendarView {
             nextMonth();
         });
         HBox titleBar = new HBox(previousMonth, monthBar, nextMonth);
-
-        // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth);
-        // Create the calendar view
+        //endregion
+        // region DEFINE AND MAKE MAIN AVAILABLE
         titleBar.setPadding(new Insets(10, 0, 20, 0));
         titleBar.setAlignment(Pos.CENTER);
         monthBar.setAlignment(Pos.CENTER);
@@ -111,17 +117,17 @@ public class FullCalendarView {
         calendarYear.getStyleClass().add("year");
         calendarTitle.setFill(Paint.valueOf("#546e7a"));
         calendarYear.setFill(Paint.valueOf("#546e7a"));
-
+        main_pane.getChildren().add(view);
+        //endregion
+        // Populate calendar with the appropriate day numbers
+        populateCalendar(yearMonth);
+        //endregion
     }
 
     //Set the days of the calendar to correspond to the appropriate date
     //yearMonth year and month of month to render
 
-    public void generateDate(){
-
-    }
-
-    //function check current month
+    //function Check available month
     public boolean checkDateInMonth( LocalDate check, String base){
         String[] newCheck = check.toString().split("-");
         int c = Integer.parseInt(newCheck[1]);
@@ -133,57 +139,77 @@ public class FullCalendarView {
     }
 
     public void populateCalendar(YearMonth yearMonth) {
-        // Get the date we want to start with on the calendar
+        // Get the date i want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         task = new Task();
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY") ) {
             calendarDate = calendarDate.minusDays(1);
         }
-        // Populate the calendar with day numbers
         //create vbox inside every single grid
         for (DateNode ap : allCalendarDays) {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
+            //region DEFINE COMPONENTS FOR GRID
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             ap.setDate(calendarDate);
-            VBox containerView = new VBox();
-            HBox todoView = new HBox(); //this view for every todo
-            Label lbl_task = new Label();
-
+            VBox containerView = new VBox(); //this is container
+            HBox todoView = new HBox(); //this view todoLabel container
+            Label lbl_task = new Label(); //this todoTitle
+            //endregion
             todoView.getChildren().add(lbl_task);
             boolean checkDate = checkDateInMonth(calendarDate,yearMonth.getMonth().toString());
             //style & add date in month or not
             LocalDate  match = calendarDate;
-//            System.out.println(match);
+
+//          region ADD INFORMATION TO EVERY SINGLE GRID
             if(checkDate) {
                 Task task = new Task();
                 task.setTaskName(lbl_task.getText());
-                task.setColor("#8d6e63");
                 //add date to grid
                 TaskDB taskDB = new TaskDB();
                 containerView.getChildren().addAll(txt);
+                //GET TASKS LIST BELONG TO CURRENT EMP
                 try {
-                    ResultSet row = taskDB.getSomeID("2IhZxMp0c", Const.TASK_TABLE, "ModID");
+                    ResultSet row = taskDB.getSomeID(HomeController.userId, Const.TASK_TABLE, "EmpID");
                     while(row.next()){
-                        LocalDate dateStart = formatDate(row.getString("StartDate"));;
-                        LocalDate dateEnd = formatDate(row.getString("EndDate"));
+                        LocalDate dateStart = DateTimePickerHandler.formatDate(row.getString("StartDate"));;
+                        LocalDate dateEnd = DateTimePickerHandler.formatDate(row.getString("EndDate"));
                         String color = row.getString("Color");
-                        String taskColor = toRGBCode(Color.web(color));
-//                        if(match.equals(dateStart) ){
-                        if(dateList(dateStart, dateEnd).contains(match)){//
+                        String taskColor = OtherHandler.toRGBCode(Color.web(color));
+                        if(OtherHandler.dateList(dateStart, dateEnd).contains(match)){
+                            //region DEFINE FOR NEW EACH TASK INSIDE
                             lbl_task = new Label();
                             todoView = new HBox();
-                            lbl_task.setText(row.getString("TaskName"));
+                            String taskName = "";
+                            String  taskID = "";
+                            taskName = row.getString("TaskName");
+                            lbl_task.setText(taskName);
                             todoView.getChildren().add(lbl_task);
                             VBox vBoxView = new VBox(todoView);
                             containerView.getChildren().add(vBoxView);
+                            //endregion
+                            //region OPEN SEND INFO TO TASK DETAILS
+                            String finalTaskName = taskName;
+                            LocalDate finalCalendarDate = calendarDate;
+                            String finalTaskID = row.getString(Const.TASK_ID);
+                            todoView.setOnMouseClicked(e -> {
+                                SceneHandler sceneHandler = new SceneHandler();
+                                TaskDetailController.taskName= finalTaskName;
+                                TaskDetailController.dates = finalCalendarDate;
+                                TaskDetailController.taskId = finalTaskID;
+                                sceneHandler.newScene("/CRM_APP/View/Task/taskDetail.fxml");
+
+                            });
+                            //endregion
+                            //region STYLE
                             todoView.setStyle("-fx-background-color: " + taskColor);
                             todoView.setAlignment(Pos.CENTER);
                             ap.getStyleClass().add("datePane");
                             lbl_task.getStyleClass().add("taskText");
                             todoView.getStyleClass().add("subTask");
+                            //endregion
                         }
                     }
                 } catch (SQLException throwables) {
@@ -193,8 +219,6 @@ public class FullCalendarView {
                 }
 
                 ap.getChildren().addAll(containerView);
-
-
                 //reset style
                 ap.getStyleClass().removeIf(style -> style.equals("notMonth"));
             }else{
@@ -202,13 +226,12 @@ public class FullCalendarView {
             }
 
             calendarDate = calendarDate.plusDays(1);
-            //style
-
+            //style again
             todoView.setAlignment(Pos.CENTER);
             ap.getStyleClass().add("datePane");
             lbl_task.getStyleClass().add("taskText");
             todoView.getStyleClass().add("subTask");
-
+        //endregion
         }
 
         // Change the title of the calendar
@@ -216,26 +239,14 @@ public class FullCalendarView {
         calendarYear.setText(String.valueOf(yearMonth.getYear()));
     }
 
-    private List<LocalDate> dateList(LocalDate dateStart, LocalDate dateEnd){
-        List<LocalDate> dates = Stream.iterate(dateStart, date -> date.plusDays(1))
-                .limit(ChronoUnit.DAYS.between(dateStart, dateEnd)+1)
-                .collect(Collectors.toList());
-        if(dates.size()>0);
-        return dates;
-    }
 
-    private LocalDate formatDate(String i){
-        String start =i;
-        String[] d = start.split(" ");
-        LocalDate date = LocalDate.parse(d[0]);
-        return date;
-    }
+
+
 //     Move the month back by one. Repopulate the calendar with the correct dates.
     private void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth);
     }
-
 
 //     Move the month forward by one. Repopulate the calendar with the correct dates.
     private void nextMonth() {
@@ -253,14 +264,5 @@ public class FullCalendarView {
 
     public void setAllCalendarDays(ArrayList<DateNode> allCalendarDays) {
         this.allCalendarDays = allCalendarDays;
-    }
-
-    //to color hex code
-    public static String toRGBCode( Color color )
-    {
-        return String.format( "#%02X%02X%02X",
-                (int)( color.getRed() * 255 ),
-                (int)( color.getGreen() * 255 ),
-                (int)( color.getBlue() * 255 ) );
     }
 }

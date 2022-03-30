@@ -134,7 +134,7 @@ public class ProjectCellController extends JFXListCell<Project> {
 
 
             String projectID = item.getId();
-
+            String projectName = item.getName();
 
             btn_details.setOnAction(e ->{
                 sceneHandler =  new SceneHandler();
@@ -144,6 +144,7 @@ public class ProjectCellController extends JFXListCell<Project> {
 
             btn_edit.setOnAction(e -> {
                 sceneHandler =  new SceneHandler();
+                ProjectDetailsController.projectID = projectID;
                 sceneHandler.slideScene(btn_edit, cellStack, "X","/CRM_APP/View/Project/projectDetail.fxml");
             });
 

@@ -22,12 +22,11 @@ public class DateNode extends VBox {
         this.setOnMouseClicked(e -> {
             System.out.println(date);
             if(!this.getStyleClass().contains("notMonth")){
-
                 //send data
                 task = new Task();
                 task.setStartDate(date);
-                TaskDetailController.dates= date;
-                sceneHandler.newScene("/CRM_APP/View/Task/taskDetail.fxml");
+                sceneHandler = new SceneHandler();
+//                sceneHandler.newScene("/CRM_APP/View/Task/taskDetail.fxml");
 
             }
         });

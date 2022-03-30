@@ -45,8 +45,8 @@ public class TaskCellController extends JFXListCell<Task> {
 
     private FXMLLoader fxmlLoader;
     private Database database;
-    SceneHandler sceneHandler;
-
+    private SceneHandler sceneHandler;
+    public
     @FXML
     void editEvent(ActionEvent event) {
 
@@ -79,11 +79,42 @@ public class TaskCellController extends JFXListCell<Task> {
                 if(row.next()){
                     lbl_module.setText(row.getString(Const.MODULE_NAME));
                 }
+                lbl_name.setText(item.getTaskName());
+                lbl_emp.setText(item.getEmpID());
+                handleStatus(item.getStatus());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+            setText(null);
+            setGraphic(main_pane);
+        }
+    }
+    private void handleStatus(String stt){
+        lbl_status.getStylesheets().add("/CRM_APP/Style/DetailStyle.css");
+        switch (stt) {
+            case "0":
+                lbl_status.setText("Pending");
+                lbl_status.getStyleClass().add("pending");
+                break;
+            case "1":
+                lbl_status.setText("Assign");
+                lbl_status.getStyleClass().add("assigned");
+                break;
+            case "2":
+                lbl_status.setText("Working");
+                lbl_status.getStyleClass().add("working");
+                break;
+            case "3":
+                lbl_status.setText("Review");
+                lbl_status.getStyleClass().add("review");
+                break;
+            case "4":
+                lbl_status.setText("Done");
+                lbl_status.getStyleClass().add("done");
+                break;
+            default: break;
         }
     }
 }

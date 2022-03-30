@@ -51,7 +51,7 @@
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../Asset/Icon/icon_user.png" />
+                        <Image url="@../../Asset/Icon/icons8-user-80.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="25.0" />
@@ -71,13 +71,13 @@
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../Asset/Icon/icon_password.png" />
+                        <Image url="@../../Asset/Icon/icons8-lock-96.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
                   </ImageView>
-                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Password" text="123aa" unFocusColor="#76b3ff" />
+                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="123aa" unFocusColor="#76b3ff" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="50.0" />
