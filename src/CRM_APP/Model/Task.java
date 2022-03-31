@@ -11,6 +11,15 @@ public class Task {
     private String color;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String des;
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
 
     public String getTaskID() {
         return taskID;

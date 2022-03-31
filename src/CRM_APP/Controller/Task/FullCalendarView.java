@@ -8,6 +8,7 @@ import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -46,6 +47,7 @@ public class FullCalendarView {
     private YearMonth currentYearMonth;
     private boolean isDateInMonth = false;
     private Task task;
+    private Thread myThread;
     private String[] monthChar = {"","JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
                             "JULY", "AUGUST", "SEPTEMBER", "OCTOBER","NOVEMBER", "DECEMBER"};
 
@@ -121,6 +123,8 @@ public class FullCalendarView {
         //endregion
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
+        myThread= new Thread(this::handleThread);
+        myThread.start();
         //endregion
     }
 
@@ -196,11 +200,9 @@ public class FullCalendarView {
                             String finalTaskID = row.getString(Const.TASK_ID);
                             todoView.setOnMouseClicked(e -> {
                                 SceneHandler sceneHandler = new SceneHandler();
-                                TaskDetailController.taskName= finalTaskName;
                                 TaskDetailController.dates = finalCalendarDate;
                                 TaskDetailController.taskId = finalTaskID;
                                 sceneHandler.newScene("/CRM_APP/View/Task/taskDetail.fxml");
-
                             });
                             //endregion
                             //region STYLE
@@ -240,6 +242,20 @@ public class FullCalendarView {
     }
 
 
+    //refresh listview
+    private void handleThread(){
+        while(true){
+            Platform.runLater(() ->{
+                populateCalendar(currentYearMonth);
+            });
+            try{
+
+                Thread.sleep(1000);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 //     Move the month back by one. Repopulate the calendar with the correct dates.

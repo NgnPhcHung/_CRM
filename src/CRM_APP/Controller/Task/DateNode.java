@@ -20,12 +20,11 @@ public class DateNode extends VBox {
         super(children);
         // Add action handler for mouse clicked
         this.setOnMouseClicked(e -> {
-            System.out.println(date);
             if(!this.getStyleClass().contains("notMonth")){
                 //send data
-                task = new Task();
-                task.setStartDate(date);
-                sceneHandler = new SceneHandler();
+//                task = new Task();
+//                task.setStartDate(date);
+//                sceneHandler = new SceneHandler();
 //                sceneHandler.newScene("/CRM_APP/View/Task/taskDetail.fxml");
 
             }
