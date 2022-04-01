@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Task.TaskListController">
    <children>
       <GridPane prefHeight="610.0" prefWidth="850.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css">
@@ -79,7 +78,7 @@
                         </HBox>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btn_assign" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="120.0" layoutY="10.0" onAction="#filterEvent" text="Pending">
+                  <JFXButton fx:id="btn_assign" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="120.0" layoutY="10.0" onAction="#filterEvent" text="Assigned">
                      <styleClass>
                         <String fx:value="cardContainer" />
                         <String fx:value="card2" />

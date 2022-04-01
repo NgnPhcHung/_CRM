@@ -63,6 +63,7 @@ public class Const {
     public static final String PROJECT_END_TIME = "EndTime";
     public static final String PROJECT_MANAGER = "Manager";
     public static final String PROJECT_TOTAL_AMOUNT = "TotalAmount";
+    public static final String PROJECT_CUSTOMER = "CusID";
 
     //module
     public static final String MODULE_ID = "ModID";

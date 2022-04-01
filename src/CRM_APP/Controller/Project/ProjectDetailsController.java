@@ -74,6 +74,7 @@ public class ProjectDetailsController {
     private Database database;
     public static String projectID = null;
     private ObservableList<String> list;
+
     @FXML
     void initialize() {
         dp_start.setValue(LocalDate.now());
@@ -146,6 +147,16 @@ public class ProjectDetailsController {
                 LocalDate end = DateTimePickerHandler.formatDate(row.getString("EndTime"));
                 dp_start.setValue(start);
                 dp_end.setValue(end);
+
+                ResultSet rowManager = database.getSomeID(row.getString(Const.PROJECT_MANAGER), Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
+                ResultSet rowCustomer = database.getSomeID(row.getString(Const.CUSTOMER_ID), Const.CUSTOMER_TABLE, Const.CUSTOMER_ID);
+
+                if(rowManager.next()){
+                    cb_manager.setValue(rowManager.getString(Const.EMPLOYEE_NAME));
+                }
+                if(rowCustomer.next()){
+                    cb_customer.setValue(rowCustomer.getString(Const.CUSTOMER_NAME));
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -158,6 +169,10 @@ public class ProjectDetailsController {
         Project project = new Project();
         projectDB = new ProjectDB();
         database = new Database();
+        String empName = cb_manager.getValue();
+        String CusName = cb_customer.getValue();
+        String emID = "";
+        String cusID = "";
         if(txt_name.getText().equals("") && txt_amount.getText().equals("")){
             lbl_noti.setText("Invalid Information");
         }else{
@@ -172,12 +187,35 @@ public class ProjectDetailsController {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
+
+            try {
+                ResultSet rowEmp = database.getSomeID(empName, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+                ResultSet rowCus = database.getSomeID(CusName, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+
+                if(rowEmp.next()){
+                    emID = rowEmp.getString(Const.EMPLOYEE_ID);
+                    project.setManager(emID);
+                }
+                if(rowCus.next()){
+                    cusID = rowCus.getString(Const.CUSTOMER_ID);
+                    project.setCusId(cusID);
+                }
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
             project.setId(projectID);
             project.setName(txt_name.getText());
             project.setBeginTime(dp_start.getValue()+"");
             project.setEndTime(dp_end.getValue()+"");
             project.setAmount(Integer.parseInt(txt_amount.getText()));
             projectDB.updateProject(project);
+            sceneHandler =  new SceneHandler();
+            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-X", "/CRM_APP/View/Project/project.fxml");
         }
     }
     private void save (){

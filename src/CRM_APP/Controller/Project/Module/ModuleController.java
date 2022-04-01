@@ -93,13 +93,8 @@ public class ModuleController {
     private ObservableList<Module> modules;
 
     @FXML
-    void filterEvent(ActionEvent event) {
-
-    }
-
-    @FXML
     void initialize() {
-        populateList();
+        populateList("nor");
         try {
             fillCard();
         } catch (SQLException throwables) {
@@ -135,29 +130,75 @@ public class ModuleController {
         lbl_done.setText(done);
     }
 
-    private void populateList() {
+    private void populateList(String status) {
         sceneHandler= new SceneHandler();
         database = new Database();
+        ModuleDB moduleDB;
         modules = FXCollections.observableArrayList();
         ResultSet row = null;
-        try {
-            row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
-            while(row.next()){
-                Module module = new Module();
-                module.setProjectID(projectID);
-                module.setModuleID(row.getString("ModID"));
-                module.setModName(row.getString("ModName"));
-                module.setStatus(row.getString("Status"));
 
-                modules.add(module);
+        if(status.equals("nor")){
+            try {
+                row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
+                while(row.next()){
+                    Module module = new Module();
+                    module.setProjectID(projectID);
+                    module.setModuleID(row.getString("ModID"));
+                    module.setModName(row.getString("ModName"));
+                    module.setStatus(row.getString("Status"));
+
+                    modules.add(module);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            lv_modules.setItems(modules);
-            lv_modules.setCellFactory(ModuleCellController -> new ModuleCellController());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        }else{
+            moduleDB = new ModuleDB();
+            try {
+                Module module = new Module();
+                module.setStatus(status);
+                module.setProjectID(projectID);
+                row = moduleDB.getStatus(module);
+                while(row.next()){
+                    module = new Module();
+                    module.setProjectID(projectID);
+                    module.setModuleID(row.getString("ModID"));
+                    module.setModName(row.getString("ModName"));
+                    module.setStatus(row.getString("Status"));
 
+                    modules.add(module);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        lv_modules.setItems(modules);
+        lv_modules.setCellFactory(ModuleCellController -> new ModuleCellController());
     }
+
+    @FXML
+    void filterEvent(ActionEvent event) {
+        String statusButton;
+        Button button = (Button) event.getSource();
+        String btnName = button.getText().trim();
+
+        switch (btnName){
+            case "Pending":
+                populateList("0");
+                break;
+            case "Working":
+                populateList("1");
+                break;
+            case "Reviewing":
+                populateList("2");
+                break;
+            case "Done":
+                populateList("3");
+                break;
+            default:break;
+        }
+    }
+
 }

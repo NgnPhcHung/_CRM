@@ -46,7 +46,7 @@ public class TaskDB {
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
-
+    //employee Query
     public void empUpdateTask(Task task){
         String query = "UPDATE " + Const.TASK_TABLE + " SET "
                         + Const.TASK_COLOR + " =? ,"
@@ -66,4 +66,73 @@ public class TaskDB {
             throwables.printStackTrace();
         }
     }
+
+    //region ADMIN QUERY
+    public void save(Task task){
+        db= new Database();
+        String query  = "INSERT INTO "+ Const.TASK_TABLE +" ( "
+                + Const.TASK_ID + ", "
+                + Const.TASK_MOD_ID + ", "
+                + Const.EMPLOYEE_ID + ", "
+                + Const.TASK_NAME + ", "
+                + Const.TASK_STATUS + ", "
+                + Const.TASK_COLOR + ", "
+                + Const.TASK_START + ", "
+                + Const.TASK_END + ", "
+                + Const.TASK_DES + " ) "
+                +" VALUES(?,?,?,?,?,?,?,?,?) " ;
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = db.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, task.getTaskID());
+            preparedStatement.setString(2, task.getModID());
+            preparedStatement.setString(3, task.getEmpID());
+            preparedStatement.setString(4, task.getTaskName());
+            preparedStatement.setString(5, task.getStatus());
+            preparedStatement.setString(6, task.getColor());
+            preparedStatement.setString(7, task.getStartDate()+"");
+            preparedStatement.setString(8, task.getEndDate()+"");
+            preparedStatement.setString(9, task.getDes());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Task task){
+        String query = "UPDATE " + Const.TASK_TABLE + " SET "
+                        + Const.TASK_NAME + " =?, "
+                        + Const.TASK_MOD_ID + " =?, "
+                        + Const.TASK_STATUS + " =?, "
+                        + Const.TASK_EMP_ID + " =?, "
+                        + Const.TASK_COLOR + " =?, "
+                        + Const.TASK_START + " =?, "
+                        + Const.TASK_END + " =?, "
+                        + Const.TASK_DES + " =?"
+                        +" WHERE " + Const.TASK_ID + "=?";
+
+        try {
+            PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+            preparedStatement.setString(1, task.getTaskName());
+            preparedStatement.setString(2, task.getModID());
+            preparedStatement.setString(3, task.getStatus());
+            preparedStatement.setString(4, task.getEmpID());
+            preparedStatement.setString(5, task.getColor());
+            preparedStatement.setString(6, task.getStartDate()+"");
+            preparedStatement.setString(7, task.getEndDate()+"");
+            preparedStatement.setString(8, task.getDes());
+            preparedStatement.setString(9, task.getTaskID());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    //endregion
 }

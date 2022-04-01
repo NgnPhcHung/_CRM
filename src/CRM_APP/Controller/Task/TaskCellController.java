@@ -1,5 +1,6 @@
 package CRM_APP.Controller.Task;
 
+import CRM_APP.Controller.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;
@@ -76,17 +77,29 @@ public class TaskCellController extends JFXListCell<Task> {
             database = new Database();
             try {
                 ResultSet row = database.getSomeID(item.getModID(), Const.MODULE_TABLE, Const.MODULE_ID);
+                ResultSet row2 = database.getSomeID(item.getEmpID(), Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
                 if(row.next()){
                     lbl_module.setText(row.getString(Const.MODULE_NAME));
                 }
+                if(row2.next()){
+                    lbl_emp.setText(row2.getString(Const.EMPLOYEE_NAME));
+                }
                 lbl_name.setText(item.getTaskName());
-                lbl_emp.setText(item.getEmpID());
+
                 handleStatus(item.getStatus());
+
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
+            btn_edit.setOnAction(e -> {
+                sceneHandler = new SceneHandler();
+                TaskDetailController.isAdmin = true;
+                TaskDetailController.taskId = item.getTaskID();
+                sceneHandler.slideScene(btn_edit, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
+            });
             setText(null);
             setGraphic(main_pane);
         }

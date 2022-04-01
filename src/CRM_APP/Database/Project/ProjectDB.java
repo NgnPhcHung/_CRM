@@ -55,7 +55,9 @@ public class ProjectDB {
                         + Const.PROJECT_NAME +" =?, "
                         + Const.PROJECT_BEGIN_TIME + " =?, "
                         + Const.PROJECT_END_TIME + " =?, "
-                        + Const.PROJECT_TOTAL_AMOUNT + " =? "
+                        + Const.PROJECT_TOTAL_AMOUNT + " =?, "
+                        + Const.PROJECT_MANAGER + " =?, "
+                        + Const.PROJECT_CUSTOMER + " =? "
                         + " WHERE " + Const.PROJECT_ID + " =?";
         try {
             PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
@@ -63,8 +65,9 @@ public class ProjectDB {
             preparedStatement.setString(2, project.getBeginTime());
             preparedStatement.setString(3, project.getEndTime());
             preparedStatement.setString(4, project.getAmount()+"");
-            preparedStatement.setString(5, project.getId());
-            System.out.println(query);
+            preparedStatement.setString(5, project.getManager());
+            preparedStatement.setString(6, project.getCusId());
+            preparedStatement.setString(7, project.getId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {

@@ -67,6 +67,16 @@ public class ModuleDB {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+    }
+    public ResultSet getStatus(Module module) throws SQLException {
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM " + Const.MODULE_TABLE + " WHERE "
+                        + Const.MODULE_STATUS + " = ? AND "
+                        + Const.MODULE_PROJECT_ID + " = ?";
+        PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, module.getStatus());
+        preparedStatement.setString(2, module.getProjectID());
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
     }
 }

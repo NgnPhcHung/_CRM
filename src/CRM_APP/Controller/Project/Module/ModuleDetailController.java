@@ -181,6 +181,7 @@ public class ModuleDetailController {
         database.detele(Const.MODULE_TABLE, Const.MODULE_ID, modID);
         sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
     }
+
     private void manageToggle(){
         try {
             ResultSet row = database.getSomeID(modID, Const.MODULE_TABLE, "ModID");
@@ -202,6 +203,7 @@ public class ModuleDetailController {
             e.printStackTrace();
         }
     }
+
     private void populateDetail(){
         Database database = new Database();
         try {

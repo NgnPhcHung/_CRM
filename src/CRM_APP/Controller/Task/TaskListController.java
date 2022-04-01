@@ -79,17 +79,33 @@ public class TaskListController {
 
     @FXML
     void filterEvent(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        String btnName = button.getText().trim();
 
+        switch (btnName){
+            case "Pending":
+                break;
+            case "Assigned":
+                break;
+            case "Working":
+                break;
+            case "Reviewing":
+                break;
+            case "Done":
+                break;
+        }
     }
 
     @FXML
     void initialize() {
-        sceneHandler = new SceneHandler();
         btn_back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
         });
         populateTask();
         btn_addNew.setOnAction(e->{
+            sceneHandler = new SceneHandler();
+            TaskDetailController.isAdmin = true;
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
         });
     }
@@ -103,7 +119,6 @@ public class TaskListController {
             row = database.getSomeID(modID, Const.TASK_TABLE, "ModID");
             while(row.next()){
                 Task task = new Task();
-
 
                 task.setTaskID(row.getString(Const.TASK_ID));
                 task.setTaskName(row.getString(Const.TASK_NAME));
