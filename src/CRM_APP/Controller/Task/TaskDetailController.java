@@ -88,7 +88,7 @@ public class TaskDetailController {
     private TaskDB taskDB = new TaskDB();
     private Database database = new Database();
     public static LocalDate dates;
-    public static String taskId;
+    public static String taskId="";
     public static boolean isAdmin = false;
     private String status;
     private SceneHandler sceneHandler;
@@ -97,8 +97,10 @@ public class TaskDetailController {
     @FXML
     void initialize() {
         //if not admin logged in
+
         if(!isAdmin){
             cb_employ.setDisable(true);
+            cb_module.setDisable(true);
             tog_pend.setDisable(true);
             txt_name.setDisable(true);
             btn_back.setVisible(false);
@@ -106,53 +108,56 @@ public class TaskDetailController {
             datePick_taskDate.setDisable(true);
             datePick_taskEnd.setDisable(true);
             populateDetail();
+            populateComboBox();
             manageToggle();
-
+            manageTogglePopulate();
             btn_save.setOnAction(e ->{
                 empSave();
                 btn_save.getScene().getWindow().hide();
             });
-        }
-
-        //region ADMIN
-
-        if(taskId.equals(null)){
-            datePick_taskDate.setValue(LocalDate.now());
+        }else{
+            //region ADMIN
+            manageTogglePopulate();
+            if(taskId.equals("")){
+                newTask();
+                datePick_taskDate.setValue(LocalDate.now());
+            }
+            populateComboBox();
+            populateDetail();
             LocalDate dateStart = datePick_taskDate.getValue();
             DateTimePickerHandler.disableDate(datePick_taskEnd, dateStart);
+            datePick_taskEnd.setValue(dateStart);
             catchStartDateEnd();
-        }else{
-            manageTogglePopulate();
-            populateDetail();
+
+            btn_back.setOnAction(e -> {
+                sceneHandler = new SceneHandler();
+                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
+            });
+            btn_delete.setOnAction(e -> {
+                delete();
+            });
+            btn_save.setOnAction(e -> {
+                if(taskId == ""){
+                    save();
+                }else {
+                    update();
+                }
+                sceneHandler = new SceneHandler();
+                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
+            });
+            //endregion
         }
-        btn_back.setOnAction(e -> {
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
-        });
-        btn_delete.setOnAction(e -> {
-            delete();
-        });
-        btn_save.setOnAction(e -> {
-            if(taskId==null){
-                save();
-            }else {
-                update();
-            }
-        });
 
 
-        //endregion
 
         //region SET TOGGLE DATA & HANDLE EVENT VALUE CHANGE
         ToggleGroup group = new ToggleGroup();
         tog_pend.setUserData(0);
-        tog_assign.setUserData(1);
-        tog_work.setUserData(2);
-        tog_review.setUserData(3);
-        tog_done.setUserData(4);
+        tog_work.setUserData(1);
+        tog_review.setUserData(2);
+        tog_done.setUserData(3);
 
         tog_pend.setToggleGroup(group);
-        tog_assign.setToggleGroup(group);
         tog_work.setToggleGroup(group);
         tog_done.setToggleGroup(group);
         tog_review.setToggleGroup(group);
@@ -166,7 +171,22 @@ public class TaskDetailController {
         });
         //endregion
     }
+    
+    private void newTask(){
+        database = new Database();
+        try {
+            ResultSet resultSet= database.getSomeID(TaskListController.modID, Const.MODULE_TABLE, Const.MODULE_ID);
+            while(resultSet.next()){
+                cb_module.setValue(resultSet.getString(Const.MODULE_NAME));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
+    }
+    
     private void manageToggle(){
         try {
             ResultSet row = database.getSomeID(taskId, Const.TASK_TABLE, Const.TASK_ID);
@@ -178,15 +198,12 @@ public class TaskDetailController {
                         tog_pend.setSelected(true);
                         break;
                     case "1":
-                        tog_assign.setSelected(true);
-                        break;
-                    case "2":
                         tog_work.setSelected(true);
                         break;
-                    case "3":
+                    case "2":
                         tog_review.setSelected(true);
                         break;
-                    case "4":
+                    case "3":
                         tog_done.setSelected(true);
                         break;
                     default:break;
@@ -207,8 +224,7 @@ public class TaskDetailController {
             }
         });
     }
-
-    private  void populateComboBox(){
+    private void populateComboBox(){
         try {
             database = new Database();
             ResultSet row = null;
@@ -247,9 +263,7 @@ public class TaskDetailController {
            cb_module.getSelectionModel().select(0);
        }
     }
-
     private void populateDetail(){
-        populateComboBox();
         try {
             String emID;
             String modID;
@@ -265,11 +279,10 @@ public class TaskDetailController {
                 String taskColor = OtherHandler.toRGBCode(Color.web(color));
                 colorPicker_taskColor.setValue(Color.valueOf(taskColor));
                 ResultSet row2 = database.getSomeID(emID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
+                ResultSet row3 = database.getSomeID(modID, Const.MODULE_TABLE, Const.MODULE_ID);
                 while(row2.next()){
-                    System.out.println(row2.getString(Const.EMPLOYEE_NAME));
                     cb_employ.setValue(row2.getString(Const.EMPLOYEE_NAME));
                 }
-                ResultSet row3 = database.getSomeID(modID, Const.MODULE_TABLE, Const.MODULE_ID);
                 while(row3.next()){
                     System.out.println(row3.getString(Const.MODULE_NAME));
                     cb_module.setValue(row3.getString(Const.MODULE_NAME));
@@ -348,7 +361,7 @@ public class TaskDetailController {
         database = new Database();
         database.detele(Const.TASK_TABLE, Const.TASK_ID, taskId);
         sceneHandler = new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
+        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
     }
     private void update(){
         database = new Database();
@@ -392,8 +405,6 @@ public class TaskDetailController {
         task.setDes(des);
         task.setColor(color);
         taskDB.update(task);
-        sceneHandler = new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "Y", "/CRM_APP/View/Task/taskList.fxml");
     }
     private void manageTogglePopulate(){
         try {

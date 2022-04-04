@@ -31,7 +31,7 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
                            <children>
                               <Label fx:id="lbl_customer" text="Customer's name" textFill="#686868" HBox.hgrow="ALWAYS">
                                  <font>
@@ -48,7 +48,7 @@
                               <Insets left="5.0" />
                            </padding>
                         </Separator>
-                        <HBox alignment="CENTER" layoutX="369.0" layoutY="15.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="369.0" layoutY="15.0" prefWidth="200.0">
                            <children>
                               <Label fx:id="lbl_manager" text="manager's name" textFill="#686868" HBox.hgrow="ALWAYS">
                                  <font>
@@ -56,6 +56,9 @@
                                  </font>
                               </Label>
                            </children>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
                         </HBox>
                         <Separator orientation="VERTICAL" prefHeight="200.0">
                            <opaqueInsets>

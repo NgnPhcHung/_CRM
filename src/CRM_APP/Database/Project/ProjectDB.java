@@ -76,4 +76,15 @@ public class ProjectDB {
             e.printStackTrace();
         }
     }
+
+    public ResultSet projectFilter(String name) throws SQLException, ClassNotFoundException {
+        database = new Database();
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM " + Const.PROJECT_TABLE + " WHERE "
+                        + Const.PROJECT_NAME + " LIKE '%" + name + "%'";
+        PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }

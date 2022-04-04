@@ -6,14 +6,18 @@ import CRM_APP.Database.Project.ProjectDB;
 import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Handler.TextfieldHandler;
 import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -28,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 
 import static CRM_APP.Controller.Project.ProjectCellController.cellStack;
 
@@ -77,17 +82,23 @@ public class ProjectDetailsController {
 
     @FXML
     void initialize() {
+        //region FORMAT ON START
         dp_start.setValue(LocalDate.now());
         LocalDate dateStart = dp_start.getValue();
+        dp_end.setValue(dateStart);
+
         populateComboBoxData();
         DateTimePickerHandler.disableDate(dp_end, dateStart);
         catchStartDateEnd();
+        TextfieldHandler num = new TextfieldHandler();
+        num.numberOnly(txt_amount);
         if(projectID.equals("null")){
             btn_delete.setVisible(false);
         }else{
             populateDetails();
             btn_delete.setVisible(true);
         }
+        //endregion
         btn_save.setOnAction(e -> {
             if(projectID.equals("null")){
                 save ();
@@ -225,6 +236,10 @@ public class ProjectDetailsController {
         Project project = new Project();
         String cusID = "";
         String emID = "";
+        if(txt_name.getText().equals("") && txt_amount.getText().equals("")){
+            lbl_noti.setText("Invalid Information");
+        }
+        //region CREATE CHECK ID EXIST
         String newProjectID ="";
         try {
             newProjectID = OtherHandler.generateId();
@@ -238,6 +253,8 @@ public class ProjectDetailsController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        //endregion
         //region CONVERT CUSTOMER NAME  TO ID
         try {
             String customerNameToId = cb_customer.getValue();
@@ -264,12 +281,14 @@ public class ProjectDetailsController {
             e.printStackTrace();
         }
         //endregion
+        //region PACKAGE AND SEND TO DB HANDLE
         project.setId(newProjectID);
         project.setName(txt_name.getText());
         project.setCusId(cusID);
         project.setManager(emID);
         project.setBeginTime(dp_start.getValue().toString());
         project.setEndTime(dp_end.getValue().toString());
+        //endregion
         projectDB.insertProject(project);
         sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
     }
@@ -279,6 +298,7 @@ public class ProjectDetailsController {
         database.detele(Const.PROJECT_TABLE, Const.PROJECT_ID, projectID);
         sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Project/project.fxml");
     }
+
     //endregion
 
     //region WORKING WITH UI

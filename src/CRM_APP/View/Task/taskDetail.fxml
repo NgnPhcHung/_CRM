@@ -42,40 +42,39 @@
       </HBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
-            <JFXTextField fx:id="txt_name" focusColor="#678dff" labelFloat="true" promptText="Task" stylesheets="@../../Style/TaskDetail.css" unFocusColor="#ff9e9e" />
+            <JFXTextField fx:id="txt_name" focusColor="#678dff" promptText="Task" stylesheets="@../../Style/TaskDetail.css" unFocusColor="#ff9e9e" />
             <JFXDatePicker fx:id="datePick_taskDate" maxWidth="1.7976931348623157E308" promptText="Date start" styleClass="text-field" />
             <JFXDatePicker fx:id="datePick_taskEnd" maxWidth="1.7976931348623157E308" promptText="Date end" styleClass="text-field" />
             <JFXComboBox fx:id="cb_employ" focusColor="#7e9df8" prefHeight="31.0" prefWidth="349.0" promptText="Employee" styleClass="jfx-text-field" unFocusColor="#f89494" />
             <JFXComboBox fx:id="cb_module" focusColor="#7e9df8" layoutX="71.0" layoutY="224.0" prefHeight="31.0" prefWidth="349.0" promptText="Module" styleClass="jfx-text-field" unFocusColor="#f89494" />
-            <ToggleButtonGroup selectionType="SINGLE">
-               <toggles>
-                  <ToggleButton fx:id="tog_pend" selected="true">
-                     <graphic>
-                        <Label styleClass="someText" text="Pending" />
-                     </graphic>
-                  </ToggleButton>
-                  <ToggleButton fx:id="tog_assign" layoutX="10.0" layoutY="10.0">
-                     <graphic>
-                        <Label styleClass="someText" text="Assigned" />
-                     </graphic>
-                  </ToggleButton>
-                  <ToggleButton fx:id="tog_work" layoutX="10.0" layoutY="10.0">
-                     <graphic>
-                        <Label styleClass="someText" text="Woriking" />
-                     </graphic>
-                  </ToggleButton>
-                  <ToggleButton fx:id="tog_review" layoutX="50.0" layoutY="10.0">
-                     <graphic>
-                        <Label styleClass="someText" text="Reviewing" />
-                     </graphic>
-                  </ToggleButton>
-                  <ToggleButton fx:id="tog_done" layoutX="90.0" layoutY="10.0">
-                     <graphic>
-                        <Label styleClass="someText" text="Done" />
-                     </graphic>
-                  </ToggleButton>
-               </toggles>
-            </ToggleButtonGroup>
+            <HBox alignment="CENTER">
+               <children>
+                  <ToggleButtonGroup selectionType="SINGLE">
+                     <toggles>
+                        <ToggleButton fx:id="tog_pend" selected="true">
+                           <graphic>
+                              <Label styleClass="someText" text="Pending" />
+                           </graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="tog_work" layoutX="10.0" layoutY="10.0">
+                           <graphic>
+                              <Label styleClass="someText" text="Woriking" />
+                           </graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="tog_review" layoutX="50.0" layoutY="10.0">
+                           <graphic>
+                              <Label styleClass="someText" text="Reviewing" />
+                           </graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="tog_done" layoutX="90.0" layoutY="10.0">
+                           <graphic>
+                              <Label styleClass="someText" text="Done" />
+                           </graphic>
+                        </ToggleButton>
+                     </toggles>
+                  </ToggleButtonGroup>
+               </children>
+            </HBox>
             <JFXTextArea fx:id="txt_des" prefHeight="60.0" prefWidth="400.0" promptText="Description" />
             <JFXColorPicker fx:id="colorPicker_taskColor" />
             <JFXButton fx:id="btn_save" prefHeight="45.0" prefWidth="100.0" text="Save" />

@@ -67,7 +67,7 @@ public class ModuleDetailController {
     private String status;
     private ToggleGroup group;
     private ModuleDB moduleDB;
-    public static String modID;
+    public static String modID="";
     SceneHandler sceneHandler;
     Database database ;
     public static String projectID;
@@ -80,26 +80,28 @@ public class ModuleDetailController {
 
     @FXML
     void initialize() {
-        comboBoxHandler();
         database = new Database();
-        if(modID==null){
+        if(modID == null){
             cb_project.setDisable(false);
             btn_delete.setVisible(false);
         }else{
             btn_delete.setVisible(true);
             cb_project.setDisable(true);
+        }
+        try {
             manageToggle();
+            comboBoxHandler();
             //Lock current Project Name
-            try {
-                ResultSet row = database.getSomeID(projectID, Const.PROJECT_TABLE, "ProjectID");
-                if(row.next()) {
-                    cb_project.setValue(row.getString("ProjectName"));
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            ResultSet row = database.getSomeID(projectID, Const.PROJECT_TABLE, Const.PROJECT_ID);
+            System.out.println("projectID"+ projectID);
+            while(row.next()) {
+                System.out.println("row.getString(\"ProjectName\")" + row.getString("ProjectName"));
+                cb_project.setValue(row.getString("ProjectName"));
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         //region SET TOGGLE DATA & HANDLE EVENT VALUE CHANGE
         group = new ToggleGroup();
@@ -122,7 +124,7 @@ public class ModuleDetailController {
         //endregion
 
         btn_save.setOnAction(e -> {
-            if(modID.equals(null)){
+            if(modID == null){
                if(txt_name.getText().equals("")) {
                    lbl_noti.setText("Invalid Name");
                 }else {
@@ -174,6 +176,8 @@ public class ModuleDetailController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        sceneHandler = new SceneHandler();
+        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/module.fxml");
     }
     private void delete(){
         database = new Database();

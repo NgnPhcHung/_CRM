@@ -32,7 +32,7 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
                            <children>
                               <Label fx:id="lbl_module" text="Module Name" textFill="#686868" HBox.hgrow="ALWAYS">
                                  <font>
@@ -49,12 +49,15 @@
                               <Insets left="5.0" />
                            </padding>
                         </Separator>
-                        <HBox alignment="CENTER" layoutX="189.0" layoutY="15.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="189.0" layoutY="15.0" prefWidth="200.0">
                            <children>
                               <Label fx:id="lbl_emp" text="Employee " textFill="#686868" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
                               </Label>
                            </children>
                         </HBox>

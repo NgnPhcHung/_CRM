@@ -3,6 +3,7 @@ package CRM_APP.Controller.Task;
 import CRM_APP.Controller.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Database.Task.TaskDB;
 import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
@@ -47,12 +48,6 @@ public class TaskListController {
     private Label lbl_pending;
 
     @FXML
-    private JFXButton btn_assign;
-
-    @FXML
-    private Label lbl_assign;
-
-    @FXML
     private JFXButton btn_working;
 
     @FXML
@@ -76,6 +71,7 @@ public class TaskListController {
     private SceneHandler sceneHandler;
     public static String modID;
     private Database database;
+    private TaskDB taskDB ;
 
     @FXML
     void filterEvent(ActionEvent event) {
@@ -84,25 +80,35 @@ public class TaskListController {
 
         switch (btnName){
             case "Pending":
-                break;
-            case "Assigned":
+                populateTask("0");
                 break;
             case "Working":
+                populateTask("1");
                 break;
             case "Reviewing":
+                populateTask("2");
                 break;
             case "Done":
+                populateTask("3");
                 break;
+            default:break;
         }
     }
 
     @FXML
     void initialize() {
+        try {
+            fillCard();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         btn_back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
         });
-        populateTask();
+        populateTask("nor");
         btn_addNew.setOnAction(e->{
             sceneHandler = new SceneHandler();
             TaskDetailController.isAdmin = true;
@@ -110,36 +116,93 @@ public class TaskListController {
         });
     }
 
-    private void populateTask(){
+    private void populateTask(String status){
         sceneHandler= new SceneHandler();
         database = new Database();
         tasks = FXCollections.observableArrayList();
         ResultSet row = null;
-        try {
-            row = database.getSomeID(modID, Const.TASK_TABLE, "ModID");
-            while(row.next()){
-                Task task = new Task();
+        if(status.equals("nor")){
+            try {
+                row = database.getSomeID(modID, Const.TASK_TABLE, "ModID");
+                while(row.next()){
+                    Task task = new Task();
 
-                task.setTaskID(row.getString(Const.TASK_ID));
-                task.setTaskName(row.getString(Const.TASK_NAME));
-                task.setEmpID(row.getString(Const.TASK_EMP_ID));
-                task.setModID(row.getString(Const.TASK_MOD_ID));
-                LocalDate start = DateTimePickerHandler.formatDate(row.getString("StartDate"));
-                task.setStartDate(start);
-                LocalDate end = DateTimePickerHandler.formatDate(row.getString("EndDate"));
-                task.setEndDate(end);
-                task.setStatus(row.getString(Const.TASK_STATUS));
-                task.setColor(row.getString(Const.TASK_COLOR));
+                    task.setTaskID(row.getString(Const.TASK_ID));
+                    task.setTaskName(row.getString(Const.TASK_NAME));
+                    task.setEmpID(row.getString(Const.TASK_EMP_ID));
+                    task.setModID(row.getString(Const.TASK_MOD_ID));
+                    LocalDate start = DateTimePickerHandler.formatDate(row.getString("StartDate"));
+                    task.setStartDate(start);
+                    LocalDate end = DateTimePickerHandler.formatDate(row.getString("EndDate"));
+                    task.setEndDate(end);
+                    task.setStatus(row.getString(Const.TASK_STATUS));
+                    task.setColor(row.getString(Const.TASK_COLOR));
 
-                tasks.add(task);
+                    tasks.add(task);
+                }
+                lv_tasks.setItems(tasks);
+                lv_tasks.setCellFactory(TaskCellController -> new TaskCellController());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            lv_tasks.setItems(tasks);
-            lv_tasks.setCellFactory(TaskCellController -> new TaskCellController());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }else{
+            try {
+                taskDB = new TaskDB();
+                Task task = new Task();
+                task.setStatus(status);
+                task.setModID(modID);
+                row = taskDB.getStatus(task);
+                while(row.next()){
+                    task = new Task();
+                    task.setTaskID(row.getString(Const.TASK_ID));
+                    task.setTaskName(row.getString(Const.TASK_NAME));
+                    task.setEmpID(row.getString(Const.TASK_EMP_ID));
+                    task.setModID(row.getString(Const.TASK_MOD_ID));
+                    LocalDate start = DateTimePickerHandler.formatDate(row.getString("StartDate"));
+                    task.setStartDate(start);
+                    LocalDate end = DateTimePickerHandler.formatDate(row.getString("EndDate"));
+                    task.setEndDate(end);
+                    task.setStatus(row.getString(Const.TASK_STATUS));
+                    task.setColor(row.getString(Const.TASK_COLOR));
+
+                    tasks.add(task);
+                }
+                lv_tasks.setItems(tasks);
+                lv_tasks.setCellFactory(TaskCellController -> new TaskCellController());
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
+    private void findTask(){
+        txt_task.textProperty().addListener(((observable, oldValue, newValue) -> {
+            sceneHandler= new SceneHandler();
+            database = new Database();
+            tasks = FXCollections.observableArrayList();
+            ResultSet row = null;
+        }));
+    }
+    private void fillCard() throws SQLException, ClassNotFoundException {
+        taskDB = new TaskDB();
+        ResultSet row = taskDB.getCountStatus(modID);
+        String pending = "";
+        String reviewing = "";
+        String working = "";
+        String done = "";
+
+        if(row.next()){
+            pending = row.getString("Pending");
+            working = row.getString("Working");
+            reviewing = row.getString("Reviewing");
+            done = row.getString("Done");
+        }
+        lbl_pending.setText(pending);
+        lbl_working.setText(working);
+        lbl_reviewing.setText(reviewing);
+        lbl_done.setText(done);
+    }
 }

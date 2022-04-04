@@ -81,6 +81,9 @@ public class HomeController {
     @FXML
     void initialize() {
         getInfo();
+        if(!userId.contains("AD")){
+            btn_project.setVisible(false);
+        }
     }
 
     //when user logout
@@ -238,12 +241,8 @@ public class HomeController {
                 showConfirmation(tab);
             }else {
                 if(btnName.equals("Task")){
-                    if(userId.contains("AD")){
-                        StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/Task/taskList.fxml"));
-                        tab.setContent(newPane);
-                    }else {
-                        tab.setContent(new FullCalendarView(YearMonth.now()).getView());
-                    }
+                    FullCalendarView.openFromHome = true;
+                    tab.setContent(new FullCalendarView(YearMonth.now()).getView());
                 }else{
                     StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
                     tab.setContent(newPane);

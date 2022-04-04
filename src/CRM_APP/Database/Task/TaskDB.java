@@ -46,6 +46,38 @@ public class TaskDB {
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+
+    public ResultSet getStatus(Task task) throws SQLException {
+        ResultSet resultSet = null;
+        String query = " SELECT * FROM " + Const.TASK_TABLE + " WHERE "
+                        + Const.TASK_STATUS + " =? AND "
+                        + Const.TASK_MOD_ID + " =?";
+        PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, task.getStatus());
+        preparedStatement.setString(2, task.getModID());
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+    public ResultSet getCountStatus(String modID) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+        String query = "SELECT COUNT(CASE WHEN Status = \"0\" THEN 1\n" +
+                "                  ELSE NULL\n" +
+                "             END) AS Pending\n" +
+                "\t\t,COUNT(CASE WHEN Status = \"1\" THEN 1\n" +
+                "                   ELSE NULL\n" +
+                "              END) AS Working\n" +
+                "\t\t,COUNT(CASE WHEN Status = \"2\" THEN 1\n" +
+                "                   ELSE NULL\n" +
+                "              END) AS Reviewing\n" +
+                "\t\t,COUNT(CASE WHEN Status = \"3\" THEN 1\n" +
+                "                   ELSE NULL\n" +
+                "              END) AS Done\n" +
+                "    FROM "+ Const.TASK_TABLE +" WHERE " + Const.TASK_MOD_ID +"=?";
+        PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, modID);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
     //employee Query
     public void empUpdateTask(Task task){
         String query = "UPDATE " + Const.TASK_TABLE + " SET "
@@ -94,7 +126,6 @@ public class TaskDB {
             preparedStatement.setString(7, task.getStartDate()+"");
             preparedStatement.setString(8, task.getEndDate()+"");
             preparedStatement.setString(9, task.getDes());
-
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {
@@ -135,4 +166,19 @@ public class TaskDB {
         }
     }
     //endregion
+
+    //region TASKLIST
+    public ResultSet projectFilter(String name) throws SQLException, ClassNotFoundException {
+        db = new Database();
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM " + Const.PROJECT_TABLE + " WHERE "
+                + Const.PROJECT_NAME + " LIKE '%" + name + "%'";
+        PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+    //endregion
+
+
 }

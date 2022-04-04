@@ -76,7 +76,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="250.0" HBox.hgrow="SOMETIMES">
+                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="330.0" HBox.hgrow="SOMETIMES">
                            <children>
                               <Label styleClass="title" text="Manager" textFill="#686868">
                                  <font>

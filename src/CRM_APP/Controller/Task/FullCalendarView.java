@@ -50,7 +50,7 @@ public class FullCalendarView {
     private Thread myThread;
     private String[] monthChar = {"","JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
                             "JULY", "AUGUST", "SEPTEMBER", "OCTOBER","NOVEMBER", "DECEMBER"};
-
+    public static boolean openFromHome = false;
 //     yearMonth year month to create the calendar of
     public FullCalendarView(YearMonth yearMonth) {
         currentYearMonth = yearMonth;

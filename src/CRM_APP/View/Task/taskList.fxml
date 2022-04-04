@@ -78,23 +78,6 @@
                         </HBox>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btn_assign" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="120.0" layoutY="10.0" onAction="#filterEvent" text="Assigned">
-                     <styleClass>
-                        <String fx:value="cardContainer" />
-                        <String fx:value="card2" />
-                     </styleClass>
-                     <graphic>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumContainer">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
-                                 <children>
-                                    <Label fx:id="lbl_assign" text="11500" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                     </graphic>
-                  </JFXButton>
                   <JFXButton fx:id="btn_working" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="335.0" layoutY="10.0" onAction="#filterEvent" text="Working">
                      <styleClass>
                         <String fx:value="cardContainer" />
