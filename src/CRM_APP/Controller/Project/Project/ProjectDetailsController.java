@@ -1,5 +1,6 @@
-package CRM_APP.Controller.Project;
+package CRM_APP.Controller.Project.Project;
 
+import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Project.ProjectDB;
@@ -13,14 +14,10 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -30,11 +27,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-
-import static CRM_APP.Controller.Project.ProjectCellController.cellStack;
 
 public class ProjectDetailsController {
 
@@ -72,7 +65,7 @@ public class ProjectDetailsController {
     private Button btn_back;
 
     @FXML
-    private Button btn_delete;
+    private JFXButton btn_delete;
 
     SceneHandler sceneHandler;
     private ProjectDB projectDB;

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="600.0" prefWidth="800.0" styleClass="container" stylesheets="@../../Style/EmployeeProfileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Employee.EmployeeProfileController">
+   <children>
+      <GridPane>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="30.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0" styleClass="card2">
+                           <children>
+                              <Label text="Total Tasks">
+                                 <styleClass>
+                                    <String fx:value="cardText" />
+                                    <String fx:value="cardHeader" />
+                                 </styleClass></Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label text="3000">
+                                       <styleClass>
+                                          <String fx:value="cardText" />
+                                          <String fx:value="cardNumber" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="150.0" styleClass="card1">
+                           <children>
+                              <Label text="Expired">
+                                 <styleClass>
+                                    <String fx:value="cardText" />
+                                    <String fx:value="cardHeader" />
+                                 </styleClass>
+                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label text="27">
+                                       <styleClass>
+                                          <String fx:value="cardText" />
+                                          <String fx:value="cardNumber" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                     <children>
+                        <VBox alignment="CENTER_LEFT" spacing="30.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <JFXTextField focusColor="#98b2ff" labelFloat="true" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="User ID" unFocusColor="#ff8989" />
+                              <JFXTextField focusColor="#98b2ff" labelFloat="true" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="Address" unFocusColor="#ff8989" />
+                              <JFXTextField focusColor="#98b2ff" labelFloat="true" layoutX="10.0" layoutY="41.0" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="Phone" unFocusColor="#ff8989" />
+                              <JFXPasswordField focusColor="#91adff" labelFloat="true" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="Password" unFocusColor="#ff8c8c" />
+                           </children>
+                        </VBox>
+                        <VBox maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="150.0">
+                                 <children>
+                                    <Label text="Joined Team">
+                                       <styleClass>
+                                          <String fx:value="cardText" />
+                                          <String fx:value="cardNumber" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <JFXListView />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <JFXButton text="Save" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <VBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label text="Employee Name">
+                           <styleClass>
+                              <String fx:value="cardText" />
+                              <String fx:value="cardHeader" />
+                           </styleClass>
+                        </Label>
+                        <Label text="Customer Support">
+                           <styleClass>
+                              <String fx:value="cardText" />
+                              <String fx:value="position" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+</StackPane>

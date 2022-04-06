@@ -1,6 +1,6 @@
 package CRM_APP.Controller.Task;
 
-import CRM_APP.Controller.Project.ProjectCellController;
+import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;

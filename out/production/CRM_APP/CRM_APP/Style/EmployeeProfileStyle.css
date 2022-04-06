@@ -1,0 +1,41 @@
+.container{
+    -fx-background-color: #eceff1;
+}
+.card3{
+    -fx-background-color: #9fa8da;
+}
+.card2{
+    -fx-background-color: #a5d6a7;
+}
+.card1{
+    -fx-background-color: #ff7d47;
+}
+.cardText{
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+}
+.cardHeader{
+    -fx-font-size: 25;
+}
+.cardNumber{
+    -fx-font-size: 20;
+}
+
+.position{
+    -fx-font-family: "Calibri Light";
+}
+.button{
+    -fx-background-color: #42a5f5;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Calibri;
+    -fx-pref-width: 150;
+    -fx-pref-height: 50;
+    -fx-font-size: 20;
+}
+.button:hover{
+    -fx-background-color: #64b5f6;
+    -fx-text-fill: #686868;
+}

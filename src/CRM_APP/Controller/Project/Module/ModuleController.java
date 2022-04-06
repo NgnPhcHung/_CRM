@@ -1,42 +1,26 @@
 package CRM_APP.Controller.Project.Module;
 
-import CRM_APP.Controller.Project.ProjectCellController;
-import CRM_APP.Controller.Project.ProjectController;
+import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Project.ModuleDB;
-import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Module;
-import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import javax.xml.crypto.Data;
 
 public class ModuleController {
 

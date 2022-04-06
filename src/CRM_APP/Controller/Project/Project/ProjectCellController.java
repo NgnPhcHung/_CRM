@@ -1,39 +1,23 @@
-package CRM_APP.Controller.Project;
+package CRM_APP.Controller.Project.Project;
 
 import CRM_APP.Controller.Project.Module.ModuleController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Model.Customer;
-import CRM_APP.Model.Module;
 import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXListCell;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ProjectCellController extends JFXListCell<Project> {
@@ -73,6 +57,7 @@ public class ProjectCellController extends JFXListCell<Project> {
     private Database database;
     private SceneHandler sceneHandler;
     public static StackPane cellStack;
+
     @FXML
     void initialize() {
         database = new Database();

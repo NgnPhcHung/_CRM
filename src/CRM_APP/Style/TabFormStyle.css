@@ -29,10 +29,10 @@
     -fx-font-style: italic;
     -fx-text-fill: #686868;
     -fx-font-family: Calibri;
-
 }
 .button:hover{
     -fx-background-color: #64b5f6;
+    -fx-text-fill: #ffffff;
 }
 .cardContainer{
     -fx-background-radius: 30px;

@@ -1,6 +1,5 @@
 package CRM_APP.Controller.Project.Module;
 
-import CRM_APP.Controller.Project.ProjectCellController;
 import CRM_APP.Controller.Task.TaskListController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -20,7 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-import static CRM_APP.Controller.Project.ProjectCellController.cellStack;
+import static CRM_APP.Controller.Project.Project.ProjectCellController.cellStack;
 
 public class ModuleCellController extends JFXListCell<Module> {
     @FXML

@@ -13,8 +13,25 @@
     -fx-background-radius: 10px;
     -fx-background-color: transparent;
     -fx-font-weight: bold;
+    -fx-font-family: Calibri;
     -fx-font-size: 20;
     -fx-text-fill: #686868;
+}
+.button:hover{
+    -fx-background-color: #5c6bc0;
+    -fx-text-fill: #ffffff;
+}
+.buttonSave{
+    -fx-background-color: #5c6bc0;
+    -fx-text-fill: #ffffff;
+}
+.buttonSave:hover{
+    -fx-background-color: #5c6bc0;
+    -fx-background-radius: 10;
+    -fx-border-color: #5c6bc0;
+    -fx-border-width: 1;
+    /*-fx-background-insets: 5;*/
+    -fx-border-insets: -4;
 }
 .notification{
     -fx-font-family: Calibri;
@@ -22,20 +39,18 @@
     -fx-font-weight: bold;
     -fx-text-fill: #ff6b6b;
 }
-.header{
-    -fx-background-color:  #4fc3f7;
-    -fx-text-fill: #686868;
-    -fx-font-size: 35;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(one-pass-box, #b0bec5, 20, 0 , 0, 5);
-}
+/*.header{*/
+/*    -fx-text-fill: #686868;*/
+/*    -fx-font-size: 35;*/
+/*    -fx-font-weight: bold;*/
+/*    -fx-effect: dropshadow(one-pass-box, #b0bec5, 20, 0 , 0, 5);*/
+/*}*/
 .imgButton{
     -fx-background-color: #9fa8da;
     -fx-border-width: 0;
     -fx-background-radius: 50%;
     -fx-pref-height: 55;
     -fx-pref-width: 55;
-    -fx-rotate: 180;
     -fx-text-fill: #686868;
 }
 .imgButton:pressed{
@@ -64,6 +79,19 @@
     -fx-background-color: #686868;
     -fx-border-width: 0;
     -fx-background-radius: 15px;
+    -fx-text-fill: #ff5252;
+}
+.deleteButton:hover {
+    -fx-background-color: #686868;
+    -fx-border-width: 0;
+    -fx-background-radius: 15px;
+    -fx-text-fill: #ffffff;
+}
+.title{
+    -fx-font-family: Calibri;
+    -fx-font-size: 30;
+    -fx-text-fill: #686868;
+    -fx-font-weight: bold;
 }
 .delete{
     -fx-text-fill: #ff5252;

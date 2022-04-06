@@ -4,33 +4,27 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import CRM_APP.Controller.Home.HomeController;
-import CRM_APP.Controller.Project.Module.ModuleController;
-import CRM_APP.Controller.Project.ProjectCellController;
+import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Task.TaskDB;
 import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Model.Employee;
 import CRM_APP.Model.Task;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
-import javafx.stage.Window;
 
 public class TaskDetailController {
 

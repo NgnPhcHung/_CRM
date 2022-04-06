@@ -243,6 +243,9 @@ public class HomeController {
                 if(btnName.equals("Task")){
                     FullCalendarView.openFromHome = true;
                     tab.setContent(new FullCalendarView(YearMonth.now()).getView());
+                }else if (btnName.equals("Employee") && !userId.contains("AD")){
+                    StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/Employee/employeeProfile.fxml"));
+                    tab.setContent(newPane);
                 }else{
                     StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
                     tab.setContent(newPane);

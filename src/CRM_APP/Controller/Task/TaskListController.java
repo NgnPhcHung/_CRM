@@ -1,6 +1,6 @@
 package CRM_APP.Controller.Task;
 
-import CRM_APP.Controller.Project.ProjectCellController;
+import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Task.TaskDB;
@@ -14,7 +14,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;

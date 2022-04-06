@@ -1,14 +1,12 @@
-package CRM_APP.Controller.Project;
+package CRM_APP.Controller.Project.Project;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-import CRM_APP.Controller.Home.HomeController;
-import CRM_APP.Controller.Project.Module.ModuleController;
+import CRM_APP.Controller.Project.Project.ProjectCellController;
+import CRM_APP.Controller.Project.Project.ProjectDetailsController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Project.ProjectDB;
@@ -19,21 +17,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-import static CRM_APP.Controller.Project.ProjectCellController.cellStack;
+import static CRM_APP.Controller.Project.Project.ProjectCellController.cellStack;
 
 public class ProjectController {
     @FXML

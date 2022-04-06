@@ -51,7 +51,7 @@
                         </Separator>
                         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="btn_details" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent" style="-fx-background-color: transparent;">
+                              <Button fx:id="btn_details" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

@@ -37,7 +37,7 @@
 .opt:hover{
     -fx-background-color: #b2ebf2;
     -fx-background-radius: 20px;
-    -fx-effect: dropshadow(one-pass-box, #e2f1f8, 20, 0 , 2, 2);
+    -fx-effect: dropshadow(one-pass-box, #e2f1f8, 0, 0 , 4, 4);
     -fx-border-width: 3px;
     -fx-border-color: #64b5f6;
     -fx-border-radius: 15px;
