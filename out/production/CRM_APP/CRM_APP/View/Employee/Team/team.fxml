@@ -1,120 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Team.TeamController">
+<GridPane prefHeight="610.0" prefWidth="850.0" styleClass="container" stylesheets="@../../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Team.TeamController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="10.0" valignment="CENTER" />
+      <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="CENTER" />
+    <RowConstraints minHeight="10.0" valignment="CENTER" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
+      <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <GridPane fx:id="main_pane" prefHeight="610.0" prefWidth="1024.0" styleClass="container" stylesheets="@../../../Style/TabFormStyle.css">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
          <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <children>
-                        <JFXButton fx:id="btn_back" text="◄" />
-                     </children>
-                  </HBox>
-                  <JFXTextField fx:id="txt_find" focusColor="#90caf9" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Team name" unFocusColor="#ff7a51">
-                     <HBox.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </HBox.margin>
-                  </JFXTextField>
+                  <Button fx:id="btn_back" mnemonicParsing="false" styleClass="prevButton" text="▼" />
+                  <Button fx:id="btn_addNew" mnemonicParsing="false" text="Create New Team" />
                </children>
-               <GridPane.margin>
-                  <Insets top="15.0" />
-               </GridPane.margin>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
             </HBox>
-            <VBox GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
-               <children>
-                  <HBox prefHeight="70.0" prefWidth="200.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                           <children>
-                              <Label text="Name" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri Bold" size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <HBox alignment="CENTER_LEFT" layoutX="41.0" layoutY="10.0" prefWidth="150.0" />
-                              <HBox alignment="CENTER_LEFT" prefWidth="160.0" />
-                              <HBox alignment="CENTER_LEFT" prefWidth="180.0" />
-                           </children>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </HBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <JFXListView fx:id="lv_team" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </JFXListView>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </GridPane.margin>
-               <children>
-                  <Label styleClass="title" text="Details" />
-                  <VBox alignment="CENTER" prefHeight="300.0" prefWidth="300.0" spacing="40.0">
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label fx:id="lbl_noti" text="Noti" textFill="#d31500" visible="false">
-                           <font>
-                              <Font name="Calibri" size="22.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="txt_teamName" focusColor="#84a3ff" labelFloat="true" promptText="Team Name" unFocusColor="#ff9191">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </JFXTextField>
-                        <JFXButton fx:id="btn_save" styleClass="buttonSave" text="Save" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
+            <JFXTextField fx:id="txt_module" focusColor="#7c9af2" promptText="Team" unFocusColor="#eeb67a">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </JFXTextField>
          </children>
-      </GridPane>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </VBox>
+      <JFXListView fx:id="lv_team" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
+         <GridPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </GridPane.margin>
+      </JFXListView>
+      <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="820.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+         <children>
+            <Label layoutX="25.0" layoutY="28.0" maxWidth="1.7976931348623157E308" styleClass="title" text="Team" textFill="#686868" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="25.0" right="10.0" />
+               </HBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefWidth="150.0">
+               <children>
+                  <Label styleClass="title" text="Member" textFill="#686868">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
    </children>
-</StackPane>
+</GridPane>

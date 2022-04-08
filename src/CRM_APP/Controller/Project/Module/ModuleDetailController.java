@@ -222,22 +222,7 @@ public class ModuleDetailController {
 
     }
     private void comboBoxHandler() {
-        try{
-            ProjectDB projectDB=  new ProjectDB();
-            ResultSet row = projectDB.getProjectList();
-            String name ="";
-            while (row.next()){
-                name = row.getString("ProjectName");
-                list.add(name);
-            }
-            cb_project.setItems(list);
-            cb_project.getSelectionModel().select(0);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        OtherHandler.populateComboBox(cb_project, Const.PROJECT_TABLE, Const.PROJECT_NAME);
     }
 
 }

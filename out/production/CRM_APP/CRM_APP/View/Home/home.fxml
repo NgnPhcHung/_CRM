@@ -16,7 +16,7 @@
   <tabs>
     <Tab closable="false" text="Home">
          <content>
-            <VBox fx:id="tab_home" alignment="TOP_CENTER" style="-fx-background-color: #454545;">
+            <VBox fx:id="tab_home" alignment="TOP_CENTER">
                <children>
                   <HBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
                      <children>

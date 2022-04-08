@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="container" stylesheets="@../../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Team.CreateTeamController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label styleClass="title2" text="Details" />
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="25.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lbl_noti" styleClass="noti" text="notification" visible="false" />
+                  <JFXTextField fx:id="txt_teamName" focusColor="#7c9af2" labelFloat="true" prefWidth="400.0" promptText="Team" styleClass="input" unFocusColor="#eeb67a">
+                     <font>
+                        <Font name="Calibri" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_save" styleClass="input" text="Save" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <JFXButton fx:id="btn_back" styleClass="input" text="◄">
+         <GridPane.margin>
+            <Insets left="20.0" />
+         </GridPane.margin>
+      </JFXButton>
+   </children>
+</GridPane>

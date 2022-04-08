@@ -91,7 +91,6 @@ public class TaskDetailController {
     @FXML
     void initialize() {
         //if not admin logged in
-
         if(!isAdmin){
             cb_employ.setDisable(true);
             cb_module.setDisable(true);
@@ -141,8 +140,6 @@ public class TaskDetailController {
             });
             //endregion
         }
-
-
 
         //region SET TOGGLE DATA & HANDLE EVENT VALUE CHANGE
         ToggleGroup group = new ToggleGroup();
@@ -218,45 +215,15 @@ public class TaskDetailController {
             }
         });
     }
-    private void populateComboBox(){
-        try {
-            database = new Database();
-            ResultSet row = null;
-            list = FXCollections.observableArrayList();
-            row = database.getAllTableValue(Const.EMPLOYEE_TABLE);
-            while(row.next()){
-                String name = row.getString(Const.EMPLOYEE_NAME);
-                list.add(name);
-            }
-            cb_employ.setItems(list);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+    private void populateComboBox() {
+        OtherHandler.populateComboBox(cb_employ, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+        OtherHandler.populateComboBox(cb_module, Const.MODULE_TABLE, Const.MODULE_NAME);
+        if (isAdmin) {
+            cb_employ.getSelectionModel().select(0);
+            cb_module.getSelectionModel().select(0);
         }
-        try {
-            database = new Database();
-            ResultSet row = null;
-            list = FXCollections.observableArrayList();
-            row = database.getAllTableValue(Const.MODULE_TABLE);
-            while(row.next()){
-                String name = row.getString(Const.MODULE_NAME);
-                list.add(name);
-            }
-            cb_module.setItems(list);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-       if(isAdmin){
-           cb_employ.getSelectionModel().select(0);
-           cb_module.getSelectionModel().select(0);
-       }
     }
+
     private void populateDetail(){
         try {
             String emID;

@@ -5,24 +5,36 @@
     -fx-font-size: 15;
 }
 
+.input{
+    -fx-font-size: 20;
+}
 .title{
     -fx-font-family: Calibri;
     -fx-font-size: 20;
     -fx-font-weight: bold;
     -fx-font-style: italic;
 }
+.title2{
+    -fx-font-family: Calibri;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+}
 
 .label{
     -fx-text-fill: #686868;
 }
-
+.noti {
+    -fx-text-fill: #ff5252;
+    -fx-font-size: 20;
+    -fx-font-family: Calibri;
+    -fx-font-weight: bold;
+}
 
 .jfx-text-field {
     -fx-prompt-text-fill: #989898;
     -fx-text-fill: #686868;
-
+    -fx-font-family: Calibri;
 }
-
 .button{
     -fx-background-color: #42a5f5;
     -fx-font-weight: bold;
@@ -32,6 +44,16 @@
 }
 .button:hover{
     -fx-background-color: #64b5f6;
+    -fx-text-fill: #ffffff;
+}
+.deleteButton{
+    -fx-background-color: #686868;
+    -fx-border-width: 0;
+    -fx-text-fill: #ff5252;
+}
+.deleteButton:hover {
+    -fx-background-color: #686868;
+    -fx-border-width: 0;
     -fx-text-fill: #ffffff;
 }
 .cardContainer{

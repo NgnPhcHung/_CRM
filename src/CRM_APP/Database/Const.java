@@ -4,6 +4,7 @@ public class Const {
     //Table
     public static final String EMPLOYEE_TABLE = "employee";
     public static final String TEAM_TABLE = "team";
+    public static final String TEAM_DETAIL_TABLE = "team_details";
     public static final String TASK_TABLE = "task";
     public static final String AUTHEN_TABLE = "authen";
     public static final String QUESTION_TABLE = "question";

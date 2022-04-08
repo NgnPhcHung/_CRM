@@ -1,17 +1,14 @@
 package CRM_APP.Controller.Employee.Team;
 
 import CRM_APP.Controller.Employee.Employee.EmployeeCellController;
-import CRM_APP.Controller.Employee.Employee.EmployeeController;
-import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.TeamDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Model.Module;
-import CRM_APP.Model.Project;
 import CRM_APP.Model.Team;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -25,9 +22,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 
-public class TeamController {
+public class TeamDetailController {
 
     @FXML
     private ResourceBundle resources;
@@ -44,46 +40,48 @@ public class TeamController {
     @FXML
     private JFXTextField txt_module;
 
-
     @FXML
-    private JFXListView<Team> lv_team;
+    private JFXListView<Team> lv_emp;
 
-    private SceneHandler sceneHandler;
     private Database database;
-    private ObservableList<Team> teams;
-    private Team team;
+    private ResultSet row = null;
     private TeamDB teamDB;
+    private Team team;
+    private SceneHandler sceneHandler;
+    private ObservableList<Team> teams;
+    public static String teamID;
 
     @FXML
     void initialize() {
         populateList();
-        btn_addNew.setOnAction(e -> {
+        btn_back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_addNew, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/Team/createTeam.fxml");
+            sceneHandler.slideScene(btn_back, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/team.fxml");
+
         });
     }
 
-    private void populateList() {
+    private void populateList(){
         sceneHandler = new SceneHandler();
         database = new Database();
+        teamDB = new TeamDB();
         teams = FXCollections.observableArrayList();
         ResultSet row = null;
         try {
-            row = database.getAllTableValue(Const.TEAM_TABLE);
-            while (row.next()) {
-                Team team = new Team();
+            row = database.getSomeID(teamID, Const.TEAM_DETAIL_TABLE, Const.TEAM_ID);
+            while(row.next()){
+                team = new Team();
                 team.setTeamID(row.getString(Const.TEAM_ID));
-                team.setTeamName(row.getString(Const.TEAM_NAME));
-
+                team.setEmID(row.getString(Const.EMPLOYEE_ID));
                 teams.add(team);
             }
-            lv_team.setItems(teams);
-            lv_team.setCellFactory(TeamCellController -> new TeamCellController());
+            lv_emp.setItems(teams);
+            lv_emp.setCellFactory(TeamDetailCellController -> new TeamDetailCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-}
 
+}

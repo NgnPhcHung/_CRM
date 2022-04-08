@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 
-import static CRM_APP.Controller.Employee.Employee.EmployeeCellController.cellStack;
 
 public class EmployeeController {
 
@@ -72,7 +71,7 @@ public class EmployeeController {
                 employee.setAddress(row.getString(Const.EMPLOYEE_ADDRESS));
                 employee.setPhone(row.getString(Const.EMPLOYEE_PHONE));
                 employee.setPosition(row.getString(Const.EMPLOYEE_POSITION));
-                cellStack = main_stack;
+                EmployeeCellController.cellStack = main_stack;
                 employees.add(employee);
             }
             lv_employee.setItems(employees);

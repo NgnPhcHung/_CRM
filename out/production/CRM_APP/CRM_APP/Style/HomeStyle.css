@@ -1,6 +1,5 @@
 .container{
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-background-color: #e2f1f8;
 }
 
 .tab{
@@ -30,25 +29,34 @@
     -fx-border-width: 2px;
     -fx-border-color: #1565c0;
     -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
+    -fx-background-radius: 15px;
     -fx-background-color: transparent;
-    -fx-text-fill: #cfd8dc;
+    -fx-background-insets: 1;
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
 }
+
+
 .opt:hover{
     -fx-background-color: #b2ebf2;
     -fx-background-radius: 20px;
-    -fx-effect: dropshadow(one-pass-box, #e2f1f8, 0, 0 , 4, 4);
+    -fx-effect: dropshadow(one-pass-box, #686868, 0, 0 , 6, 6);
     -fx-border-width: 3px;
     -fx-border-color: #64b5f6;
     -fx-border-radius: 15px;
-    -fx-text-fill: #455a64;
+    -fx-font-weight: bold;
 }
+.opt:pressed{
+    -fx-effect: dropshadow(one-pass-box, #686868, 0, 0 , 2, 2);
+}
+
 .esc{
     -fx-background-color: transparent;
     -fx-border-color:  #ed0935;
     -fx-border-radius:  10px;
     -fx-border-width: 5px;
-    -fx-text-fill: #eceff1;
+    -fx-text-fill: #686868;
     -fx-font-family: Calibri;
     -fx-font-weight: bold;
     -fx-font-size: 20px;
@@ -59,14 +67,15 @@
     -fx-background-color: #ff595f;
     -fx-background-radius: 20;
     -fx-border-width: 0;
+    -fx-text-fill: #ffffff;
 }
 .hello{
-    -fx-text-fill: #eceff1;
+    -fx-text-fill: #686868;
     -fx-font-family: Calibri;
     -fx-font-size: 25;
     -fx-font-weight: bold;
 }
 .career{
     -fx-font-size: 15;
-    -fx-text-fill: #448aff;
+    -fx-text-fill: #0277bd;
 }

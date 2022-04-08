@@ -3,6 +3,9 @@ package CRM_APP.Handler;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
+import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 import java.net.InetAddress;
@@ -82,5 +85,27 @@ public class OtherHandler {
                 .collect(Collectors.toList());
         if(dates.size()>0);
         return dates;
+    }
+
+    //fill data to combo box
+    public static void populateComboBox(JFXComboBox cb, String table, String col){
+        ObservableList<String> list;
+        Database database ;
+        try {
+            database = new Database();
+            ResultSet row = null;
+            list = FXCollections.observableArrayList();
+            row = database.getAllTableValue(table);
+            while(row.next()){
+                String name = row.getString(col);
+                list.add(name);
+            }
+            cb.setItems(list);
+            cb.getSelectionModel().select(0);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
