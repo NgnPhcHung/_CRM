@@ -17,6 +17,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -288,8 +289,22 @@ public class ProjectDetailsController {
     private void delete(){
         database = new Database();
         sceneHandler = new SceneHandler();
-        database.detele(Const.PROJECT_TABLE, Const.PROJECT_ID, projectID);
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Project/project.fxml");
+        try {
+            if(!OtherHandler.checkExist(Const.MODULE_TABLE, Const.MODULE_PROJECT_ID, projectID)){
+                database.detele(Const.PROJECT_TABLE, Const.PROJECT_ID, projectID);
+                lbl_noti.setVisible(false);
+                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Project/project.fxml");
+            }else{
+                lbl_noti.setVisible(true);
+                lbl_noti.setText("Project have Module inside, can not delete!");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     //endregion

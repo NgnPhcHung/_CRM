@@ -71,7 +71,6 @@ public class AddEmployeeController {
             btn_Delete.setVisible(false);
         }else {
             populateDetail();
-
             btn_Delete.setVisible(true);
         }
         textfieldHandler = new TextfieldHandler();
@@ -90,9 +89,22 @@ public class AddEmployeeController {
             sceneHandler.slideScene(btn_Save, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employee.fxml");
         });
         btn_Delete.setOnAction(e -> {
-            delete();
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employee.fxml");
+            try {
+                if(!OtherHandler.checkExist(Const.TASK_TABLE, Const.TASK_EMP_ID, emID)
+                    && OtherHandler.checkExist(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID)){
+                    delete();
+                    sceneHandler = new SceneHandler();
+                    sceneHandler.slideScene(btn_Save, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employee.fxml");
+                    lbl_Noti.setVisible(false);
+                }else{
+                    lbl_Noti.setVisible(true);
+                    lbl_Noti.setText("This Staff have task, can not delete!");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            }
         });
     }
     //region DATABASE PROCESS
@@ -144,6 +156,8 @@ public class AddEmployeeController {
     }
     private void delete(){
         database = new Database();
+        database.detele(Const.AUTHEN_TABLE, Const.EMPLOYEE_ID, emID);
+        database.detele(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID);
         database.detele(Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID, emID);
     }
     private void populateDetail(){

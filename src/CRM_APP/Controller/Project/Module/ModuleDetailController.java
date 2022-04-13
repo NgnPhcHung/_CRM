@@ -180,8 +180,20 @@ public class ModuleDetailController {
     private void delete(){
         database = new Database();
         sceneHandler = new SceneHandler();
-        database.detele(Const.MODULE_TABLE, Const.MODULE_ID, modID);
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
+        try {
+            if(!OtherHandler.checkExist(Const.TASK_TABLE, Const.TASK_MOD_ID, modID)){
+                database.detele(Const.MODULE_TABLE, Const.MODULE_ID, modID);
+                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
+            }else{
+                lbl_noti.setVisible(true);
+                lbl_noti.setText("Module have task inside, can not delete!");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void manageToggle(){

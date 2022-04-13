@@ -126,4 +126,12 @@ public class OtherHandler {
             e.printStackTrace();
         }
     }
+
+    //check constraints for delete
+    public static boolean checkExist(String table, String column, String id) throws SQLException, ClassNotFoundException {
+        Database database = new Database();
+        ResultSet resultSet = database.getSomeID(id, table, column);
+        if(resultSet.next()) return true;
+        else return false;
+    }
 }

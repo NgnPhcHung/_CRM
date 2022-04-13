@@ -1,4 +1,6 @@
 package CRM_APP.Controller.Employee.Employee;
+import CRM_APP.Controller.Employee.Team.TeamCellController;
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
@@ -6,6 +8,7 @@ import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
 import CRM_APP.Handler.TextfieldHandler;
 import CRM_APP.Model.Employee;
+import CRM_APP.Model.Team;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
@@ -16,6 +19,8 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.animation.Animation;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,7 +54,7 @@ public class EmployeeProfileController {
     private JFXPasswordField txt_Password;
 
     @FXML
-    private JFXListView<?> lv_JoinTeam;
+    private JFXListView<Team> lv_JoinTeam;
 
     @FXML
     private JFXButton btn_Save;
@@ -76,11 +81,14 @@ public class EmployeeProfileController {
     private EmployeeDB employeeDB;
     private Employee employee;
     private ShakerHandler shakerHandler;
+    private ObservableList<Team> teams;
+
     @FXML
     void initialize() {
         populateDetail();
         taskCounter();
-        if(emID.contains("EM")){
+        populateList();
+        if(HomeController.userId.contains("EM")){
             btn_Edit.setVisible(false);
         }
         if(condition.equals("home")){
@@ -141,7 +149,6 @@ public class EmployeeProfileController {
             lbl_Noti.setVisible(false);
         }
     }
-
     private void taskCounter(){
         //region TOTAL TASK
         try {
@@ -173,5 +180,31 @@ public class EmployeeProfileController {
             e.printStackTrace();
         }
         //endregion
+    }
+    private void populateList(){
+        sceneHandler = new SceneHandler();
+        database = new Database();
+        teams = FXCollections.observableArrayList();
+        try {
+
+            ResultSet row = database.getSomeID(emID, Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID);
+            while (row.next()) {
+                database = new Database();
+                ResultSet rs = database.getSomeID(row.getString(Const.TEAM_ID), Const.TEAM_TABLE, Const.TEAM_ID);
+                if(rs.next()){
+                    Team team = new Team();
+                    team.setTeamID(rs.getString(Const.TEAM_ID));
+                    team.setTeamName(rs.getString(Const.TEAM_NAME));
+
+                    teams.add(team);
+                }
+            }
+            lv_JoinTeam.setItems(teams);
+            lv_JoinTeam.setCellFactory(EmployeeProfileCellController -> new EmployeeProfileCellController());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
