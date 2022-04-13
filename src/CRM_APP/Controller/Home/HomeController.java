@@ -11,6 +11,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import CRM_APP.Controller.Employee.Employee.EmployeeProfileController;
 import CRM_APP.Controller.Task.FullCalendarView;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -71,8 +72,6 @@ public class HomeController {
 
     @FXML
     private Label lbl_position;
-
-
 
     private LoginDB database = new LoginDB();
     public static String userId;
@@ -244,6 +243,8 @@ public class HomeController {
                     FullCalendarView.openFromHome = true;
                     tab.setContent(new FullCalendarView(YearMonth.now()).getView());
                 }else if (btnName.equals("Employee") && !userId.contains("AD")){
+                    EmployeeProfileController.emID = userId;
+                    EmployeeProfileController.condition = "home";
                     StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/Employee/employeeProfile.fxml"));
                     tab.setContent(newPane);
                 }else{

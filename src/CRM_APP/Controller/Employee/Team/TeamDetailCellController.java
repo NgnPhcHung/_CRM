@@ -1,5 +1,7 @@
 package CRM_APP.Controller.Employee.Team;
 
+import CRM_APP.Controller.Employee.Employee.EmployeeCellController;
+import CRM_APP.Controller.Employee.Employee.EmployeeProfileController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.TeamDB;
@@ -33,6 +35,10 @@ public class TeamDetailCellController extends JFXListCell<Team> {
 
     @FXML
     private Label lbl_num;
+
+    @FXML
+    private Button btn_hidden;
+
 
     private FXMLLoader fxmlLoader;
     private Database database;
@@ -78,6 +84,12 @@ public class TeamDetailCellController extends JFXListCell<Team> {
                 while (rowTask.next()){
                     lbl_num.setText(rowTask.getString("countTask"));
                 }
+                this.setOnMouseClicked(e->{
+                    sceneHandler = new SceneHandler();
+                    EmployeeProfileController.emID = item.getEmID();
+                    EmployeeProfileController.condition = "TeamList";
+                    sceneHandler.slideScene(btn_hidden, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employeeProfile.fxml");
+                });
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {

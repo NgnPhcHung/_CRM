@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,87 +13,89 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="CRM_APP.Controller.Employee.Employee.addEmployeeController">
+<GridPane prefHeight="700.0" prefWidth="800.0" styleClass="container" stylesheets="@../../Style/DetailStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Employee.AddEmployeeController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #4fc3f7;" GridPane.columnSpan="2147483647">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647">
          <children>
-            <Label text="Add Document" textFill="#455a64">
+            <Label styleClass="headerTitle" text="Create Employee" textFill="#455a64">
                <font>
                   <Font name="Calibri Bold" size="35.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <GridPane GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                <children>
-                  <JFXTextField focusColor="#7898f8" labelFloat="true" promptText="Document name" unFocusColor="#ff7d7d">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </JFXTextField>
-                  <JFXTextField focusColor="#7898f8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Project name" unFocusColor="#ff7d7d">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </JFXTextField>
-                  <JFXTextField focusColor="#7898f8" labelFloat="true" layoutX="10.0" layoutY="41.0" promptText="Description" unFocusColor="#ff7d7d">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </JFXTextField>
-                  <Label text="Document for project A.pdf" textFill="#686868">
+                  <JFXComboBox fx:id="cb_Role" focusColor="#7e9df8" promptText="Role" styleClass="jfx-text-field" unFocusColor="#f89494" />
+                  <JFXTextField fx:id="txt_Name" focusColor="#7898f8" labelFloat="true" promptText="Name" unFocusColor="#ff7d7d" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                     <children>
-                        <HBox>
-                           <children>
-                              <JFXButton style="-fx-border-color: #2196f3; -fx-border-radius: 10px;" text="Choose file" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri Bold" size="20.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <JFXButton style="-fx-border-color: #2196f3; -fx-border-radius: 10px;" text="Save" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri Bold" size="20.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
+                  </JFXTextField>
+               </children>
+            </HBox>
+            <JFXTextField fx:id="txt_Phone" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="37.0" promptText="Phone" unFocusColor="#ff7d7d">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="txt_Address" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="192.0" promptText="Address" unFocusColor="#ff7d7d">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="txt_Position" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="249.0" promptText="Position" unFocusColor="#ff7d7d">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="txt_Password" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="278.0" promptText="Password" unFocusColor="#ff7d7d">
+               <font>
+                  <Font name="Calibri" size="20.0" />
+               </font>
+            </JFXTextField>
+            <Label fx:id="lbl_Noti" styleClass="notification" text="This is notification" textFill="#ff6b6b" visible="false">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btn_Save" prefWidth="100.0" styleClass="buttonSave" text="Save" textFill="#686868">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" styleClass="imgButton" text="◄" />
+         </children>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <JFXButton fx:id="btn_Delete" styleClass="deleteButton" text="Delete" />
                </children>
             </VBox>
-         </children>
-      </GridPane>
+         </children></VBox>
    </children>
 </GridPane>

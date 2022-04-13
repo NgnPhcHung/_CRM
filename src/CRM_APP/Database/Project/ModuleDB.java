@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ModuleDB {
     Database database = new Database();
 
-    public ResultSet getCountStatus(String projectID) throws SQLException, ClassNotFoundException {
+    public ResultSet getCountStatus(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
         String query = "SELECT COUNT(CASE WHEN Status = \"0\" THEN 1\n" +
                 "                  ELSE NULL\n" +
@@ -27,7 +27,15 @@ public class ModuleDB {
                 "              END) AS Done\n" +
                 "    FROM crm.module WHERE " + Const.PROJECT_ID +"=?";
         PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
-        preparedStatement.setString(1, projectID);
+        preparedStatement.setString(1, id);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+    public ResultSet countAll(String id) throws SQLException, ClassNotFoundException{
+        ResultSet resultSet = null;
+        String query = "SELECT COUNT(*) FROM " + Const.MODULE_TABLE+ " WHERE " + Const.PROJECT_ID +"=?";
+        PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, id);
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }

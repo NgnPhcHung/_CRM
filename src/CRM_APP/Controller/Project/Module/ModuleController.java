@@ -5,6 +5,7 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Project.ModuleDB;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Handler.TextfieldHandler;
 import CRM_APP.Model.Module;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -66,18 +67,24 @@ public class ModuleController {
     @FXML
     private Label lbl_done;
 
+    @FXML
+    private JFXButton btn_Total;
+
+    @FXML
+    private Label lbl_Total;
 
     @FXML
     private JFXListView<Module> lv_modules;
 
     private SceneHandler sceneHandler;
     private Database database;
-    private ModuleDB db = new ModuleDB();
+    private ModuleDB moduleDB;
     public static String projectID;
     private ObservableList<Module> modules;
-
+    private Module module;
     @FXML
     void initialize() {
+        filterCell();
         populateList("nor");
         try {
             fillCard();
@@ -96,22 +103,27 @@ public class ModuleController {
     }
 
     private void fillCard() throws SQLException, ClassNotFoundException {
-        ResultSet row = db.getCountStatus(projectID);
+        moduleDB = new ModuleDB();
+        ResultSet row = moduleDB.getCountStatus(projectID);
+        ResultSet row2 = moduleDB.countAll(projectID);
         String pending = "";
         String reviewing = "";
         String working = "";
         String done = "";
-
-        if(row.next()){
+        String total  = "";
+        if(row.next() && row2.next()){
             pending = row.getString("Pending");
             working = row.getString("Working");
             reviewing = row.getString("Reviewing");
             done = row.getString("Done");
+            total = row2.getString(1);
         }
+
         lbl_pending.setText(pending);
         lbl_working.setText(working);
         lbl_reviewing.setText(reviewing);
         lbl_done.setText(done);
+        lbl_Total.setText(total);
     }
 
     private void populateList(String status) {
@@ -141,7 +153,7 @@ public class ModuleController {
         }else{
             moduleDB = new ModuleDB();
             try {
-                Module module = new Module();
+                module = new Module();
                 module.setStatus(status);
                 module.setProjectID(projectID);
                 row = moduleDB.getStatus(module);
@@ -181,8 +193,40 @@ public class ModuleController {
             case "Done":
                 populateList("3");
                 break;
+            case "Total":
+                populateList("nor");
+                break;
             default:break;
         }
     }
 
+    private void filterCell(){
+        txt_module.textProperty().addListener(((observable, oldValue, newValue) -> {
+            sceneHandler= new SceneHandler();
+            database = new Database();
+            modules = FXCollections.observableArrayList();
+            moduleDB = new ModuleDB();
+            ResultSet row = null;
+
+            try {
+                row = database.filterDataInput(Const.MODULE_TABLE, Const.MODULE_NAME, newValue);
+                while(row.next()){
+                    module = new Module();
+                    module.setProjectID(projectID);
+                    module.setModuleID(row.getString("ModID"));
+                    module.setModName(row.getString("ModName"));
+                    module.setStatus(row.getString("Status"));
+
+                    modules.add(module);
+                }
+                lv_modules.setItems(modules);
+                lv_modules.setCellFactory(ModuleCellController -> new ModuleCellController());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }));
+    }
 }
+

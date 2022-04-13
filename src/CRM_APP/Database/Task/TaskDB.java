@@ -99,6 +99,15 @@ public class TaskDB {
         }
     }
 
+    public ResultSet countAll(String id) throws SQLException, ClassNotFoundException{
+        ResultSet resultSet = null;
+        String query = "SELECT COUNT(*) FROM " + Const.TASK_TABLE+ " WHERE " + Const.MODULE_ID +"=?";
+        PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, id);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+
     //region ADMIN QUERY
     public void save(Task task){
         db= new Database();

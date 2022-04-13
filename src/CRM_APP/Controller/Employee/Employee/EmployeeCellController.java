@@ -2,9 +2,13 @@ package CRM_APP.Controller.Employee.Employee;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Database.Employee.EmployeeDB;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Employee;
 import com.jfoenix.controls.JFXListCell;
@@ -48,7 +52,8 @@ public class EmployeeCellController extends JFXListCell<Employee> {
     private FXMLLoader fxmlLoader;
     private Database database;
     private SceneHandler sceneHandler;
-
+    private EmployeeDB employeeDB;
+    private Employee employee;
     @FXML
     void initialize() {
 
@@ -71,12 +76,41 @@ public class EmployeeCellController extends JFXListCell<Employee> {
                     e.printStackTrace();
                 }
             }
+            getTeam(item.getId());
             lbl_name.setText(item.getName());
             lbl_phone.setText(item.getPhone());
             lbl_position.setText(item.getPosition());
             lbl_address.setText(item.getAddress());
+            btn_edit.setOnAction(e -> {
+                sceneHandler = new SceneHandler();
+                EmployeeProfileController.emID = item.getId();
+                EmployeeProfileController.condition = "EmployeeList";
+                sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Employee/employeeProfile.fxml");
+            });
+            setText(null);
+            setGraphic(main_pane);
         }
-        setText(null);
-        setGraphic(main_pane);
+    }
+    private void getTeam(String id){
+        try {
+            employeeDB = new EmployeeDB();
+            employee = new Employee();
+            employee.setId(id);
+            database = new Database();
+            ResultSet row = employeeDB.getFirstTeam(employee);
+            String temp;
+            if(row.next()){
+                ResultSet rs = database.getSomeID(row.getString(Const.TEAM_ID), Const.TEAM_TABLE, Const.TEAM_ID);
+                while (rs.next()){
+                    lbl_team.setText(rs.getString(Const.TEAM_NAME));
+                }
+            }else{
+                lbl_team.setText("Not in Team");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

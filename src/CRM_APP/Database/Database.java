@@ -49,5 +49,14 @@ public class Database extends Configs{
             e.printStackTrace();
         }
     }
+    public ResultSet filterDataInput(String table, String col, String name) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM " + table + " WHERE "
+                + col + " LIKE '%" + name + "%'";
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
     //endregion
 }

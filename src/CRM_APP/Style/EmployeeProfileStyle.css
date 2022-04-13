@@ -29,13 +29,25 @@
     -fx-background-color: #42a5f5;
     -fx-font-weight: bold;
     -fx-font-style: italic;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #686868;
     -fx-font-family: Calibri;
-    -fx-pref-width: 150;
-    -fx-pref-height: 50;
+    /*-fx-pref-width: 150;*/
+    /*-fx-pref-height: 50;*/
     -fx-font-size: 20;
+    -fx-background-radius: 10;
 }
 .button:hover{
     -fx-background-color: #64b5f6;
+    -fx-text-fill: #ffffff;
+}
+.imgButton{
+    -fx-background-color: #9fa8da;
+    -fx-border-width: 0;
+    -fx-background-radius: 50%;
+    -fx-pref-height: 55;
+    -fx-pref-width: 55;
     -fx-text-fill: #686868;
+}
+.imgButton:hover{
+    -fx-background-color: #c5cae9;
 }

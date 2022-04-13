@@ -1,15 +1,19 @@
 package CRM_APP.Controller.Employee.Employee;
 
 import CRM_APP.Controller.Employee.Employee.EmployeeCellController;
+import CRM_APP.Controller.Task.TaskCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Employee;
+import CRM_APP.Model.Task;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTextField;
@@ -45,12 +49,14 @@ public class EmployeeController {
     private SceneHandler sceneHandler;
     private Database database;
     private ObservableList<Employee> employees;
-
+    private Employee employee;
     @FXML
     void initialize() {
+        filterCell();
         populateList();
         btn_add.setOnAction(e -> {
-
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Employee/addEmployee.fxml");
         });
         btn_team.setOnAction(e -> {
             sceneHandler = new SceneHandler();
@@ -62,10 +68,11 @@ public class EmployeeController {
         database = new Database();
         employees = FXCollections.observableArrayList();
         ResultSet row = null;
+        employee = new Employee();
         try {
             row = database.getAllTableValue(Const.EMPLOYEE_TABLE);
             while(row.next()){
-                Employee employee = new Employee();
+                employee = new Employee();
                 employee.setId(row.getString(Const.EMPLOYEE_ID));
                 employee.setName(row.getString(Const.EMPLOYEE_NAME));
                 employee.setAddress(row.getString(Const.EMPLOYEE_ADDRESS));
@@ -82,5 +89,31 @@ public class EmployeeController {
             e.printStackTrace();
         }
     }
+    private void filterCell(){
+        txt_find.textProperty().addListener(((observable, oldValue, newValue) -> {
+            sceneHandler = new SceneHandler();
+            database = new Database();
+            ObservableList<Employee> employs = FXCollections.observableArrayList();
+            ResultSet row = null;
+            try {
+                row = database.filterDataInput(Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME, newValue);
+                while(row.next()){
+                    Employee employee = new Employee();
+                    employee.setId(row.getString(Const.EMPLOYEE_ID));
+                    employee.setName(row.getString(Const.EMPLOYEE_NAME));
+                    employee.setAddress(row.getString(Const.EMPLOYEE_ADDRESS));
+                    employee.setPhone(row.getString(Const.EMPLOYEE_PHONE));
+                    employee.setPosition(row.getString(Const.EMPLOYEE_POSITION));
 
+                    employs.add(employee);
+                }
+                lv_employee.setItems(employs);
+                lv_employee.setCellFactory(EmployeeCellController -> new EmployeeCellController());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }));
+    }
 }

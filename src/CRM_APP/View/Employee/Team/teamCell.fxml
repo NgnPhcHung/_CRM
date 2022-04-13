@@ -13,7 +13,7 @@
 
 <HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="400.0" styleClass="container" stylesheets="@../../../Style/TabCellStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="300.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" HBox.hgrow="ALWAYS">
          <children>
             <Label fx:id="lbl_name" text="team" textFill="#686868">
                <font>
@@ -29,11 +29,11 @@
          <children>
             <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER_LEFT" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="203.0" layoutY="15.0">
                            <children>
-                              <Label fx:id="lbl_num" text="count" textFill="#686868" HBox.hgrow="ALWAYS">
+                              <Label fx:id="lbl_num" prefWidth="52.0" text="count" textFill="#686868" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
@@ -55,6 +55,18 @@
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../../Asset/Icon/icon_view.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="btn_details" layoutX="10.0" layoutY="18.0" lineSpacing="10.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../Asset/Icon/icon_edit.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>

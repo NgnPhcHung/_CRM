@@ -61,6 +61,10 @@ public class TeamController {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_addNew, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/Team/createTeam.fxml");
         });
+        btn_back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_addNew, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/employee.fxml");
+        });
     }
 
     private void populateList() {

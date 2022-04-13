@@ -40,6 +40,9 @@ public class TeamCellController extends JFXListCell<Team> {
     @FXML
     private Button btn_edit;
 
+    @FXML
+    private Button btn_details;
+
     private FXMLLoader fxmlLoader;
     private Database database;
     private SceneHandler sceneHandler;
@@ -76,6 +79,11 @@ public class TeamCellController extends JFXListCell<Team> {
                 sceneHandler = new SceneHandler();
                 TeamDetailController.teamID = item.getTeamID();
                 sceneHandler.slideScene(btn_edit, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/teamDetail.fxml");
+            });
+            btn_details.setOnAction(e -> {
+                sceneHandler = new SceneHandler();
+                CreateTeamController.teamID = item.getTeamID();
+                sceneHandler.slideScene(btn_edit, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/createTeam.fxml");
             });
         }
         setText(null);

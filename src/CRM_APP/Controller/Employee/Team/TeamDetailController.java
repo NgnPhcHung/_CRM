@@ -59,6 +59,10 @@ public class TeamDetailController {
             sceneHandler.slideScene(btn_back, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/team.fxml");
 
         });
+        btn_addNew.setOnAction(e->{
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_back, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/addMember.fxml");
+        });
     }
 
     private void populateList(){
@@ -83,5 +87,4 @@ public class TeamDetailController {
             e.printStackTrace();
         }
     }
-
 }

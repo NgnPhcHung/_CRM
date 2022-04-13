@@ -91,11 +91,11 @@ public class ProjectController {
     void filterCell() {
         txt_findName.textProperty().addListener(((observable, oldValue, newValue) -> {
             sceneHandler= new SceneHandler();
-            ProjectDB projectDB = new ProjectDB();
+            database = new Database();
             projects = FXCollections.observableArrayList();
             ResultSet row = null;
             try {
-                row = projectDB.projectFilter(newValue);
+                row = database.filterDataInput(Const.PROJECT_TABLE, Const.PROJECT_NAME, newValue);
                 while(row.next()){
                     Project project = new Project();
                     project.setId(row.getString("ProjectID"));

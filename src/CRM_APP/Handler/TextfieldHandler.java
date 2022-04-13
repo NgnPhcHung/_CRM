@@ -1,8 +1,13 @@
 package CRM_APP.Handler;
 
+import CRM_APP.Database.Database;
+import CRM_APP.Model.Project;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -51,5 +56,38 @@ public class TextfieldHandler {
         }else{
             return false;
         }
+    }
+    public void limitTextField(JFXTextField textField, int LIMIT){
+        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() > oldValue.intValue()) {
+                    // Check if the new character is greater than LIMIT
+                    if (textField.getText().length() >= LIMIT) {
+
+                        // if it's 11th character then just setText to previous
+                        // one
+                        textField.setText(textField.getText().substring(0, LIMIT));
+                    }
+                }
+            }
+        });
+    }
+
+    public void limitInput(JFXPasswordField textField, int LIMIT){
+        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.intValue() > oldValue.intValue()) {
+                    // Check if the new character is greater than LIMIT
+                    if (textField.getText().length() >= LIMIT) {
+
+                        // if it's 11th character then just setText to previous
+                        // one
+                        textField.setText(textField.getText().substring(0, LIMIT));
+                    }
+                }
+            }
+        });
     }
 }

@@ -129,6 +129,23 @@
                         </HBox>
                      </graphic>
                   </JFXButton>
+                  <JFXButton fx:id="btn_Total" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="Total">
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="card2" />
+                     </styleClass>
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="cardNum">
+                                 <children>
+                                    <Label fx:id="lbl_Total" text="5" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </JFXButton>
                </children>
             </HBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
