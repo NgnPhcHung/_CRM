@@ -1,6 +1,6 @@
 package CRM_APP.Controller.Customer;
 
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -42,11 +42,11 @@ public class ContactController {
     private JFXButton btn_save;
 
     private boolean isMale = true;
-    TextfieldHandler textfieldHandler;
+    TextFieldHandler textfieldHandler;
 
     @FXML
     void initialize() {
-        textfieldHandler = new TextfieldHandler();
+        textfieldHandler = new TextFieldHandler();
         textfieldHandler.numberOnly(txt_phone);
     }
 

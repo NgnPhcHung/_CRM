@@ -5,7 +5,7 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import CRM_APP.Model.Employee;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -56,7 +56,7 @@ public class AddEmployeeController {
     @FXML
     private Button btn_Delete;
 
-    private TextfieldHandler textfieldHandler;
+    private TextFieldHandler textfieldHandler;
     private Database database;
     private EmployeeDB employeeDB;
     private Employee employee;
@@ -64,7 +64,7 @@ public class AddEmployeeController {
     public static String emID = "null";
     @FXML
     void initialize() {
-        TextfieldHandler textfieldHandler = new TextfieldHandler();
+        TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.limitTextField(txt_Password, 6);
         cb_Role.getItems().addAll("Employee", "Admin");
         if(emID.equals("null")){
@@ -73,7 +73,7 @@ public class AddEmployeeController {
             populateDetail();
             btn_Delete.setVisible(true);
         }
-        textfieldHandler = new TextfieldHandler();
+        textfieldHandler = new TextFieldHandler();
         textfieldHandler.numberOnly(txt_Phone);
         btn_Save.setOnAction(e ->{
             if(emID.equals("null")){

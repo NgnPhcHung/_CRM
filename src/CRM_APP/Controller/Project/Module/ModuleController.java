@@ -5,7 +5,7 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Project.ModuleDB;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import CRM_APP.Model.Module;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -176,7 +176,6 @@ public class ModuleController {
 
     @FXML
     void filterEvent(ActionEvent event) {
-        String statusButton;
         Button button = (Button) event.getSource();
         String btnName = button.getText().trim();
 

@@ -6,7 +6,7 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import CRM_APP.Model.Employee;
 import CRM_APP.Model.Team;
 import com.jfoenix.controls.JFXButton;
@@ -94,7 +94,7 @@ public class EmployeeProfileController {
         if(condition.equals("home")){
             btn_Back.setVisible(false);
         }
-        TextfieldHandler textfieldHandler = new TextfieldHandler();
+        TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.limitInput(txt_Password, 6);
         //press button back and check where it come from
         btn_Back.setOnAction(e -> {

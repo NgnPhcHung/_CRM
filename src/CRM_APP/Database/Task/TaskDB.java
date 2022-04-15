@@ -145,6 +145,7 @@ public class TaskDB {
     }
 
     public void update(Task task){
+
         String query = "UPDATE " + Const.TASK_TABLE + " SET "
                         + Const.TASK_NAME + " =?, "
                         + Const.TASK_MOD_ID + " =?, "

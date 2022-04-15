@@ -70,7 +70,7 @@ public class ProjectController {
                 project.setEndTime(row.getString("EndTime"));
                 project.setManager(row.getString("Manager"));
                 project.setCusId(row.getString("CusID"));
-                cellStack = main_stack;
+                ProjectCellController.cellStack = main_stack;
                 projects.add(project);
             }
             lv_project.setItems(projects);

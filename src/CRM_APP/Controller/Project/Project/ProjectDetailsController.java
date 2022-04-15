@@ -7,7 +7,7 @@ import CRM_APP.Database.Project.ProjectDB;
 import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import CRM_APP.Model.Project;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -84,7 +84,7 @@ public class ProjectDetailsController {
         populateComboBoxData();
         DateTimePickerHandler.disableDate(dp_end, dateStart);
         catchStartDateEnd();
-        TextfieldHandler num = new TextfieldHandler();
+        TextFieldHandler num = new TextFieldHandler();
         num.numberOnly(txt_amount);
         if(projectID.equals("null")){
             btn_delete.setVisible(false);

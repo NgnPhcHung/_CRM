@@ -1,49 +1,61 @@
 package CRM_APP.Model;
 
+import java.time.LocalDate;
+
 public class Bill {
-    private String name;
-    private String company;
-    private int amount;
-    private String date;
-    private boolean status;
+    private String id;
+    private String customer;
+    private LocalDate date;
+    private String status;
+    private String percent;
+    private String totalAmount;
 
-    public String getName() {
-        return name;
+    public String getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public String getCompany() {
-        return company;
+    public String getId() {
+        return id;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getAmount() {
-        return amount;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
-    public String getDate() {
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPercent() {
+        return percent;
+    }
+
+    public void setPercent(String percent) {
+        this.percent = percent;
     }
 }

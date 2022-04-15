@@ -1,7 +1,7 @@
 package CRM_APP.Controller.Customer;
 
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -48,7 +48,7 @@ public class CustomerDetailController {
 
 
     SceneHandler sceneHandler;
-    TextfieldHandler textfieldHandler;
+    TextFieldHandler textfieldHandler;
 
     @FXML
     void saveEvent(ActionEvent event) {
@@ -72,7 +72,7 @@ public class CustomerDetailController {
 
     @FXML
     void initialize() {
-        textfieldHandler = new TextfieldHandler();
+        textfieldHandler = new TextFieldHandler();
 
     }
 }

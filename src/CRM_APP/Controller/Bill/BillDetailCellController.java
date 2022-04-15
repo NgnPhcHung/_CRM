@@ -1,25 +1,27 @@
-package CRM_APP.Controller.Billing;
+package CRM_APP.Controller.Bill;
 
+import CRM_APP.Database.Const;
+import CRM_APP.Database.Database;
+import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Model.Bill;
+import CRM_APP.Model.Module;
 import com.jfoenix.controls.JFXListCell;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class BillCellController extends JFXListCell {
+public class BillDetailCellController extends JFXListCell<Module> {
+
     @FXML
     private ResourceBundle resources;
 
@@ -27,31 +29,33 @@ public class BillCellController extends JFXListCell {
     private URL location;
 
     @FXML
-    private static HBox main_pane;
+    private HBox main_Pane;
 
-    @FXML private Button btn_view;
+    @FXML
+    private Label lbl_Name;
 
     FXMLLoader fxmlLoader;
+    public static StackPane cellStack;
+    private Database database;
+    private SceneHandler sceneHandler;
+
 
     @FXML
     void initialize() {
 
     }
 
-    @FXML
-    void editEvent(ActionEvent event) {
 
-    }
 
     @Override
-    protected void updateItem(Object item, boolean empty) {
+    protected void updateItem(Module item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
             setText(null);
             setGraphic(null);
         }else{
-            if(fxmlLoader == null){
-                fxmlLoader = new FXMLLoader(getClass().getResource("/CRM_APP/View/Bill/billCell.fxml"));
+            if (fxmlLoader == null) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/CRM_APP/View/Bill/billDetailCell.fxml"));
                 fxmlLoader.setController(this);
 
                 try {
@@ -61,9 +65,10 @@ public class BillCellController extends JFXListCell {
                 }
             }
 
+            lbl_Name.setText(item.getModName());
+
             setText(null);
-            setGraphic(main_pane);
+            setGraphic(main_Pane);
         }
     }
-
 }
