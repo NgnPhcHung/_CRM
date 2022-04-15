@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 public class SurveyController {
@@ -38,6 +39,9 @@ public class SurveyController {
     @FXML
     private JFXListView<Survey> lv_product;
 
+    @FXML
+    public Button btn_back;
+
     private ObservableList<Survey> surveys;
     private SceneHandler sceneHandler;
     private Database database;
@@ -50,6 +54,11 @@ public class SurveyController {
             SurveyTypeCreateController.surID = null;
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Survey/surveyDetail.fxml");
+        });
+
+        btn_back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_back, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyMenu.fxml");
         });
     }
 

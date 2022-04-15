@@ -45,8 +45,8 @@ public class SurveyTypeController {
         });
 
         btn_back.setOnAction(e -> {
-            //sceneHandler = new SceneHandler();
-            //sceneHandler.slideScene(btn_back, main_stack, "-Y", "/CRM_APP/View/Survey/surveyMenu.fxml");
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_back, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyMenu.fxml");
         });
     }
 
