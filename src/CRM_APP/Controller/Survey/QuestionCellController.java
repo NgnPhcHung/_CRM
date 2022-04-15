@@ -70,7 +70,7 @@ public class QuestionCellController extends JFXListCell<Question> {
                 }
             }
             lbl_question.setText(item.getQuestionName());
-            lbl_dateAdded.setText(item.getDateAdd());
+            lbl_dateAdded.setText(item.getQuestionName());
             lbl_surveyType.setText(item.getSurID());
             String questionId = item.getQuestionId();
             String questionText = item.getQuestionName();

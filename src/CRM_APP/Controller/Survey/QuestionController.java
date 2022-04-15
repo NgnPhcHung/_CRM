@@ -9,6 +9,7 @@ import CRM_APP.Model.Question;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,9 +19,11 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.layout.StackPane;
 
 public class QuestionController {
 
+    public StackPane main_stack;
     @FXML
     private ResourceBundle resources;
 
@@ -42,29 +45,32 @@ public class QuestionController {
 
     private Thread listViewThread;
     private boolean isRunning = true;
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
-        listViewThread= new Thread(this::handleThread);
+        listViewThread = new Thread(this::handleThread);
         listViewThread.start();
 
         populateQuestions();
-        btn_manage.setOnAction(event -> sceneHandler.newScene("/CRM_APP/View/Survey/questionDetail.fxml"));
+        btn_manage.setOnAction(event -> {
+            QuestionDetailController.questionID = null;
+            sceneHandler.newScene("/CRM_APP/View/Survey/questionDetail.fxml");
+        });
     }
 
     //populate question list in database to list view
     private void populateQuestions() throws SQLException, ClassNotFoundException {
-        sceneHandler= new SceneHandler();
+        sceneHandler = new SceneHandler();
         database = new Database();
         questions = FXCollections.observableArrayList();
 
         ResultSet row = database.getAllTableValue(Const.QUESTION_TABLE);
-        while(row.next()){
+        while (row.next()) {
             Question question = new Question();
-
-            question.setQuestionId(row.getString("QuestionID"));
-            question.setQuestionName(row.getString("QuestionName"));
-            question.setDateAdd(row.getString("DateAdd"));
-            question.setSurID(row.getString("SurID"));
+            question.setQuestionId(row.getString(Const.QUESTION_ID));
+            question.setQuestionName(row.getString(Const.QUESTION_NAME));
+            question.setTypeID(row.getString(Const.QUESTIONTYPE_ID));
+            question.setSurID(row.getString(Const.SURVEYTYPE_ID));
 
             questions.addAll(question);
         }
@@ -73,21 +79,19 @@ public class QuestionController {
     }
 
     //refresh listview
-    private void handleThread(){
-        while(isRunning){
-            Platform.runLater(() ->{
+    private void handleThread() {
+        while (isRunning) {
+            Platform.runLater(() -> {
                 try {
                     populateQuestions();
-                } catch (SQLException throwables) {
+                } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
             });
-            try{
+            try {
 
                 Thread.sleep(1000);
-            }catch(InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

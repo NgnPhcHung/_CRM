@@ -80,7 +80,7 @@ public class HomeController {
     @FXML
     void initialize() {
         getInfo();
-        if(!userId.contains("AD")){
+        if (!userId.contains("AD")) {
             btn_project.setVisible(false);
         }
     }
@@ -99,6 +99,7 @@ public class HomeController {
         Platform.exit();
         System.exit(0);
     }
+
     private void userLogout(String uid) throws SQLException, ClassNotFoundException {
         String deviceName = OtherHandler.getDevice();
         String aid = OtherHandler.generateId();
@@ -119,21 +120,20 @@ public class HomeController {
     }
 
     //check value is in array (now is tab)
-    private boolean check(String arr[], String valueCheck){
+    private boolean check(String arr[], String valueCheck) {
         boolean test = false;
-        for(int i  = 0; i < arr.length;i++){
-            if(arr[i].equals(valueCheck)) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(valueCheck)) {
                 test = true;
                 break;
-            }
-            else test = false;
+            } else test = false;
         }
         return test;
     }
 
     //add tab to tabs
     private String[] addElement(String[] a, String e) {
-        a  = Arrays.copyOf(a, a.length + 1);
+        a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;
     }
@@ -147,8 +147,8 @@ public class HomeController {
         alert.setX(bounds.getMaxX() - 1240);//vertical
         alert.setY(bounds.getMaxY() - 900); //horizontal
         alert.getDialogPane().setStyle(
-                "-fx-background-radius: 10px;"+
-                "-fx-background-color: transparent;");
+                "-fx-background-radius: 10px;" +
+                        "-fx-background-color: transparent;");
         alert.getDialogPane().getScene().setFill(Color.TRANSPARENT); // Used for better visual representation of the bug
         alert.setHeaderText("");
         alert.initStyle(StageStyle.UNDECORATED);
@@ -186,79 +186,80 @@ public class HomeController {
             label.setText("No selection!");
         } else if (option.get() == Result) {
             GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getChooseFileFxml("result", "Survey")));
-            if(tabManage("Result")){
+            if (tabManage("Result")) {
                 tab.setContent(newPane);
                 tab.setText("Result");
                 tp_homeMain.getTabs().add(tab);
             }
         } else if (option.get() == Question) {
             GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getChooseFileFxml("question", "Survey")));
-            if(tabManage("Question")){
+            if (tabManage("Question")) {
                 tab.setContent(newPane);
                 tab.setText("Question");
                 tp_homeMain.getTabs().add(tab);
             }
-        }else if (option.get() == Close) {
-           alert.close();
+        } else if (option.get() == Close) {
+            alert.close();
         } else {
             label.setText("-");
         }
     }
 
     //this will get all opened tab
-    private boolean tabManage(String btn){
+    private boolean tabManage(String btn) {
         boolean isOpen = false;
 
         String temp[] = new String[]{};
         String btnName = btn;
 
         //if tab not in tabs, add tab
-        for(Tab tabs: tp_homeMain.getTabs()){
-            if(check(temp,tabs.getText())==false){
-                temp = addElement(temp,tabs.getText());
+        for (Tab tabs : tp_homeMain.getTabs()) {
+            if (check(temp, tabs.getText()) == false) {
+                temp = addElement(temp, tabs.getText());
             }
         }
 
-        if(check(temp,btnName)) return isOpen=false;
-        else return isOpen=true;
+        if (check(temp, btnName)) return isOpen = false;
+        else return isOpen = true;
     }
 
     //set new tab when press button
     @FXML
     void mouseClickEvent(MouseEvent event) throws IOException {
-        Button button = (Button)event.getSource();
+        Button button = (Button) event.getSource();
         String btnName = button.getText().trim();
 
-        if(tabManage(btnName)){
+        if (tabManage(btnName)) {
             Tab tab = new Tab(btnName);
 
             tp_homeMain.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
             tp_homeMain.getStylesheets().add("/CRM_APP/Style/HomeStyle.css");
             tp_homeMain.setStyle("tab-close-button: #cfd8dc");
 
-            if (btnName.equals("Survey")){
-                showConfirmation(tab);
-            }else {
-                if(btnName.equals("Task")){
-                    FullCalendarView.openFromHome = true;
-                    tab.setContent(new FullCalendarView(YearMonth.now()).getView());
-                }else if (btnName.equals("Employee") && !userId.contains("AD")){
-                    EmployeeProfileController.emID = userId;
-                    EmployeeProfileController.condition = "home";
-                    StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/Employee/employeeProfile.fxml"));
-                    tab.setContent(newPane);
-                }else{
-                    StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
-                    tab.setContent(newPane);
-                }
-
-                tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
-                        "    -fx-font-weight: bold;\n" +
-                        "    -fx-font-family: Calibri;\n" +
-                        "    -fx-font-size: 20;");
-
-                tp_homeMain.getTabs().add(tab);
+            if (btnName.equals("Survey")) {
+                //showConfirmation(tab);
+                StackPane newPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/CRM_APP/View/Survey/surveyMenu.fxml")));
+                tab.setContent(newPane);
+            } else if (btnName.equals("Task")) {
+                FullCalendarView.openFromHome = true;
+                tab.setContent(new FullCalendarView(YearMonth.now()).getView());
+            } else if (btnName.equals("Employee") && !userId.contains("AD")) {
+                EmployeeProfileController.emID = userId;
+                EmployeeProfileController.condition = "home";
+                StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/Employee/employeeProfile.fxml"));
+                tab.setContent(newPane);
+            } else {
+                StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
+                tab.setContent(newPane);
             }
+
+            tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
+                    "    -fx-font-weight: bold;\n" +
+                    "    -fx-font-family: Calibri;\n" +
+                    "    -fx-font-size: 20;");
+
+            tp_homeMain.getTabs().add(tab);
+
         }
     }
 
@@ -267,8 +268,8 @@ public class HomeController {
         ResultSet row = null;
         try {
             row = db.getSomeID(userId, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
-            if(row.next()){
-                lbl_name.setText("Welcome back, "+row.getString("EmpName"));
+            if (row.next()) {
+                lbl_name.setText("Welcome back, " + row.getString("EmpName"));
                 lbl_position.setText(row.getString("Position"));
             }
         } catch (SQLException throwables) {
@@ -278,11 +279,13 @@ public class HomeController {
         }
 
     }
+
     //get set
-    public void setUserId(String userId){
+    public void setUserId(String userId) {
         this.userId = userId;
     }
-    public String getUserId(){
+
+    public String getUserId() {
         return this.userId;
     }
 }

@@ -1,22 +1,29 @@
 package CRM_APP.Model;
 
 public class Survey {
-    private String id;
-    private String name;
+    private String surveyID, cusID, surveyName;
 
-    public String getId() {
-        return id;
+    public String getSurveyID() {
+        return surveyID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSurveyID(String surveyID) {
+        this.surveyID = surveyID;
     }
 
-    public String getName() {
-        return name;
+    public String getCusID() {
+        return cusID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCusID(String cusID) {
+        this.cusID = cusID;
+    }
+
+    public String getSurveyName() {
+        return surveyName;
+    }
+
+    public void setSurveyName(String surveyName) {
+        this.surveyName = surveyName;
     }
 }

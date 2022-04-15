@@ -2,6 +2,7 @@ package CRM_APP.Database.Survey;
 
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Model.Employee;
 import CRM_APP.Model.Survey;
 import CRM_APP.Model.SurveyType;
 
@@ -9,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SurveyDB {
+public class SurveyTypeDB {
     private Database db;
 
     //when user login
@@ -17,7 +18,7 @@ public class SurveyDB {
         db = new Database();
         ResultSet resultSet = null;
 
-        String query = "SELECT * FROM " + Const.SURVEY_TABLE;
+        String query = "SELECT * FROM " + Const.SURVEY_TYPE_TABLE;
         PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
 
@@ -25,17 +26,17 @@ public class SurveyDB {
     }
 
 
-    public void save(Survey survey) {
+    public void saveSurveyType(SurveyType surveyType) {
         try {
             db = new Database();
-            String query = "INSERT INTO " + Const.SURVEY_TABLE + "( "
-                    + Const.SURVEY_ID + ", "
-                    + Const.CUSTOMER_ID + ", "
-                    + Const.SURVEY_NAME + " ) VALUES  (?,?,?,?)";
+            String query = "INSERT INTO " + Const.SURVEY_TYPE_TABLE + "( "
+                    + Const.SURVEYTYPE_ID + ", "
+                    + Const.SURVEYTYPE_NAME + ", "
+                    + Const.SURVEYTYPE_DES + " ) VALUES  (?,?,?)";
             PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
-            preparedStatement.setString(1, survey.getSurveyID());
-            preparedStatement.setString(2, survey.getCusID());
-            preparedStatement.setString(3, survey.getSurveyName());
+            preparedStatement.setString(1, surveyType.getSurID());
+            preparedStatement.setString(2, surveyType.getSurName());
+            preparedStatement.setString(3, surveyType.getDes());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -44,16 +45,16 @@ public class SurveyDB {
         }
     }
 
-    public void update(Survey survey) {
+    public void update(SurveyType surveyType) {
         db = new Database();
-        String query = " UPDATE " + Const.SURVEY_TABLE + " SET "
-                + Const.CUSTOMER_ID + " =?, "
-                + Const.SURVEY_NAME + "=? WHERE " + Const.SURVEY_ID + "=?";
+        String query = " UPDATE " + Const.SURVEY_TYPE_TABLE + " SET "
+                + Const.SURVEYTYPE_NAME + " =?, "
+                + Const.SURVEYTYPE_DES + "=? WHERE " + Const.SURVEYTYPE_ID + "=?";
         try {
             PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
-            preparedStatement.setString(1, survey.getCusID());
-            preparedStatement.setString(2, survey.getSurveyName());
-            preparedStatement.setString(3, survey.getSurveyID());
+            preparedStatement.setString(1, surveyType.getSurName());
+            preparedStatement.setString(2, surveyType.getDes());
+            preparedStatement.setString(3, surveyType.getSurID());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException throwables) {

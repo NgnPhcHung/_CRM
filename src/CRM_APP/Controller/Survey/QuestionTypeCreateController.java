@@ -3,11 +3,9 @@ package CRM_APP.Controller.Survey;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.QuestionTypeDB;
-import CRM_APP.Database.Survey.SurveyTypeDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
-import CRM_APP.Handler.TextfieldHandler;
 import CRM_APP.Model.QuestionType;
 import CRM_APP.Model.SurveyType;
 import com.jfoenix.controls.JFXButton;
@@ -48,7 +46,6 @@ public class QuestionTypeCreateController {
     private QuestionTypeDB questionTypeDB;
     private QuestionType questionType;
     private ShakerHandler shakerHandler;
-    private TextfieldHandler textfieldHandler;
 
     @FXML
     void initialize() {

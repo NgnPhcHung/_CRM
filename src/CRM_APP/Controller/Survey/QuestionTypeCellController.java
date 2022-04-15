@@ -53,11 +53,11 @@ public class QuestionTypeCellController extends JFXListCell<QuestionType> {
                 }
                 lbl_question_type.setText(item.getqTypeName());
 
-            btn_edit.setOnAction(e -> {
-                sceneHandler = new SceneHandler();
-                QuestionTypeCreateController.questionTypeID = item.getqTypeID();
-                sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/questionTypeCreate.fxml");
-            });
+                btn_edit.setOnAction(e -> {
+                    sceneHandler = new SceneHandler();
+                    QuestionTypeCreateController.questionTypeID = item.getqTypeID();
+                    sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/questionTypeCreate.fxml");
+                });
                 setText(null);
                 setGraphic(main_pane);
             }

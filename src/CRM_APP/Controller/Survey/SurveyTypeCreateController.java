@@ -8,7 +8,7 @@ import CRM_APP.Database.Survey.SurveyTypeDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
-import CRM_APP.Handler.TextfieldHandler;
+import CRM_APP.Handler.TextFieldHandler;
 import CRM_APP.Model.Employee;
 import CRM_APP.Model.Survey;
 import CRM_APP.Model.SurveyType;
@@ -52,7 +52,7 @@ public class SurveyTypeCreateController {
     private SurveyTypeDB surveyTypeDB;
     private SurveyType surveyType;
     private ShakerHandler shakerHandler;
-    private TextfieldHandler textfieldHandler;
+    private TextFieldHandler textfieldHandler;
 
     @FXML
     void initialize() {

@@ -12,100 +12,108 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="610.0" prefWidth="820.0" stylesheets="@../../Style/TabFormStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Survey.QuestionController">
-  <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="20.0" top="10.0" />
-         </GridPane.margin>
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-               <children>
-                  <Label styleClass="title" text="Question" textFill="#686868">
-                     <font>
-                        <Font name="Calibri Bold" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
+<?import javafx.scene.layout.StackPane?>
+<StackPane fx:id="main_stack" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="CRM_APP.Controller.Survey.QuestionController">
+    <GridPane prefHeight="610.0" prefWidth="1024.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets left="20.0" top="10.0"/>
+                </GridPane.margin>
+                <children>
+                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <children>
+                            <Label styleClass="title" text="Question" textFill="#686868">
+                                <font>
+                                    <Font name="Calibri Bold" size="20.0"/>
+                                </font>
+                            </Label>
+                        </children>
+                    </HBox>
+                    <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER" prefWidth="150.0">
+                                <children>
+                                    <Label styleClass="title" text="Type" textFill="#686868">
+                                        <font>
+                                            <Font name="Calibri Bold" size="20.0"/>
+                                        </font>
+                                        <padding>
+                                            <Insets left="15.0" right="15.0"/>
+                                        </padding>
+                                    </Label>
+                                </children>
+                            </HBox>
+                            <Separator layoutX="352.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0">
+                                <HBox.margin>
+                                    <Insets right="5.0"/>
+                                </HBox.margin>
+                            </Separator>
+                            <HBox alignment="CENTER" prefWidth="150.0">
+                                <children>
+                                    <Label styleClass="title" text="Action" textFill="#686868">
+                                        <font>
+                                            <Font name="Calibri Bold" size="20.0"/>
+                                        </font>
+                                        <padding>
+                                            <Insets left="10.0" right="15.0"/>
+                                        </padding>
+                                    </Label>
+                                </children>
+                            </HBox>
+                        </children>
+                        <padding>
+                            <Insets right="20.0"/>
+                        </padding>
+                    </HBox>
+                </children>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <HBox alignment="CENTER" prefWidth="150.0">
-                     <children>
-                        <Label styleClass="title" text="Type" textFill="#686868">
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="15.0" right="15.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Separator layoutX="352.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin></Separator>
-                  <HBox alignment="CENTER" prefWidth="150.0">
-                     <children>
-                        <Label styleClass="title" text="Action" textFill="#686868">
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="10.0" right="15.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header"
+                  GridPane.columnSpan="2147483647">
+                <children>
+                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <children>
+                            <JFXButton fx:id="btn_manage" text="Create Question" textFill="#515151">
+                                <HBox.margin>
+                                    <Insets left="15.0"/>
+                                </HBox.margin>
+                                <font>
+                                    <Font name="Calibri Bold Italic" size="15.0"/>
+                                </font>
+                            </JFXButton>
+                        </children>
+                    </HBox>
+                    <JFXTextField fx:id="txt_search" focusColor="#90caf9" labelFloat="true" prefHeight="30.0"
+                                  prefWidth="200.0" promptText="Title" unFocusColor="#ff7a51">
+                        <HBox.margin>
+                            <Insets left="15.0" right="15.0"/>
+                        </HBox.margin>
+                    </JFXTextField>
+                </children>
+                <GridPane.margin>
+                    <Insets top="15.0"/>
+                </GridPane.margin>
             </HBox>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header" GridPane.columnSpan="2147483647">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <JFXButton fx:id="btn_manage" text="Create Question" textFill="#515151">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="Calibri Bold Italic" size="15.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </HBox>
-            <JFXTextField fx:id="txt_search" focusColor="#90caf9" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Title" unFocusColor="#ff7a51">
-               <HBox.margin>
-                  <Insets left="15.0" right="15.0" />
-               </HBox.margin>
-            </JFXTextField>
-         </children>
-         <GridPane.margin>
-            <Insets top="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <JFXListView fx:id="lv_questionlist" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.rowSpan="2147483647">
-         <GridPane.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </GridPane.margin>
-      </JFXListView>
-   </children>
-</GridPane>
+            <JFXListView fx:id="lv_questionlist" GridPane.columnSpan="2147483647" GridPane.rowIndex="2"
+                         GridPane.rowSpan="2147483647">
+                <GridPane.margin>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                </GridPane.margin>
+            </JFXListView>
+        </children>
+    </GridPane>
+</StackPane>

@@ -14,38 +14,36 @@ public class QuestionDB {
 
     }
     //question
-    public void createQuestion(String id, String surId,String name, String date){
+    public void createQuestion(String id, String surId, String name, String questionTypeId){
         String query = "INSERT INTO " + Const.QUESTION_TABLE +" ("
-                        + Const.QUESTION_ID + ", "
-                        + Const.SURVEYTYPE_ID + ", "
-                        + Const.QUESTION_NAME + ", "
-                        + Const.QUESTION_DATE_ADD
-                        +" ) VALUES (?,?,?,?)";
+                + Const.QUESTION_ID + ", "
+                + Const.SURVEYTYPE_ID + ", "
+                + Const.QUESTION_NAME + ", "
+                + Const.QUESTIONTYPE_ID
+                +" ) VALUES (?,?,?,?)";
         try {
             PreparedStatement preparedStatement = db.dbConnection.prepareStatement(query);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, surId);
             preparedStatement.setString(3, name);
-            preparedStatement.setString(4, date);
+            preparedStatement.setString(4, questionTypeId);
             preparedStatement.executeUpdate();
             db.getDbConnection().close();
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
-    public void createQuestionDetail(String id, String qId,String name){
+    public void createQuestionDetail(String id, String qId,String ans){
         String query = "INSERT INTO " + Const.QUESTION_DETAIL_TABLE +" ("
                 + Const.QUESTIONDETAIL_ID + ", "
                 + Const.QUESTION_ID + ", "
-                + Const.QUESTIONDETAIL_CHOICE
+                + Const.QUESTIONDETAIL_ANSWER
                 +" ) VALUES (?,?,?)";
         try {
             PreparedStatement preparedStatement = db.dbConnection.prepareStatement(query);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, qId);
-            preparedStatement.setString(3, name);
+            preparedStatement.setString(3, ans);
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {

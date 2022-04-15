@@ -57,7 +57,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </ImageView>
-                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="SAD3456" unFocusColor="#76b3ff">
+                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="AD01" unFocusColor="#76b3ff">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -77,7 +77,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </ImageView>
-                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="123aa" unFocusColor="#76b3ff" />
+                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="123" unFocusColor="#76b3ff" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="50.0" />
