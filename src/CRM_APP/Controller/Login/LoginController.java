@@ -72,9 +72,10 @@ public class LoginController {
     private Executor exec ;
 
     private SceneHandler sceneHandler;
-    private LoginDB database = new LoginDB();
-    private Database mydb = new Database();
-    private Employee em = new Employee();
+    private LoginDB database = new LoginDB(); // Khởi tạo database cho login
+    private Database mydb = new Database(); // Khởi tạo lớp database
+    private Employee employee = new Employee(); // Khai báo đối tượng nhân viên
+
     private String userId;
 
     @FXML
@@ -93,9 +94,10 @@ public class LoginController {
         sceneHandler = new SceneHandler();
         String loginText = txt_username.getText().trim();
         String loginPwd = txt_password.getText().trim();
-        Employee employee = new Employee();
-        employee.setId(loginText);
-        employee.setPassword(loginPwd);
+
+        employee = new Employee(); // Khởi tạo đối tượng
+        employee.setId(loginText); // Gán giá trị cho ID
+        employee.setPassword(loginPwd); // Gán giá trị cho password
 
         try {
             ResultSet userRow = database.getUser(employee);
@@ -116,16 +118,16 @@ public class LoginController {
                 txt_password.setText("");
                 txt_username.setText("");
             }
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     //login event
     private void loginSuccess() {
         try {
             btn_login.getScene().getWindow().hide();
+
+            // Gọi màn hình home
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/CRM_APP/View/Home/home.fxml"));
             HomeController.userId = userId;
@@ -146,8 +148,8 @@ public class LoginController {
     }
     //this func will fire when login success and be4 change scene
     private void userLogin(String uid){
-        String deviceName = OtherHandler.getDevice();
-        String aid = OtherHandler.generateId();
+        String deviceName = OtherHandler.getDevice(); // Lấy tên thiết bị
+        String aid = OtherHandler.generateId(); // Tạo ra id ngẫu nhiên
         ResultSet rs = null;
         try {
 
@@ -157,14 +159,14 @@ public class LoginController {
                 rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
 
             }
+            // Lấy thời gian hiện tại hệ thống
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             String logTime = dtf.format(now);
+
             database.authen("login", aid, uid, logTime, deviceName);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }catch (Exception e){}
+        }
     }
 }
