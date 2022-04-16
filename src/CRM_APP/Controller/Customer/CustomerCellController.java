@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 public class CustomerCellController extends JFXListCell<Customer> {
     @FXML
@@ -31,7 +32,7 @@ public class CustomerCellController extends JFXListCell<Customer> {
     private Label lbl_phone;
 
     @FXML
-    private Label lbl_email;
+    private Label lbl_Address;
 
     @FXML
     private Label lbl_project;
@@ -48,18 +49,12 @@ public class CustomerCellController extends JFXListCell<Customer> {
 
     FXMLLoader fxmlLoader ;
     SceneHandler sceneHandler;
+    public static StackPane cellStack;
+
     @FXML
     void initialize() {
     }
 
-    //press edit button
-    @FXML
-    void editEvent(ActionEvent event) {
-        sceneHandler = new SceneHandler();
-        sceneHandler.newScene("/CRM_APP/View/Customer/contact.fxml");
-    }
-
-    //udpate
     @Override
     protected void updateItem(Customer item, boolean empty) {
         super.updateItem(item, empty);
@@ -79,7 +74,13 @@ public class CustomerCellController extends JFXListCell<Customer> {
                 }
             }
             lbl_name.setText(item.getCusName());
-
+            lbl_Address.setText(item.getAddress());
+            lbl_phone.setText(item.getPhone());
+            btn_edit.setOnAction(e->{
+                CustomerDetailController.cusID = item.getId();
+                sceneHandler = new SceneHandler();
+                sceneHandler.slideScene(btn_edit, cellStack, "X", "/CRM_APP/View/Customer/customerDetail.fxml");
+            });
             setText(null);
             setGraphic(main_pane);
         }

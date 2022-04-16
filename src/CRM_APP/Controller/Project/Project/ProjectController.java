@@ -54,7 +54,13 @@ public class ProjectController {
     void initialize() {
         populateList();
         filterCell();
+        btn_new.setOnAction(e->{
+            ProjectDetailsController.projectID = "null";
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_new, main_stack, "-X", "/CRM_APP/View/Project/projectDetail.fxml");
+        });
     }
+
     private void populateList(){
         sceneHandler= new SceneHandler();
         database = new Database();
@@ -83,9 +89,7 @@ public class ProjectController {
     }
     @FXML
     void newProjectEvent(ActionEvent event) {
-        sceneHandler = new SceneHandler();
-        ProjectDetailsController.projectID = "null";
-        sceneHandler.slideScene(btn_new, cellStack, "-Y","/CRM_APP/View/Project/projectDetail.fxml");
+//
     }
     //filter cell when user input find project
     void filterCell() {

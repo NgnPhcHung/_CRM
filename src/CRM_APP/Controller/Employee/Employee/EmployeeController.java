@@ -46,6 +46,7 @@ public class EmployeeController {
     @FXML
     private JFXListView<Employee> lv_employee;
 
+
     private SceneHandler sceneHandler;
     private Database database;
     private ObservableList<Employee> employees;

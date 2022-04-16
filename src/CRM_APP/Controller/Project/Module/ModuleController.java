@@ -98,6 +98,7 @@ public class ModuleController {
         });
         btn_addNew.setOnAction(e -> {
             ModuleDetailController.modID=null;
+            ModuleDetailController.projectID=projectID;
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/moduleDetail.fxml");
         });
     }

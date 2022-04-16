@@ -284,6 +284,7 @@ public class ProjectDetailsController {
         project.setEndTime(dp_end.getValue().toString());
         //endregion
         projectDB.insertProject(project);
+        sceneHandler = new SceneHandler();
         sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
     }
     private void delete(){

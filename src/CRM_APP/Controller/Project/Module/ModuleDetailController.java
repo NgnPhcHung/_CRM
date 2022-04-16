@@ -91,9 +91,7 @@ public class ModuleDetailController {
             comboBoxHandler();
             //Lock current Project Name
             ResultSet row = database.getSomeID(projectID, Const.PROJECT_TABLE, Const.PROJECT_ID);
-            System.out.println("projectID"+ projectID);
             while(row.next()) {
-                System.out.println("row.getString(\"ProjectName\")" + row.getString("ProjectName"));
                 cb_project.setValue(row.getString("ProjectName"));
             }
         } catch (SQLException throwables) {
