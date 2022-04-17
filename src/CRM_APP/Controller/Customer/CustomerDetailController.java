@@ -61,8 +61,10 @@ public class CustomerDetailController {
     void initialize() {
         TextFieldHandler textFieldHandler = new TextFieldHandler();
         textFieldHandler.numberOnly(txt_Phone);
+        System.out.println("day la cusID " + cusID);
         if(cusID.equals("null")){
             btn_Detete.setVisible(false);
+
         }else{
             populateDetail();
         }

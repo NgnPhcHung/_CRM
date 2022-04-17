@@ -49,6 +49,7 @@ public class CustomerController {
         findCustomer();
         btn_addCustomer.setOnAction(e ->{
             sceneHandler = new SceneHandler();
+            CustomerDetailController.cusID = "null";
             sceneHandler.slideScene(btn_addCustomer, main_Stack, "X", "/CRM_APP/View/Customer/customerDetail.fxml");
         });
     }
