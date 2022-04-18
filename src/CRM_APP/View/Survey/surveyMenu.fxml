@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="main_stack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="796.0" minWidth="800.0" prefHeight="796.0" prefWidth="1400.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Survey.SurveyMenuController">
-   <AnchorPane>
+   <AnchorPane styleClass="container" stylesheets="@../../Style/HomeStyle.css">
       <children>
          <Pane prefHeight="119.0" prefWidth="1319.0" style="-fx-background-color: #2D75E8;">
             <children>
@@ -24,7 +24,7 @@
                </Label>
                <Label layoutX="44.0" layoutY="69.0" text="Click item for details" textFill="WHITE" />
             </children></Pane>
-         <GridPane layoutX="219.0" layoutY="202.0" prefHeight="393.0" prefWidth="881.0" style="-fx-background-color: #FFFFFF;">
+         <GridPane layoutX="219.0" layoutY="202.0" prefHeight="393.0" prefWidth="881.0" styleClass="container">
             <columnConstraints>
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -32,10 +32,11 @@
             </columnConstraints>
             <rowConstraints>
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <Button fx:id="btn_survey_type" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="140.0" prefWidth="234.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Survey Type" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <Button fx:id="btn_survey_type" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="200.0" prefWidth="200.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Survey Type" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                   <graphic>
                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -44,7 +45,7 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button fx:id="btn_question_type" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="140.0" prefWidth="234.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Question Type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <Button fx:id="btn_question_type" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="200.0" prefWidth="200.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Question Type" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                   <graphic>
                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -53,7 +54,7 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button fx:id="btn_question" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="140.0" prefWidth="234.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Question" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <Button fx:id="btn_question" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="200.0" prefWidth="200.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Question" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                   <graphic>
                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -62,7 +63,7 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button fx:id="btn_create_survey" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="140.0" prefWidth="234.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Create Survey" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <Button fx:id="btn_create_survey" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="200.0" prefWidth="200.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Create Survey" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                   <graphic>
                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -71,7 +72,7 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button fx:id="btn_survey_result" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="140.0" prefWidth="234.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Survey Result" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <Button fx:id="btn_survey_result" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="200.0" prefWidth="200.0" styleClass="opt" stylesheets="@../../Style/HomeStyle.css" text="Survey Result" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                   <graphic>
                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                         <image>

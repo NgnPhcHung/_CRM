@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="tp_homeMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" styleClass="container" stylesheets="@../../Style/HomeStyle.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Home.HomeController">
+<TabPane fx:id="tp_homeMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" styleClass="container" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Home.HomeController">
   <tabs>
     <Tab closable="false" text="Home">
          <content>
@@ -24,21 +25,38 @@
                            <children>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
-                                    <Label fx:id="lbl_name" styleClass="hello" text="Label" />
+                                    <Label fx:id="lbl_name" text="Label">
+                                       <styleClass>
+                                          <String fx:value="h3" />
+                                          <String fx:value="text" />
+                                          <String fx:value="hBold" />
+                                       </styleClass></Label>
                                     <Label fx:id="lbl_position" layoutX="10.0" layoutY="45.0" text="Label">
                                        <styleClass>
-                                          <String fx:value="hello" />
-                                          <String fx:value="career" />
+                                          <String fx:value="h5" />
+                                          <String fx:value="text" />
                                        </styleClass>
                                     </Label>
                                  </children>
                               </VBox>
+                              <JFXToggleButton fx:id="tog_Style" text="Light Mode" toggleColor="#909090" toggleLineColor="#4a4a4a">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
+                              </JFXToggleButton>
                            </children>
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </HBox>
-                        <Button fx:id="btn_exit" mnemonicParsing="false" onAction="#closeApplication" styleClass="esc" text="✘" />
+                        <Button fx:id="btn_exit" mnemonicParsing="false" onAction="#closeApplication" text="✘">
+                           <styleClass>
+                              <String fx:value="esc" />
+                              <String fx:value="hBold" />
+                              <String fx:value="h4" />
+                           </styleClass></Button>
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="5.0" />
@@ -46,7 +64,7 @@
                   </HBox>
                   <HBox alignment="CENTER" maxHeight="-Infinity" spacing="20.0">
                      <children>
-                        <Button fx:id="btn_document" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="545.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" styleClass="opt" text="Survey">
+                        <Button fx:id="btn_document" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="545.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Survey">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -57,8 +75,13 @@
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle4" />
+                              <String fx:value="h4" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Button>
-                        <Button fx:id="btn_customer" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="655.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" styleClass="opt" text="Customer">
+                        <Button fx:id="btn_customer" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="655.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Customer">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -69,8 +92,13 @@
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle4" />
+                              <String fx:value="h4" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Button>
-                        <Button fx:id="btn_employee" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" styleClass="opt" text="Employee">
+                        <Button fx:id="btn_employee" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Employee">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -81,6 +109,11 @@
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle4" />
+                              <String fx:value="h4" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Button>
                      </children>
                      <padding>
@@ -98,7 +131,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                      <children>
-                        <Button fx:id="btn_task" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" styleClass="opt" text="Task">
+                        <Button fx:id="btn_task" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Task">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -109,8 +142,13 @@
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle4" />
+                              <String fx:value="h4" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Button>
-                        <Button fx:id="btn_project" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="545.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" styleClass="opt" text="Project">
+                        <Button fx:id="btn_project" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="545.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Project">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -121,8 +159,13 @@
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle4" />
+                              <String fx:value="h4" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Button>
-                        <Button fx:id="btn_bill" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" styleClass="opt" text="Bill">
+                        <Button fx:id="btn_bill" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Bill">
                            <graphic>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -133,6 +176,11 @@
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle4" />
+                              <String fx:value="h4" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Button>
                      </children>
                   </HBox>

@@ -14,10 +14,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Employee.EmployeeProfileController">
    <children>
-      <GridPane prefHeight="600.0" prefWidth="800.0" styleClass="container" stylesheets="@../../Style/EmployeeProfileStyle.css">
+      <GridPane fx:id="grid_Main" prefHeight="600.0" prefWidth="800.0" styleClass="container">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -29,24 +28,46 @@
           <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <VBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="lbl_EmpName" text="Employee Name">
+                           <styleClass>
+                              <String fx:value="h2" />
+                              <String fx:value="hBold" />
+                              <String fx:value="text" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lbl_HeaderPosition" text="Customer Support">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="h3" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="30.0">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0" styleClass="card2">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0" styleClass="textColor1">
                            <children>
                               <Label text="Total Tasks">
                                  <styleClass>
-                                    <String fx:value="cardText" />
-                                    <String fx:value="cardHeader" />
+                                    <String fx:value="text" />
+                                    <String fx:value="h3" />
+                                    <String fx:value="hBold" />
                                  </styleClass>
                               </Label>
                               <HBox alignment="CENTER">
                                  <children>
                                     <Label fx:id="lbl_TotalTask" text="3000">
                                        <styleClass>
-                                          <String fx:value="cardText" />
-                                          <String fx:value="cardNumber" />
+                                          <String fx:value="text" />
+                                          <String fx:value="h3" />
                                        </styleClass>
                                     </Label>
                                  </children>
@@ -56,20 +77,21 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="150.0" styleClass="card1">
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="150.0" styleClass="textColor2">
                            <children>
                               <Label text="Expired">
                                  <styleClass>
-                                    <String fx:value="cardText" />
-                                    <String fx:value="cardHeader" />
+                                    <String fx:value="text" />
+                                    <String fx:value="h3" />
+                                    <String fx:value="hBold" />
                                  </styleClass>
                               </Label>
                               <HBox alignment="CENTER">
                                  <children>
                                     <Label fx:id="lbl_ExpiredTask" text="27">
                                        <styleClass>
-                                          <String fx:value="cardText" />
-                                          <String fx:value="cardNumber" />
+                                          <String fx:value="text" />
+                                          <String fx:value="h3" />
                                        </styleClass>
                                     </Label>
                                  </children>
@@ -90,13 +112,18 @@
                            <children>
                               <HBox alignment="CENTER_LEFT">
                                  <children>
-                                    <Label styleClass="cardText" text="UserID: " />
+                                    <Label text="UserID: ">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="h4" />
+                                          <String fx:value="hBold" />
+                                       </styleClass></Label>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
                                           <Label fx:id="lbl_EmpID" text="EM123456">
                                              <styleClass>
-                                                <String fx:value="cardText" />
-                                                <String fx:value="cardNumber" />
+                                                <String fx:value="text" />
+                                                <String fx:value="h4" />
                                              </styleClass>
                                           </Label>
                                        </children>
@@ -105,13 +132,18 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="63.0">
                                  <children>
-                                    <Label styleClass="cardText" text="Address:" />
+                                    <Label text="Address:">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="h4" />
+                                          <String fx:value="hBold" />
+                                       </styleClass></Label>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
                                           <Label fx:id="lbl_Address" text="ADDRESS">
                                              <styleClass>
-                                                <String fx:value="cardText" />
-                                                <String fx:value="cardNumber" />
+                                                <String fx:value="text" />
+                                                <String fx:value="h4" />
                                              </styleClass>
                                           </Label>
                                        </children>
@@ -120,13 +152,18 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="151.0">
                                  <children>
-                                    <Label styleClass="cardText" text="Phone:" />
+                                    <Label text="Phone:">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="h4" />
+                                          <String fx:value="hBold" />
+                                       </styleClass></Label>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
                                           <Label fx:id="lbl_Phone" text="0123456789">
                                              <styleClass>
-                                                <String fx:value="cardText" />
-                                                <String fx:value="cardNumber" />
+                                                <String fx:value="text" />
+                                                <String fx:value="h4" />
                                              </styleClass>
                                           </Label>
                                        </children>
@@ -135,20 +172,36 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="177.0">
                                  <children>
-                                    <Label styleClass="cardText" text="Position:" />
+                                    <Label text="Position:">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="h4" />
+                                          <String fx:value="hBold" />
+                                       </styleClass></Label>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
                                           <Label fx:id="lbl_Position" text="ADMIN">
                                              <styleClass>
-                                                <String fx:value="cardText" />
-                                                <String fx:value="cardNumber" />
+                                                <String fx:value="text" />
+                                                <String fx:value="h4" />
                                              </styleClass>
                                           </Label>
                                        </children>
                                     </HBox>
                                  </children>
                               </HBox>
-                              <JFXPasswordField fx:id="txt_Password" focusColor="#91adff" labelFloat="true" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="Password" unFocusColor="#ff8c8c" />
+                              <JFXPasswordField fx:id="txt_Password" focusColor="#91adff" labelFloat="true" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="Password" unFocusColor="#ff8c8c">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                    <String fx:value="textInput" />
+                                 </styleClass></JFXPasswordField>
+                              <JFXPasswordField fx:id="txt_RePassword" focusColor="#91adff" labelFloat="true" layoutX="10.0" layoutY="222.0" maxWidth="1.7976931348623157E308" prefWidth="400.0" promptText="Re-Password" unFocusColor="#ff8c8c">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                    <String fx:value="textInput" />
+                                 </styleClass></JFXPasswordField>
                            </children>
                         </VBox>
                         <VBox maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS">
@@ -157,13 +210,14 @@
                                  <children>
                                     <Label text="Joined Team">
                                        <styleClass>
-                                          <String fx:value="cardText" />
-                                          <String fx:value="cardNumber" />
+                                          <String fx:value="text" />
+                                          <String fx:value="h3" />
+                                          <String fx:value="hBold" />
                                        </styleClass>
                                     </Label>
                                  </children>
                               </HBox>
-                              <JFXListView fx:id="lv_JoinTeam" />
+                              <JFXListView fx:id="lv_JoinTeam" VBox.vgrow="ALWAYS" />
                            </children>
                            <HBox.margin>
                               <Insets left="30.0" />
@@ -174,39 +228,34 @@
                   <VBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Label fx:id="lbl_Noti" styleClass="notification" stylesheets="@../../Style/DetailStyle.css" text="Label" visible="false" />
-                        <JFXButton fx:id="btn_Save" text="Save" />
+                        <JFXButton fx:id="btn_Save" text="Save">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="buttonStyle3" />
+                           </styleClass></JFXButton>
                      </children>
                   </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <VBox alignment="CENTER_LEFT">
-                     <children>
-                        <Label fx:id="lbl_EmpName" text="Employee Name">
-                           <styleClass>
-                              <String fx:value="cardText" />
-                              <String fx:value="cardHeader" />
-                           </styleClass>
-                        </Label>
-                        <Label fx:id="lbl_HeaderPosition" text="Customer Support">
-                           <styleClass>
-                              <String fx:value="cardText" />
-                              <String fx:value="position" />
-                           </styleClass>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" styleClass="imgButton" text="◄" />
+                  <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="◄">
+                     <styleClass>
+                        <String fx:value="buttonStyle2" />
+                        <String fx:value="text" />
+                        <String fx:value="h4" />
+                     </styleClass></Button>
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                <children>
-                  <Button fx:id="btn_Edit" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="99.0" text="Edit" />
+                  <Button fx:id="btn_Edit" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="99.0" text="Edit">
+                     <styleClass>
+                        <String fx:value="text" />
+                        <String fx:value="buttonStyle1" />
+                        <String fx:value="h4" />
+                        <String fx:value="hBold" />
+                     </styleClass></Button>
                </children>
             </VBox>
          </children>

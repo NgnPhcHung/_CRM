@@ -34,6 +34,9 @@ public class QuestionController {
     private JFXButton btn_manage;
 
     @FXML
+    private JFXButton btn_Back;
+
+    @FXML
     private JFXTextField txt_search;
 
     @FXML
@@ -53,8 +56,19 @@ public class QuestionController {
 
         populateQuestions();
         btn_manage.setOnAction(event -> {
+            sceneHandler = new SceneHandler();
             QuestionDetailController.questionID = null;
-            sceneHandler.newScene("/CRM_APP/View/Survey/questionDetail.fxml");
+            SurveyController surveyController = new SurveyController();
+
+            sceneHandler.slideScene(btn_Back, main_stack, "-X", "/CRM_APP/View/Survey/questionDetail.fxml");
+
+        });
+
+        btn_Back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            SurveyController surveyController = new SurveyController();
+
+            sceneHandler.slideScene(btn_Back, main_stack, "X", "/CRM_APP/View/Survey/surveyMenu.fxml");
         });
     }
 
@@ -71,7 +85,7 @@ public class QuestionController {
             question.setQuestionName(row.getString(Const.QUESTION_NAME));
             question.setTypeID(row.getString(Const.QUESTIONTYPE_ID));
             question.setSurID(row.getString(Const.SURVEYTYPE_ID));
-
+            QuestionCellController.stackCell = main_stack;
             questions.addAll(question);
         }
         lv_questionlist.setItems(questions);

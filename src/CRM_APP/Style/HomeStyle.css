@@ -3,13 +3,10 @@
 }
 
 .tab{
-    /*-fx-pref-width: 350;*/
-    /*-fx-pref-height: 60;*/
     -fx-background-color: #455a64;
 }
 .tab-header-background{
     -fx-background-color: #455a64;
-
 }
 
 .tab-close-button{

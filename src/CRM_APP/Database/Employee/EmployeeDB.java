@@ -90,12 +90,13 @@ public class EmployeeDB {
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
-    public ResultSet countTask2(Employee employee, String checkDate) throws SQLException, ClassNotFoundException{
+    public ResultSet countTaskExpired(Employee employee, String checkDate) throws SQLException, ClassNotFoundException{
         database = new Database();
 
         String query = "SELECT COUNT(*) FROM " + Const.TASK_TABLE + " WHERE "
                 + Const.TEAM_EM_ID +" =? AND "
-                + Const.TASK_END + " < " + checkDate;
+                + Const.TASK_END + " > " + checkDate
+                + " AND "+ Const.TASK_STATUS + " <> 3";
         PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, employee.getId());
         ResultSet resultSet = preparedStatement.executeQuery();

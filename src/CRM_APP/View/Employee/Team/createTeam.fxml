@@ -49,5 +49,10 @@
             <Label styleClass="headerTitle" text="Details" />
          </children>
       </VBox>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <children>
+            <JFXButton fx:id="btn_Delete" styleClass="deleteButton" text="Delete" />
+         </children>
+      </VBox>
    </children>
 </GridPane>

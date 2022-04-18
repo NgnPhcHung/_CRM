@@ -40,6 +40,9 @@ public class CreateTeamController {
     private JFXButton btn_save;
 
     @FXML
+    private JFXButton btn_Delete;
+
+    @FXML
     private JFXButton btn_back;
 
     private SceneHandler sceneHandler;
@@ -64,6 +67,10 @@ public class CreateTeamController {
                 createTeam();
             });
         }
+        btn_Delete.setOnAction(e -> {
+            delete();
+            btn_back.fire();
+        });
     }
 
     //region DATABASE
@@ -116,53 +123,10 @@ public class CreateTeamController {
             e.printStackTrace();
         }
     }
-    private void addMem() {
-        String name = cb_employee.getValue();
-        String teamName = txt_teamName.getText();
-
-        if (name.equals("") || teamName.equals("")) {
-            lbl_noti.setVisible(true);
-            lbl_noti.setText("Invalid Name");
-        } else {
-            //check is team name exist
-            database = new Database();
-            teamDB = new TeamDB();
-            team = new Team();
-            boolean checkName;
-            try {
-                String teamID = "";
-                String emID = "";
-                //get id from team and employee
-                ResultSet rowTeam = database.getSomeID(teamName, Const.TEAM_TABLE, Const.TEAM_NAME);
-                ResultSet rowEm = database.getSomeID(name, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
-                while (rowTeam.next() && rowEm.next()) {
-                    teamID = rowTeam.getString(Const.TEAM_ID);
-                    emID = rowEm.getString(Const.EMPLOYEE_ID);
-                    team.setTeamID(emID);
-                    team.setTeamID(teamID);
-                }
-
-                ResultSet row = teamDB.getTeamMember(team);
-                if (row.next()) {
-                    lbl_noti.setVisible(true);
-                    lbl_noti.setText("Member Already In Team");
-                } else {
-                    lbl_noti.setVisible(false);
-                    teamDB = new TeamDB();
-                    team = new Team();
-                    team.setTeamID(teamID);
-                    team.setEmID(emID);
-                    teamDB.addMember(team);
-                    sceneHandler = new SceneHandler();
-                    sceneHandler.slideScene(btn_save, EmployeeCellController.cellStack, "Y", "/CRM_APP/View/Employee/Team/team.fxml");
-                }
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+    private void delete(){
+        database = new Database();
+        database.detele(Const.TEAM_DETAIL_TABLE, Const.TEAM_ID, teamID);
+        database.detele(Const.TEAM_TABLE, Const.TEAM_ID, teamID);
     }
     //endregion
 }

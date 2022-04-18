@@ -1,9 +1,7 @@
 package CRM_APP.Controller.Home;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -18,7 +16,7 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Model.Employee;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,17 +71,44 @@ public class HomeController {
     @FXML
     private Label lbl_position;
 
+    @FXML
+    private JFXToggleButton tog_Style;
+
+
+    //setting style
+    private String light = "/CRM_APP/Style/LightStyle.css";
+    private String dark = "/CRM_APP/Style/NightStyle.css";
+    public static String styleSheet;
     private LoginDB database = new LoginDB();
     public static String userId;
     private Database mydb = new Database();
 
     @FXML
     void initialize() {
+        styleSheet = light;
+        tp_homeMain.getStylesheets().add(styleSheet);
         getInfo();
         if (!userId.contains("AD")) {
             btn_project.setVisible(false);
         }
+        tog_Style.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            tp_homeMain.getStylesheets().remove(light);
+            if(!newValue){
+                styleSheet = light;
+                tp_homeMain.getStylesheets().add(light);
+                tp_homeMain.getStylesheets().remove(dark);
+                tog_Style.setText("Light mode");
+                System.out.println(tp_homeMain.getStylesheets());
+            }else{
+                styleSheet = dark;
+                tp_homeMain.getStylesheets().add(dark);
+                tp_homeMain.getStylesheets().remove(light);
+                tog_Style.setText("Dark mode");
+                System.out.println(tp_homeMain.getStylesheets());
+            }
+        }));
     }
+
 
     //when user logout
     @FXML
@@ -233,7 +258,6 @@ public class HomeController {
             Tab tab = new Tab(btnName);
 
             tp_homeMain.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
-            tp_homeMain.getStylesheets().add("/CRM_APP/Style/HomeStyle.css");
             tp_homeMain.setStyle("tab-close-button: #cfd8dc");
 
             if (btnName.equals("Survey")) {

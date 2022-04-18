@@ -18,16 +18,21 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
 import javafx.animation.Animation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 public class EmployeeProfileController {
     @FXML
     private ResourceBundle resources;
+
+    @FXML
+    private GridPane grid_Main;
 
     @FXML
     private URL location;
@@ -52,6 +57,9 @@ public class EmployeeProfileController {
 
     @FXML
     private JFXPasswordField txt_Password;
+
+    @FXML
+    private JFXPasswordField txt_RePassword;
 
     @FXML
     private JFXListView<Team> lv_JoinTeam;
@@ -85,6 +93,7 @@ public class EmployeeProfileController {
 
     @FXML
     void initialize() {
+        grid_Main.getStylesheets().add(HomeController.styleSheet);
         populateDetail();
         taskCounter();
         populateList();
@@ -136,7 +145,9 @@ public class EmployeeProfileController {
         employeeDB = new EmployeeDB();
         employee = new Employee();
         String password = txt_Password.getText();
-        if(!password.equals("")){
+        String rePassword = txt_RePassword.getText();
+        if(!StringUtils.isNullOrEmpty(password) && !StringUtils.isNullOrEmpty(rePassword)
+            && password.equals(rePassword)){
             employee.setPassword(password);
             employee.setId(emID);
             employeeDB.updateEmp(employee);
@@ -170,7 +181,7 @@ public class EmployeeProfileController {
             employeeDB = new EmployeeDB();
             employee = new Employee();
             employee.setId(emID);
-            ResultSet row = employeeDB.countTask2(employee, LocalDate.now()+"");
+            ResultSet row = employeeDB.countTaskExpired(employee, LocalDate.now()+"");
             while(row.next()){
                 lbl_ExpiredTask.setText(row.getString(1));
             }

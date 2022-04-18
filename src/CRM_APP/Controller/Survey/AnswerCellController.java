@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import CRM_APP.Database.Const;
+import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Answer;
 import com.jfoenix.controls.JFXListCell;
@@ -32,7 +34,7 @@ public class AnswerCellController extends JFXListCell<Answer> {
 
     FXMLLoader fxmlLoader;
     SceneHandler sceneHandler = new SceneHandler();
-
+    Database database;
     @FXML
     void initialize() {
 
@@ -58,7 +60,11 @@ public class AnswerCellController extends JFXListCell<Answer> {
             }
 
             lbl_answer.setText(item.getAnswer());
-
+            btn_edit.setOnAction(e ->{
+               database = new Database();
+               String ans = lbl_answer.getText();
+               database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ANSWER, ans);
+            });
             setText(null);
             setGraphic(main_pane);
         }

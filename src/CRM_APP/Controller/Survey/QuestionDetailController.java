@@ -19,11 +19,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -53,7 +55,7 @@ public class QuestionDetailController {
     private JFXButton btn_unhideAddAnswer;
 
     @FXML
-    private JFXTextField txt_answer;
+    public JFXTextField txt_answer;
 
     @FXML
     private JFXButton btn_addAnswer;
@@ -65,7 +67,10 @@ public class QuestionDetailController {
     private JFXButton btn_save;
 
     @FXML
-    private JFXButton btn_close;
+    private Button btn_Back;
+
+    @FXML
+    private JFXButton btn_Delete;
 
     @FXML
     private VBox vbox_createAnswer;
@@ -87,15 +92,26 @@ public class QuestionDetailController {
     public static String questionID;
     public static String questionText;
     //public String questionIdCreated = null;
+    private Thread listViewThread;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         hbox_noAnswer.setVisible(false);
         comboBoxHandler();
+        if(StringUtils.isEmpty(questionID)){
+            btn_Delete.setVisible(false);
+        }
         answerExist = checkAnswerExist();
-        populateQuestions();
+//        populateQuestions();
+        listViewThread = new Thread(this::handleThread);
+        listViewThread.start();
         toggleAnswer();
         txt_question.setText(questionText);
+
+        btn_Back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_Back, QuestionCellController.stackCell, "-X", "/CRM_APP/View/Survey/question.fxml");
+        });
     }
 
     //work with answerCell.fxml
@@ -248,4 +264,23 @@ public class QuestionDetailController {
         }
         return null;
     }
+
+    private void handleThread() {
+        while (true) {
+            Platform.runLater(() -> {
+                try {
+                    populateQuestions();
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+            });
+            try {
+
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+

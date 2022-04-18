@@ -47,7 +47,7 @@ public class QuestionTypeController {
 
         btn_back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_back, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyMenu.fxml");
+            sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Survey/surveyMenu.fxml");
         });
     }
 

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -43,7 +44,7 @@ public class QuestionCellController extends JFXListCell<Question> {
     private FXMLLoader fxmlLoader ;
     private SceneHandler sceneHandler;
     private Question question;
-
+    public static StackPane stackCell;
 
     @FXML
     void initialize() {
@@ -77,7 +78,8 @@ public class QuestionCellController extends JFXListCell<Question> {
             btn_edit.setOnAction(event -> {
                 QuestionDetailController.questionID=questionId;
                 QuestionDetailController.questionText=questionText;
-                sceneHandler.newScene("/CRM_APP/View/Survey/questionDetail.fxml");
+
+                sceneHandler.slideScene(btn_edit, stackCell, "-X", "/CRM_APP/View/Survey/questionDetail.fxml");
 
             });
 

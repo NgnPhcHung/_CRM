@@ -15,6 +15,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("View/Login/login.fxml"));
         primaryStage.setTitle("NphCRM");
         primaryStage.initStyle(StageStyle.UNDECORATED);
+
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.setResizable(false);
         primaryStage.show();
