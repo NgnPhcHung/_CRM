@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,7 +15,7 @@
 
 <StackPane fx:id="main_stack" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Employee.EmployeeController">
    <children>
-      <GridPane prefHeight="610.0" prefWidth="1024.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css">
+      <GridPane prefHeight="610.0" prefWidth="1024.0" styleClass="container">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,10 +34,16 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <Label styleClass="title" text="Name" textFill="#686868">
+                        <Label text="Name" textFill="#686868">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="h4" />
+                              <String fx:value="hBold" />
+                              <String fx:value="hItalic" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Label>
                      </children>
                   </HBox>
@@ -44,22 +51,34 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" layoutX="41.0" layoutY="10.0" prefWidth="130.0">
                            <children>
-                              <Label styleClass="title" text="Position" textFill="#686868">
+                              <Label text="Position" textFill="#686868">
                                  <font>
                                     <Font name="Calibri Bold" size="20.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefWidth="150.0">
                            <children>
-                              <Label styleClass="title" text="Address" textFill="#686868">
+                              <Label text="Address" textFill="#686868">
                                  <font>
                                     <Font name="Calibri Bold" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
@@ -68,22 +87,34 @@
                               <Insets />
                            </HBox.margin>
                            <children>
-                              <Label alignment="CENTER" styleClass="title" text="Phone" textFill="#686868">
+                              <Label alignment="CENTER" text="Phone" textFill="#686868">
                                  <font>
                                     <Font name="Calibri Bold" size="20.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefWidth="200.0">
                            <children>
-                              <Label styleClass="title" text="Team" textFill="#686868">
+                              <Label text="Team" textFill="#686868">
                                  <font>
                                     <Font name="Calibri Bold" size="20.0" />
                                  </font>
                                  <padding>
                                     <Insets left="10.0" right="15.0" />
                                  </padding>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
@@ -97,7 +128,7 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header" GridPane.columnSpan="2147483647">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="headerContainer" GridPane.columnSpan="2147483647">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -108,11 +139,21 @@
                            <font>
                               <Font name="Calibri Bold Italic" size="15.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass>
                         </JFXButton>
                         <JFXButton fx:id="btn_team" layoutX="25.0" layoutY="19.0" text="Team" textFill="#515151">
                            <font>
                               <Font name="Calibri Bold Italic" size="15.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass>
                         </JFXButton>
                      </children>
                   </HBox>
@@ -120,6 +161,10 @@
                      <HBox.margin>
                         <Insets left="15.0" right="15.0" />
                      </HBox.margin>
+                     <styleClass>
+                        <String fx:value="text" />
+                        <String fx:value="textInput" />
+                     </styleClass>
                   </JFXTextField>
                </children>
                <GridPane.margin>

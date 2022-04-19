@@ -98,13 +98,11 @@ public class HomeController {
                 tp_homeMain.getStylesheets().add(light);
                 tp_homeMain.getStylesheets().remove(dark);
                 tog_Style.setText("Light mode");
-                System.out.println(tp_homeMain.getStylesheets());
             }else{
                 styleSheet = dark;
                 tp_homeMain.getStylesheets().add(dark);
                 tp_homeMain.getStylesheets().remove(light);
                 tog_Style.setText("Dark mode");
-                System.out.println(tp_homeMain.getStylesheets());
             }
         }));
     }

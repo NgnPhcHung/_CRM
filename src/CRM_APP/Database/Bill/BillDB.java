@@ -73,11 +73,13 @@ public class BillDB {
 
         String query = "UPDATE " + Const.BILL_TABLE + " SET "
                         + Const.BILL_STATUS + " = ?, "
-                        + Const.BILL_DATE + " =?";
+                        + Const.BILL_DATE + " =? WHERE " + Const.BILL_ID + "=?";
         try {
             PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
             preparedStatement.setString(1, bill.getStatus());
             preparedStatement.setString(2, bill.getDate() + "");
+            preparedStatement.setString(3, bill.getId());
+
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {

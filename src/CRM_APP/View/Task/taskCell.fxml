@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" styleClass="cellContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="300.0">
          <children>
@@ -20,6 +19,10 @@
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="h4" />
+               </styleClass>
             </Label>
          </children>
          <HBox.margin>
@@ -38,17 +41,13 @@
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets left="5.0" />
-                           </padding>
-                        </Separator>
                         <HBox alignment="CENTER_LEFT" layoutX="189.0" layoutY="15.0" prefWidth="200.0">
                            <children>
                               <Label fx:id="lbl_emp" text="Employee " textFill="#686868" HBox.hgrow="ALWAYS">
@@ -58,20 +57,16 @@
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
-                        <Separator layoutX="389.0" layoutY="15.0" orientation="VERTICAL" prefHeight="200.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets left="5.0" />
-                           </padding>
-                        </Separator>
                         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="btn_edit" layoutX="30.0" layoutY="11.0" lineSpacing="10.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                              <Button fx:id="btn_edit" layoutX="30.0" layoutY="11.0" lineSpacing="10.0" mnemonicParsing="false" styleClass="buttonNoneStyle">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -92,13 +87,17 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT">
                      <children>
-                        <Label fx:id="lbl_status" styleClass="date" text="Working" textFill="#686868">
+                        <Label fx:id="lbl_status" text="Working" textFill="#686868">
                            <padding>
                               <Insets right="25.0" />
                            </padding>
                            <font>
                               <Font name="Calibri Bold" size="10.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="h6" />
+                           </styleClass>
                         </Label>
                      </children>
                   </HBox>
@@ -107,8 +106,4 @@
          </children>
       </HBox>
    </children>
-   <stylesheets>
-      <URL value="@../../Style/TabCellStyle.css" />
-      <URL value="@../../Style/ModuleStyle.css" />
-   </stylesheets>
 </HBox>

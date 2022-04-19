@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" styleClass="cellContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="300.0">
          <children>
@@ -20,6 +20,10 @@
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="h4" />
+               </styleClass>
             </Label>
          </children>
          <HBox.margin>
@@ -38,6 +42,10 @@
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
@@ -51,7 +59,7 @@
                         </Separator>
                         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="btn_details" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent">
+                              <Button fx:id="btn_details" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent" styleClass="buttonNoneStyle">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -63,7 +71,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="btn_edit" layoutX="35.0" layoutY="11.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent" style="-fx-background-color: transparent;">
+                              <Button fx:id="btn_edit" layoutX="35.0" layoutY="11.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#editEvent" styleClass="buttonNoneStyle">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -84,7 +92,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT">
                      <children>
-                        <Label fx:id="lbl_status" styleClass="date" text="Working" textFill="#686868">
+                        <Label fx:id="lbl_status" styleClass="h6" text="Working" textFill="#686868">
                            <padding>
                               <Insets right="25.0" />
                            </padding>
@@ -99,8 +107,4 @@
          </children>
       </HBox>
    </children>
-   <stylesheets>
-      <URL value="@../../Style/TabCellStyle.css" />
-      <URL value="@../../Style/ModuleStyle.css" />
-   </stylesheets>
 </HBox>

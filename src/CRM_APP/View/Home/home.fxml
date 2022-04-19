@@ -51,11 +51,12 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </HBox>
-                        <Button fx:id="btn_exit" mnemonicParsing="false" onAction="#closeApplication" text="✘">
+                        <Button fx:id="btn_exit" mnemonicParsing="false" onAction="#closeApplication" prefHeight="60.0" prefWidth="60.0" text="✘">
                            <styleClass>
                               <String fx:value="esc" />
                               <String fx:value="hBold" />
                               <String fx:value="h4" />
+                              <String fx:value="text" />
                            </styleClass></Button>
                      </children>
                      <VBox.margin>

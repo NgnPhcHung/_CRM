@@ -113,6 +113,7 @@ public class FullCalendarView {
         monthBar.setAlignment(Pos.CENTER);
         view = new VBox(titleBar, dayLabels, calendar);
         view.getStylesheets().add("/CRM_APP/Style/TaskStyle.css");
+        view.getStylesheets().add(HomeController.styleSheet);
         view.getStyleClass().add("container");
         monthBar.getStyleClass().add("title");
         calendarTitle.getStyleClass().add("month");

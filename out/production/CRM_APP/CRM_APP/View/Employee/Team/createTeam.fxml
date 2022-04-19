@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,10 +12,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="container" stylesheets="@../../../Style/DetailStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Team.CreateTeamController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Team.CreateTeamController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="103.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="297.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="297.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
@@ -25,33 +26,63 @@
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" VBox.vgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="25.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label fx:id="lbl_noti" styleClass="noti" text="notification" visible="false" />
-                  <JFXTextField fx:id="txt_teamName" focusColor="#7c9af2" labelFloat="true" prefWidth="400.0" promptText="Team" styleClass="input" unFocusColor="#eeb67a">
+                  <JFXTextField fx:id="txt_teamName" focusColor="#7c9af2" labelFloat="true" prefWidth="400.0" promptText="Team" unFocusColor="#eeb67a">
                      <font>
                         <Font name="Calibri" size="15.0" />
                      </font>
+                     <styleClass>
+                        <String fx:value="text" />
+                        <String fx:value="textInput" />
+                        <String fx:value="h4" />
+                     </styleClass>
                   </JFXTextField>
-                  <JFXComboBox fx:id="cb_employee" focusColor="#7b9cff" maxWidth="1.7976931348623157E308" unFocusColor="#ff9191" />
-                  <JFXButton fx:id="btn_save" styleClass="input" text="Save" />
+                  <JFXComboBox fx:id="cb_employee" focusColor="#7b9cff" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Team Leader" unFocusColor="#ff9191">
+                     <styleClass>
+                        <String fx:value="text" />
+                        <String fx:value="textInput" />
+                        <String fx:value="h4" />
+                     </styleClass></JFXComboBox>
+                  <JFXButton fx:id="btn_save" text="Save">
+                     <styleClass>
+                        <String fx:value="buttonStyle3" />
+                        <String fx:value="h4" />
+                        <String fx:value="text" />
+                        <String fx:value="hBold" />
+                     </styleClass></JFXButton>
                </children>
             </VBox>
          </children>
       </VBox>
-      <JFXButton fx:id="btn_back" styleClass="imgButton" text="◄" GridPane.rowIndex="2">
+      <JFXButton fx:id="btn_back" text="◄" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin>
+         <styleClass>
+            <String fx:value="buttonStyle2" />
+            <String fx:value="h4" />
+         </styleClass>
       </JFXButton>
       <VBox alignment="CENTER" GridPane.columnIndex="1">
          <children>
-            <Label styleClass="headerTitle" text="Details" />
+            <Label text="Details">
+               <styleClass>
+                  <String fx:value="h1" />
+                  <String fx:value="text" />
+                  <String fx:value="hBold" />
+               </styleClass></Label>
          </children>
       </VBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <children>
-            <JFXButton fx:id="btn_Delete" styleClass="deleteButton" text="Delete" />
+            <JFXButton fx:id="btn_Delete" text="Delete">
+               <styleClass>
+                  <String fx:value="esc" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass></JFXButton>
          </children>
       </VBox>
    </children>

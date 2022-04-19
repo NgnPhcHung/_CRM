@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="700.0" prefWidth="800.0" styleClass="container" stylesheets="@../../Style/DetailStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Customer.CustomerDetailController">
+<GridPane prefHeight="700.0" prefWidth="800.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Customer.CustomerDetailController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
@@ -26,10 +27,12 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647">
          <children>
-            <Label styleClass="headerTitle" text="Customer Details" textFill="#455a64">
-               <font>
-                  <Font name="Calibri Bold" size="35.0" />
-               </font>
+            <Label text="Customer Details">
+               <styleClass>
+                  <String fx:value="h1" />
+                  <String fx:value="text" />
+                  <String fx:value="hBold" />
+               </styleClass>
             </Label>
          </children>
       </HBox>
@@ -42,31 +45,53 @@
                <font>
                   <Font name="Calibri" size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass>
             </JFXTextField>
             <JFXTextField fx:id="txt_Phone" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="37.0" promptText="Phone" unFocusColor="#ff7d7d">
                <font>
                   <Font name="Calibri" size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass>
             </JFXTextField>
             <JFXTextField fx:id="txt_Address" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="192.0" promptText="Address" unFocusColor="#ff7d7d">
                <font>
                   <Font name="Calibri" size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass>
             </JFXTextField>
             <JFXTextField fx:id="txt_TIN" focusColor="#7898f8" labelFloat="true" layoutX="65.0" layoutY="278.0" promptText="TIN" unFocusColor="#ff7d7d">
                <font>
                   <Font name="Calibri" size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass>
             </JFXTextField>
             <Label fx:id="lbl_Noti" styleClass="notification" text="This is notification" textFill="#ff6b6b" visible="false">
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font>
             </Label>
-            <JFXButton fx:id="btn_Save" prefWidth="100.0" styleClass="buttonSave" text="Save" textFill="#686868">
-               <font>
-                  <Font name="Calibri Bold" size="20.0" />
-               </font>
+            <JFXButton fx:id="btn_Save" prefWidth="100.0" text="Save">
+               <styleClass>
+                  <String fx:value="buttonStyle3" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass>
             </JFXButton>
          </children>
          <GridPane.margin>
@@ -75,12 +100,21 @@
       </VBox>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" styleClass="imgButton" text="◄" />
+            <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="◄">
+               <styleClass>
+                  <String fx:value="buttonStyle2" />
+                  <String fx:value="h4" />
+               </styleClass></Button>
          </children>
       </VBox>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <JFXButton fx:id="btn_Detete" styleClass="deleteButton" text="Delete" />
+            <JFXButton fx:id="btn_Detete" text="Delete">
+               <styleClass>
+                  <String fx:value="esc" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass></JFXButton>
          </children>
       </VBox>
    </children>

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -24,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 public class TaskDetailController {
@@ -78,6 +80,8 @@ public class TaskDetailController {
 
     @FXML
     private Button btn_delete;
+    @FXML
+    private GridPane grid_Main;
 
     private TaskDB taskDB = new TaskDB();
     private Database database = new Database();
@@ -90,6 +94,7 @@ public class TaskDetailController {
     private Task task;
     @FXML
     void initialize() {
+        grid_Main.getStylesheets().add(HomeController.styleSheet);
         //if not admin logged in
         if(!isAdmin){
             cb_employ.setDisable(true);

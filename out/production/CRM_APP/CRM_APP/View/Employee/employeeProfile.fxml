@@ -57,7 +57,7 @@
                            <children>
                               <Label text="Total Tasks">
                                  <styleClass>
-                                    <String fx:value="text" />
+                                    <String fx:value="lightText" />
                                     <String fx:value="h3" />
                                     <String fx:value="hBold" />
                                  </styleClass>
@@ -66,7 +66,7 @@
                                  <children>
                                     <Label fx:id="lbl_TotalTask" text="3000">
                                        <styleClass>
-                                          <String fx:value="text" />
+                                          <String fx:value="lightText" />
                                           <String fx:value="h3" />
                                        </styleClass>
                                     </Label>
@@ -81,7 +81,7 @@
                            <children>
                               <Label text="Expired">
                                  <styleClass>
-                                    <String fx:value="text" />
+                                    <String fx:value="lightText" />
                                     <String fx:value="h3" />
                                     <String fx:value="hBold" />
                                  </styleClass>
@@ -90,7 +90,7 @@
                                  <children>
                                     <Label fx:id="lbl_ExpiredTask" text="27">
                                        <styleClass>
-                                          <String fx:value="text" />
+                                          <String fx:value="lightText" />
                                           <String fx:value="h3" />
                                        </styleClass>
                                     </Label>
@@ -214,8 +214,14 @@
                                           <String fx:value="h3" />
                                           <String fx:value="hBold" />
                                        </styleClass>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </HBox.margin>
                                     </Label>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
                               </HBox>
                               <JFXListView fx:id="lv_JoinTeam" VBox.vgrow="ALWAYS" />
                            </children>

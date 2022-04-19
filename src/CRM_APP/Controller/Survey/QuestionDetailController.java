@@ -1,5 +1,6 @@
 package CRM_APP.Controller.Survey;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.QuestionDB;
@@ -27,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +40,9 @@ public class QuestionDetailController {
 
     @FXML
     private URL location;
+
+    @FXML
+    private GridPane grid_Main;
 
     @FXML
     private JFXTextField txt_question;
@@ -96,6 +101,7 @@ public class QuestionDetailController {
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
+        grid_Main.getStylesheets().add(HomeController.styleSheet);
         hbox_noAnswer.setVisible(false);
         comboBoxHandler();
         if(StringUtils.isEmpty(questionID)){
@@ -114,7 +120,7 @@ public class QuestionDetailController {
         });
     }
 
-    //work with answerCell.fxml
+    //work with questionDetailCell.fxml
     @FXML
     void addEvent(ActionEvent event) throws SQLException, ClassNotFoundException {
         String ans = txt_answer.getText().trim();

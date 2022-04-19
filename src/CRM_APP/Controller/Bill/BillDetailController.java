@@ -130,6 +130,7 @@ public class BillDetailController {
                 }else{
                     update();
                 }
+                btn_Back.fire();
             });
 
         btn_Delete.setOnAction(e ->{
@@ -296,6 +297,7 @@ public class BillDetailController {
         billDB = new BillDB();
         bill.setStatus(status);
         bill.setDate(datePick_TaskDate.getValue());
+        bill.setId(billID);
         billDB.updateBill(bill);
     }
     private void delete (){

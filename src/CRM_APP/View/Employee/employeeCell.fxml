@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="1024.0" styleClass="container" stylesheets="@../../Style/TabCellStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="1024.0" styleClass="cellContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
          <children>
@@ -18,6 +19,10 @@
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="h4" />
+               </styleClass>
             </Label>
          </children>
          <HBox.margin>
@@ -36,6 +41,10 @@
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
@@ -45,6 +54,10 @@
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
@@ -54,6 +67,10 @@
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                         </HBox>
@@ -63,6 +80,10 @@
                                  <font>
                                     <Font name="Calibri" size="18.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
                               </Label>
                            </children>
                            <HBox.margin>
@@ -71,7 +92,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="50.0">
                            <children>
-                              <Button fx:id="btn_edit" lineSpacing="10.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                              <Button fx:id="btn_edit" lineSpacing="10.0" mnemonicParsing="false" styleClass="buttonNoneStyle">
                                  <graphic>
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

@@ -1,8 +1,8 @@
 .header{
     -fx-effect: dropshadow(one-pass-box, #b0bec5, 20, 0 , 0, 5);
     -fx-background-color:  #e0f7fa;
-    -fx-font-family: Calibri;
-    -fx-font-size: 15;
+    /*-fx-font-family: Calibri;*/
+    /*-fx-font-size: 15;*/
 }
 
 .input{
@@ -134,3 +134,4 @@
     -fx-pref-width: 35;
     -fx-pref-height: 30;
 }
+

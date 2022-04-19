@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" styleClass="container" stylesheets="@../../Style/DetailStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Bill.BillDetailController">
+<GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Bill.BillDetailController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
@@ -32,10 +33,15 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" styleClass="headerTitle" text="Bill Detail">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Bill Detail">
                <font>
                   <Font name="Calibri Bold" size="21.0" />
                </font>
+               <styleClass>
+                  <String fx:value="h1" />
+                  <String fx:value="text" />
+                  <String fx:value="hBold" />
+               </styleClass>
             </Label>
          </children>
          <GridPane.margin>
@@ -45,13 +51,38 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
             <Label fx:id="lbl_Noti" styleClass="notification" text="Label" visible="false" />
-            <JFXComboBox fx:id="cb_Project" focusColor="#7e9df8" labelFloat="true" prefHeight="31.0" prefWidth="349.0" promptText="Project" styleClass="jfx-text-field" unFocusColor="#f89494" />
-            <JFXComboBox fx:id="cb_Customer" focusColor="#7e9df8" labelFloat="true" prefHeight="31.0" prefWidth="349.0" promptText="Customer" styleClass="jfx-text-field" unFocusColor="#f89494" />
-            <JFXDatePicker fx:id="datePick_TaskDate" maxWidth="1.7976931348623157E308" promptText="Bill date" styleClass="text-field" />
-            <JFXTextField fx:id="txt_Amount" focusColor="#678dff" labelFloat="true" layoutX="65.0" layoutY="93.0" promptText="Amount" stylesheets="@../../Style/TaskDetail.css" unFocusColor="#ff9e9e" />
+            <JFXComboBox fx:id="cb_Project" focusColor="#7e9df8" labelFloat="true" prefHeight="31.0" prefWidth="349.0" promptText="Project" unFocusColor="#f89494">
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass></JFXComboBox>
+            <JFXComboBox fx:id="cb_Customer" focusColor="#7e9df8" labelFloat="true" prefHeight="31.0" prefWidth="349.0" promptText="Customer" unFocusColor="#f89494">
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass></JFXComboBox>
+            <JFXDatePicker fx:id="datePick_TaskDate" maxWidth="1.7976931348623157E308" promptText="Bill date">
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass></JFXDatePicker>
+            <JFXTextField fx:id="txt_Amount" focusColor="#678dff" labelFloat="true" layoutX="65.0" layoutY="93.0" promptText="Amount" unFocusColor="#ff9e9e">
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textInput" />
+                  <String fx:value="h4" />
+               </styleClass></JFXTextField>
             <HBox>
                <children>
-                  <Label styleClass="someText" text="Status" />
+                  <Label text="Status">
+                     <styleClass>
+                        <String fx:value="h5" />
+                        <String fx:value="hBold" />
+                        <String fx:value="text" />
+                     </styleClass></Label>
                </children>
             </HBox>
             <HBox alignment="CENTER">
@@ -60,22 +91,42 @@
                      <toggles>
                         <ToggleButton fx:id="tog_Wait" selected="true">
                            <graphic>
-                              <Label styleClass="someText" text="Waiting" />
+                              <Label text="Waiting">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_Process" layoutX="10.0" layoutY="10.0">
                            <graphic>
-                              <Label styleClass="someText" text="In process" />
+                              <Label text="In process">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_Done" layoutX="50.0" layoutY="10.0">
                            <graphic>
-                              <Label styleClass="someText" text="Done" />
+                              <Label text="Done">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_Cancel" layoutX="90.0" layoutY="10.0">
                            <graphic>
-                              <Label styleClass="someText" text="Cancel" />
+                              <Label text="Cancel">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                      </toggles>
@@ -84,7 +135,12 @@
             </HBox>
             <HBox>
                <children>
-                  <Label styleClass="someText" text="Payment type" />
+                  <Label text="Payment type">
+                     <styleClass>
+                        <String fx:value="h5" />
+                        <String fx:value="hBold" />
+                        <String fx:value="text" />
+                     </styleClass></Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="65.0" layoutY="347.0">
@@ -93,24 +149,44 @@
                      <toggles>
                         <ToggleButton fx:id="tog_30" selected="true">
                            <graphic>
-                              <Label styleClass="someText" text="30%" />
+                              <Label text="30%">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_70" layoutX="10.0" layoutY="10.0">
                            <graphic>
-                              <Label styleClass="someText" text="70%" />
+                              <Label text="70%">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_100" layoutX="50.0" layoutY="10.0">
                            <graphic>
-                              <Label styleClass="someText" text="100%" />
+                              <Label text="100%">
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
                            </graphic>
                         </ToggleButton>
                      </toggles>
                   </ToggleButtonGroup>
                </children>
             </HBox>
-            <JFXButton fx:id="btn_Save" prefHeight="45.0" prefWidth="100.0" text="Save" />
+            <JFXButton fx:id="btn_Save" prefHeight="45.0" prefWidth="100.0" text="Save">
+               <styleClass>
+                  <String fx:value="buttonStyle3" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass></JFXButton>
          </children>
          <GridPane.margin>
             <Insets left="20.0" top="20.0" />
@@ -118,7 +194,11 @@
       </VBox>
       <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
          <children>
-            <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" styleClass="imgButton" text="◄" />
+            <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="◄">
+               <styleClass>
+                  <String fx:value="buttonStyle2" />
+                  <String fx:value="h4" />
+               </styleClass></Button>
          </children>
          <GridPane.margin>
             <Insets left="20.0" />
@@ -126,13 +206,23 @@
       </VBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <children>
-            <Button fx:id="btn_Delete" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" styleClass="deleteButton" text="Delete" />
+            <Button fx:id="btn_Delete" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Delete">
+               <styleClass>
+                  <String fx:value="esc" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass></Button>
          </children>
       </VBox>
       <JFXListView fx:id="lv_Module" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets right="20.0" />
          </GridPane.margin></JFXListView>
-      <Label styleClass="title" text="Module" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label text="Module" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <styleClass>
+            <String fx:value="h3" />
+            <String fx:value="text" />
+            <String fx:value="hBold" />
+         </styleClass></Label>
    </children>
 </GridPane>

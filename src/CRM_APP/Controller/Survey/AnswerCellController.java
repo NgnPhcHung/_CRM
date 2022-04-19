@@ -49,7 +49,7 @@ public class AnswerCellController extends JFXListCell<Answer> {
             setGraphic(null);
         }else {
             if (fxmlLoader == null) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/CRM_APP/View/Survey/answerCell.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/CRM_APP/View/Survey/questionDetailCell.fxml"));
                 fxmlLoader.setController(this);
 
                 try {
