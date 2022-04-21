@@ -239,3 +239,28 @@
 .list-cell{
     -fx-background-color: #78909c;
 }
+.table-view .column-header .filler{
+    -fx-font-weight: bold;
+    -fx-background-color: #78909c;
+    -fx-text-fill: #686868;
+}
+.table-cell:filled {
+    -fx-text-fill: #686868;
+}
+.table-cell{
+    -fx-text-fill: #686868;
+}
+.custom-align {
+    -fx-alignment: center-right;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #686868;
+}
+.combo-box .cell{
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+}

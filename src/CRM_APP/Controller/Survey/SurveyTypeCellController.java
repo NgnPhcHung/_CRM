@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 
 public class SurveyTypeCellController extends JFXListCell<SurveyType> {
     @FXML
@@ -24,7 +25,11 @@ public class SurveyTypeCellController extends JFXListCell<SurveyType> {
     private Label lbl_survey_type;
 
     @FXML
+    private Label lbl_numberQuestion;
+
+    @FXML
     private Button btn_edit;
+
 
     public static StackPane cellStack;
     private FXMLLoader fxmlLoader;
@@ -32,6 +37,7 @@ public class SurveyTypeCellController extends JFXListCell<SurveyType> {
     private SceneHandler sceneHandler;
     private SurveyTypeDB surveyTypeDB;
     private Survey survey;
+    private SurveyType surveyType;
 
     @Override
     protected void updateItem(SurveyType item, boolean empty) {
@@ -50,13 +56,19 @@ public class SurveyTypeCellController extends JFXListCell<SurveyType> {
                         e.printStackTrace();
                     }
                 }
+                surveyType = new SurveyType();
                 lbl_survey_type.setText(item.getSurName());
-
-            btn_edit.setOnAction(e -> {
-                sceneHandler = new SceneHandler();
-                SurveyTypeCreateController.surID = item.getSurID();
-                sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyTypeCreate.fxml");
-            });
+                surveyType.setSurID(item.getSurID());
+                surveyTypeDB = new SurveyTypeDB();
+                ResultSet row = surveyTypeDB.countQuestion(surveyType);
+                while(row.next()){
+                    lbl_numberQuestion.setText(row.getString(1));
+                }
+                btn_edit.setOnAction(e -> {
+                    sceneHandler = new SceneHandler();
+                    SurveyTypeCreateController.surID = item.getSurID();
+                    sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyTypeCreate.fxml");
+                });
                 setText(null);
                 setGraphic(main_pane);
             }

@@ -1,101 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Survey.SurveyDetailController">
+<GridPane prefHeight="700.0" prefWidth="800.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Survey.SurveyDetailController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #4fc3f7;" GridPane.columnSpan="2147483647">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647">
          <children>
-            <Label text="Survey Detail" textFill="#455a64">
-               <font>
-                  <Font name="Calibri Bold" size="35.0" />
-               </font>
+            <Label fx:id="lbl_Header" text="Survey Details">
+               <styleClass>
+                  <String fx:value="h1" />
+                  <String fx:value="text" />
+                  <String fx:value="hBold" />
+               </styleClass>
             </Label>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
       </HBox>
-      <GridPane GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <Button fx:id="btn_Back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="◄">
+               <styleClass>
+                  <String fx:value="buttonStyle2" />
+                  <String fx:value="h4" />
+               </styleClass></Button>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <JFXButton fx:id="btn_Detete" text="Delete" visible="false">
+               <styleClass>
+                  <String fx:value="esc" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+                  <String fx:value="text" />
+               </styleClass></JFXButton>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" styleClass="headerContainer">
                <children>
-                  <JFXTextField fx:id="txt_docName" focusColor="#7898f8" labelFloat="true" promptText="Name" unFocusColor="#ff7d7d">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </JFXTextField>
-                  <JFXTextField fx:id="txt_projectName" focusColor="#7898f8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Project name" unFocusColor="#ff7d7d">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </JFXTextField>
-                  <JFXTextField fx:id="txt_des" focusColor="#7898f8" labelFloat="true" layoutX="10.0" layoutY="41.0" promptText="Description" unFocusColor="#ff7d7d">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </JFXTextField>
-                  <Label fx:id="lbl_fileName" text="Document for project A.pdf" textFill="#686868">
-                     <font>
-                        <Font name="Calibri" size="20.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0" spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <JFXButton fx:id="btn_filePicker" style="-fx-border-color: #2196f3; -fx-border-radius: 10px;" text="Choose file" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri Bold" size="20.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <JFXButton style="-fx-border-color: #2196f3; -fx-border-radius: 10px;" text="Save" textFill="#686868">
-                                 <font>
-                                    <Font name="Calibri Bold" size="20.0" />
-                                 </font>
-                              </JFXButton>
-                           </children>
-                        </HBox>
+                        <JFXTextField fx:id="txt_Find" focusColor="#85a4ff" labelFloat="true" promptText="Find Question" unFocusColor="#ff9090">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="textInput" />
+                              <String fx:value="h4" />
+                           </styleClass>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXComboBox fx:id="cb_Employee" focusColor="#95afff" maxWidth="1.7976931348623157E308" unFocusColor="#ff8585" HBox.hgrow="ALWAYS">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="textInput" />
+                              <String fx:value="h4" />
+                           </styleClass>
+                        </JFXComboBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXCheckBox fx:id="check_SelectAll" text="Select All">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="h4" />
+                           </styleClass>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </JFXCheckBox>
                      </children>
                   </HBox>
                </children>
-            </VBox>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </TableView>
+            <JFXButton fx:id="btn_Save" text="Save Selected">
+               <styleClass>
+                  <String fx:value="buttonStyle1" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+                  <String fx:value="text" />
+               </styleClass>
+            </JFXButton>
          </children>
-      </GridPane>
+      </VBox>
    </children>
 </GridPane>

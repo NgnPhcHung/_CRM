@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +15,7 @@
 
 <StackPane fx:id="main_stack" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Survey.QuestionTypeController">
    <children>
-      <GridPane prefHeight="610.0" prefWidth="1024.0" styleClass="container" stylesheets="@../../Style/TabFormStyle.css">
+      <GridPane prefHeight="610.0" prefWidth="1024.0" styleClass="container">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,10 +34,15 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <Label styleClass="title" text="Question Type" textFill="#686868">
+                        <Label text="Question Type" textFill="#686868">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="h4" />
+                              <String fx:value="hBold" />
+                              <String fx:value="text" />
+                           </styleClass>
                         </Label>
                      </children>
                   </HBox>
@@ -60,11 +66,16 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="header" GridPane.columnSpan="2147483647">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="headerContainer" GridPane.columnSpan="2147483647">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btn_back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" styleClass="imgButton" text="◄" />
+                        <Button fx:id="btn_back" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="◄">
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass></Button>
                         <JFXButton fx:id="btn_add" text="Add Question Type" textFill="#515151">
                            <HBox.margin>
                               <Insets left="15.0" />
@@ -72,8 +83,16 @@
                            <font>
                               <Font name="Calibri Bold Italic" size="15.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass>
                         </JFXButton>
                      </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                   </HBox>
                </children>
                <GridPane.margin>

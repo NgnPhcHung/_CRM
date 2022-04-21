@@ -118,6 +118,11 @@ public class QuestionDetailController {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_Back, QuestionCellController.stackCell, "-X", "/CRM_APP/View/Survey/question.fxml");
         });
+
+        btn_Delete.setOnAction(e -> {
+            deleteQuestion();
+            btn_Back.fire();
+        });
     }
 
     //work with questionDetailCell.fxml
@@ -269,6 +274,12 @@ public class QuestionDetailController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void deleteQuestion(){
+        database = new Database();
+        database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID, questionID);
+        database.detele(Const.QUESTION_TABLE, Const.QUESTION_ID, questionID);
     }
 
     private void handleThread() {

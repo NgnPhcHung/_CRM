@@ -78,26 +78,6 @@
     -fx-background-insets: 5px;
 }
 
-.statusStyle1{
-
-}
-
-.statusStyle2{
-
-}
-
-.statusStyle3{
-
-}
-
-.statusStyle4{
-
-}
-
-.statusStyle5{
-
-}
-
 .textColor1:hover{
     -fx-background-color: #ff844c;
     -fx-border-color: #f4511e;
@@ -243,3 +223,20 @@
     -fx-background-color:  #e0f7fa;
 }
 
+.table-view .column-header .filler{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color:  #e0f7fa;
+
+}
+.cellText .text { -fx-strikethrough: true; }
+
+.combo-box .cell{
+    -fx-text-fill: #686868;
+    -fx-font-family: Calibri;
+    -fx-font-size: 20;
+}

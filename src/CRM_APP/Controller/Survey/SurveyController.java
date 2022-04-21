@@ -53,12 +53,12 @@ public class SurveyController {
         btn_add.setOnAction(e -> {
             SurveyTypeCreateController.surID = null;
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Survey/surveyDetail.fxml");
+            sceneHandler.slideScene(btn_add, main_stack, "X", "/CRM_APP/View/Survey/surveyCreate.fxml");
         });
 
         btn_back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_back, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyMenu.fxml");
+            sceneHandler.slideScene(btn_back, main_stack, "-X", "/CRM_APP/View/Survey/surveyMenu.fxml");
         });
     }
 

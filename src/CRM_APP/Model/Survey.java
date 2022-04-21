@@ -26,4 +26,6 @@ public class Survey {
     public void setSurveyName(String surveyName) {
         this.surveyName = surveyName;
     }
+
+
 }

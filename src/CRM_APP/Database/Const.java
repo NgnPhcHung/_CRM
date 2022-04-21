@@ -11,6 +11,7 @@ public class Const {
     public static final String QUESTION_DETAIL_TABLE = "question_details";
     public static final String SURVEY_TYPE_TABLE = "survey_type";
     public static final String SURVEY_TABLE = "survey";
+    public static final String SURVEY_DETAIL_TABLE = "survey_details";
     public static final String QUESTION_TYPE_TABLE = "question_type";
     public static final String PROJECT_TABLE = "project";
     public static final String MODULE_TABLE = "module";
@@ -57,6 +58,14 @@ public class Const {
     //survey
     public static final String SURVEY_ID = "SurveyID";
     public static final String SURVEY_NAME = "SurveyName";
+//    survey detail
+    public static final String SURVEY_DETAIL_ID = "SurveyID";
+    public static final String SURVEY_DETAIL_NAME = "QuestionID";
+    public static final String SURVEY_DETAIL_EM_ID = "EmpID";
+    public static final String SURVEY_DETAIL_RESULT = "Result";
+
+    public static final String SURVEY_TYPE_ID ="SurID";
+
     //question_type
     public static final String QUESTIONTYPE_ID = "QTypeID";
     public static final String QUESTIONTYPE_NAME = "QTypeName";

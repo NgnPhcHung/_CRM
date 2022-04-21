@@ -33,6 +33,7 @@
                <styleClass>
                   <String fx:value="h2" />
                   <String fx:value="text" />
+                  <String fx:value="hBold" />
                </styleClass>
             </Label>
          </children>

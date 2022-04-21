@@ -2,6 +2,7 @@ package CRM_APP.Database.Survey;
 
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Model.Question;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,4 +60,8 @@ public class QuestionDB {
 
         return resultSet;
     }
+    public void delete(Question question){
+
+    }
+
 }

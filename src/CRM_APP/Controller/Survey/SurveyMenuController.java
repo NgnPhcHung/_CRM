@@ -2,14 +2,10 @@ package CRM_APP.Controller.Survey;
 
 
 import CRM_APP.Handler.SceneHandler;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-
-import java.io.IOException;
 
 
 public class SurveyMenuController {

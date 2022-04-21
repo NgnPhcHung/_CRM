@@ -2,8 +2,10 @@ package CRM_APP.Controller.Survey;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
+import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.SurveyDB;
 import CRM_APP.Database.Survey.SurveyTypeDB;
@@ -78,12 +80,17 @@ public class SurveyCellController extends JFXListCell<Survey> {
                     }
                 }
                 lbl_name.setText(item.getSurveyName());
-                lbl_customer.setText(item.getCusID());
+                database = new Database();
+                ResultSet row = database.getSomeID(item.getCusID(), Const.CUSTOMER_TABLE, Const.CUSTOMER_ID);
+
+                while (row.next()) {
+                    lbl_customer.setText(row.getString(Const.CUSTOMER_NAME));
+                }
 
                 btn_edit.setOnAction(e -> {
-                    //sceneHandler = new SceneHandler();
-                    //SurveyTypeCreateController.surID = item.getSurID();
-                    //sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyTypeCreate.fxml");
+                    sceneHandler = new SceneHandler();
+                    SurveyDetailController.surveyID = item.getSurveyID();
+                    sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyDetail.fxml");
                 });
                 setText(null);
                 setGraphic(main_pane);

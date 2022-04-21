@@ -39,13 +39,6 @@
                                     </Label>
                                  </children>
                               </VBox>
-                              <JFXToggleButton fx:id="tog_Style" text="Light Mode" toggleColor="#909090" toggleLineColor="#4a4a4a">
-                                 <styleClass>
-                                    <String fx:value="text" />
-                                    <String fx:value="hBold" />
-                                    <String fx:value="h4" />
-                                 </styleClass>
-                              </JFXToggleButton>
                            </children>
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -185,6 +178,17 @@
                         </Button>
                      </children>
                   </HBox>
+                  <VBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
+                     <children>
+                        <JFXToggleButton fx:id="tog_Style" text="Light Mode" toggleColor="#909090" toggleLineColor="#4a4a4a" unToggleLineColor="#e2f1f8">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                              <String fx:value="h4" />
+                           </styleClass>
+                        </JFXToggleButton>
+                     </children>
+                  </VBox>
                </children></VBox>
          </content></Tab>
   </tabs>
