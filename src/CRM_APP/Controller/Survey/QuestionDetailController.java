@@ -279,6 +279,7 @@ public class QuestionDetailController {
     private void deleteQuestion(){
         database = new Database();
         database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID, questionID);
+        database = new Database();
         database.detele(Const.QUESTION_TABLE, Const.QUESTION_ID, questionID);
     }
 

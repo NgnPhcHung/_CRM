@@ -51,7 +51,7 @@ public class QuestionCellController extends JFXListCell<Question> {
         sceneHandler = new SceneHandler();
         question = new Question();
 //        sceneHandler.newScene("/CRM_APP/View/Survey/questionDetail.fxml");
-
+        btn_edit.setVisible(false);
     }
 
     @Override
@@ -75,17 +75,19 @@ public class QuestionCellController extends JFXListCell<Question> {
             lbl_surveyType.setText(item.getSurID());
             String questionId = item.getQuestionId();
             String questionText = item.getQuestionName();
-            btn_edit.setOnAction(event -> {
+            this.setOnMouseClicked(e -> {
                 QuestionDetailController.questionID=questionId;
                 QuestionDetailController.questionText=questionText;
 
                 sceneHandler.slideScene(btn_edit, stackCell, "-X", "/CRM_APP/View/Survey/questionDetail.fxml");
 
             });
+            btn_edit.setOnAction(event -> {
 
-            setText(null);
-            setGraphic(main_pane);
+            });
         }
+        setText(null);
+        setGraphic(main_pane);
     }
 
 }

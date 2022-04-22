@@ -20,7 +20,7 @@ public class SurveyDB {
         String query = "SELECT * FROM " + Const.SURVEY_TABLE;
         PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
-
+        preparedStatement.close();
         return resultSet;
     }
 
@@ -77,4 +77,28 @@ public class SurveyDB {
         }
     }
 
+    public ResultSet getQuestion(SurveyDetail surveyDetail) throws SQLException, ClassNotFoundException {
+        db = new Database();
+        ResultSet resultSet = null;
+        String query = " SELECT * FROM " + Const.SURVEY_DETAIL_TABLE + " INNER JOIN "
+                        + Const.QUESTION_TABLE + " ON " + Const.SURVEY_DETAIL_TABLE +"."+Const.QUESTION_ID
+                        + " = " + Const.QUESTION_TABLE+"."+Const.QUESTION_ID
+                        + " WHERE " + Const.SURVEY_DETAIL_TABLE +"."+Const.SURVEY_ID + " =?";
+        PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
+        preparedStatement.setString(1, surveyDetail.getSurveyID());
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+
+    public ResultSet checkQuestion(SurveyDetail surveyDetail) throws SQLException, ClassNotFoundException {
+        ResultSet  resultSet = null;
+        db = new Database();
+        String query = " SELECT * FROM " + Const.SURVEY_DETAIL_TABLE + " WHERE "
+                        + Const.SURVEY_DETAIL_ID + " =? AND " + Const.QUESTION_ID + " =?";
+        PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
+        preparedStatement.setString(1, surveyDetail.getSurveyID());
+        preparedStatement.setString(2, surveyDetail.getQuestionID());
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }
