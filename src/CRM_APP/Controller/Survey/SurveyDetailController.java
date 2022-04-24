@@ -57,6 +57,9 @@ public class SurveyDetailController {
     private TableView tableView;
 
     @FXML
+    private TableView tableViewExist;
+
+    @FXML
     private Label lbl_Header;
 
     @FXML
@@ -74,6 +77,7 @@ public class SurveyDetailController {
     private Question question;
     TableColumn col_Question ;
     TableColumn col_Action;
+    TableColumn col_Selected;
     private Survey survey;
     public static String surveyID;
     private SurveyDB surveyDB;
@@ -85,8 +89,8 @@ public class SurveyDetailController {
         save();
         filterData();
         back();
-        populateDetail();
         cellClickEvent();
+        populateDetail();
     }
 
     private void manageCheckBoxEvent(){
@@ -130,34 +134,34 @@ public class SurveyDetailController {
                 String quesName = item.getQuestionName();
                 String empName = cb_Employee.getValue();
                 try {
+                    surveyDetail = new SurveyDetail();
                     ResultSet rowQuestion = database.getSomeID(quesName, Const.QUESTION_TABLE, Const.QUESTION_NAME);
                     ResultSet rowEmp = database.getSomeID(empName, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
-                    if(rowQuestion.next() && rowEmp.next()){
-                        surveyDetail = new SurveyDetail();
-                        surveyDetail.setSurveyID(surveyID);
-                        surveyDetail.setEmpID(rowEmp.getString(Const.EMPLOYEE_ID));
+                    while(rowQuestion.next()){
                         surveyDetail.setQuestionID(rowQuestion.getString(Const.QUESTION_ID));
+                    }while(rowEmp.next()){
+                        surveyDetail.setEmpID(rowEmp.getString(Const.EMPLOYEE_ID));
+                    }
+                    surveyDetail.setSurveyID(surveyID);
                         surveyDB = new SurveyDB();
-
                         ResultSet rowQuestionExist = surveyDB.checkQuestion(surveyDetail);
                         if(rowQuestionExist.next()){
-                            lbl_Noti.setText("Some Question existed");
-                            lbl_Noti.setVisible(true);
-                        }else{
-                            lbl_Noti.setVisible(false);
-                            lbl_Noti.setText("");
-                            surveyDB = new SurveyDB();
-                            surveyDB.saveDetail(surveyDetail);
+                            continue;
                         }
-                    }
+
+                        surveyDB = new SurveyDB();
+                        database = new Database();
+                        surveyDB.saveDetail(surveyDetail);
+
+                        questions.removeAll(listRemove);
+                        populateDetail();
+
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (ClassNotFoundException classNotFoundException) {
                     classNotFoundException.printStackTrace();
                 }
             }
-
-            questions.removeAll(listRemove);
         });
     }
 
@@ -192,14 +196,20 @@ public class SurveyDetailController {
         questions = FXCollections.observableArrayList();
         //region SETTING SOME STYLE
         tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+
         col_Question = new TableColumn("Question");
         col_Action = new TableColumn("Action");
+
         col_Question.setMaxWidth( 1f * Integer.MAX_VALUE * 80 ); // 20% width
         col_Action.setMaxWidth( 1f * Integer.MAX_VALUE * 5 ); // 10% width
+
         tableView.getColumns().addAll(col_Question, col_Action);
         tableView.getStylesheets().add(HomeController.styleSheet);
+        tableViewExist.getStylesheets().add(HomeController.styleSheet);
+
         col_Question.getStyleClass().addAll("h4", "text");
         col_Action.getStyleClass().addAll("h4", "text","custom-align");
+
         //endregion
         try {
             ResultSet rowQuestion = database.getAllTableValue(Const.QUESTION_TABLE);
@@ -224,6 +234,15 @@ public class SurveyDetailController {
     }
 
     private void populateDetail(){
+        tableViewExist.getColumns().clear();
+        tableViewExist.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+
+        col_Selected = new TableColumn("Question");
+
+        tableViewExist.getColumns().add(col_Selected);
+        tableViewExist.getStylesheets().add(HomeController.styleSheet);
+
+        col_Selected.getStyleClass().addAll("h4", "text");
         if(!StringUtils.isEmpty(surveyID) && !surveyID.equals("")){
             surveyDB = new SurveyDB();
             surveyDetail = new SurveyDetail();
@@ -234,16 +253,10 @@ public class SurveyDetailController {
                 while(row.next()){
                     question = new Question();
                     question.setQuestionName(row.getString(Const.QUESTION_NAME));
+                    col_Selected.setCellValueFactory(new PropertyValueFactory<Question, String>("questionName"));
                     listQuestion.add(question);
                 }
-                items = tableView.getItems();
-                for(Question item : items){
-                    for(Question listItem: listQuestion){
-                      if(listItem.getQuestionName().equals(item.getQuestionName())){
-//                          col_Question.getStyleClass().add("cellText");
-                      }
-                    }
-                }
+                tableViewExist.setItems(listQuestion);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {

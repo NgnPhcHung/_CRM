@@ -25,6 +25,7 @@
           <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
@@ -99,7 +100,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </HBox>
-            <JFXListView fx:id="lv" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.rowSpan="2147483647">
+            <JFXListView fx:id="lv" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </GridPane.margin>

@@ -151,7 +151,7 @@
             </VBox>
             <HBox alignment="CENTER" prefWidth="200.0">
                <children>
-                  <JFXButton fx:id="btn_save" onAction="#saveQuestionEvent" text="Create question">
+                  <JFXButton fx:id="btn_save" text="Create question">
                      <styleClass>
                         <String fx:value="buttonStyle3" />
                         <String fx:value="h4" />

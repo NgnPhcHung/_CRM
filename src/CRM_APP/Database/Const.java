@@ -51,6 +51,8 @@ public class Const {
     public static final String QUESTION_ID = "QuestionID";
     public static final String QUESTION_NAME = "QuestionName";
     public static final String QUESTION_DATE_ADD = "DateAdd";
+    public static final String QUESTION_SUR_ID = "SurID";
+
     //survey_type
     public static final String SURVEYTYPE_ID = "SurID";
     public static final String SURVEYTYPE_NAME = "SurName";

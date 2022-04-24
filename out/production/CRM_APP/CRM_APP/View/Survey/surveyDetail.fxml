@@ -107,11 +107,15 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <HBox VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
-            </TableView>
+               <children>
+                  <TableView fx:id="tableViewExist" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
             <Label fx:id="lbl_Noti" text="Label" visible="false">
                <styleClass>
                   <String fx:value="text" />

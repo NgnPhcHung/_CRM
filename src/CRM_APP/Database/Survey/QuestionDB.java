@@ -63,5 +63,44 @@ public class QuestionDB {
     public void delete(Question question){
 
     }
+    public void updateQuestion(Question question){
+        db   = new Database();
 
+        String query = "UPDATE " + Const.QUESTION_TABLE + " SET "
+                        + Const.QUESTION_SUR_ID + " =?, "
+                        + Const.QUESTIONTYPE_ID + " =?, "
+                        + Const.QUESTION_NAME + "=? WHERE "
+                        + Const.QUESTION_ID + " =?";
+        try {
+            PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, question.getSurID());
+            preparedStatement.setString(2, question.getTypeID());
+            preparedStatement.setString(3, question.getQuestionName());
+            preparedStatement.setString(4, question.getQuestionId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getSur(Question question) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet =  null ;
+        String query = " SELECT * FROM " + Const.QUESTION_TABLE + " INNER JOIN "
+                    + Const.SURVEY_TYPE_TABLE + " ON "
+                    + Const.QUESTION_TABLE+"."+Const.QUESTION_SUR_ID + " = "
+                    + Const.SURVEY_TYPE_TABLE+"."+Const.SURVEY_TYPE_ID
+                    + " INNER JOIN " + Const.QUESTION_TYPE_TABLE + " ON "
+                    + Const.QUESTION_TABLE +"."+Const.QUESTIONTYPE_ID + " = "
+                    + Const.QUESTION_TYPE_TABLE + "." + Const.QUESTIONTYPE_ID
+                    + " WHERE " + Const.QUESTION_ID + " =?";
+        PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
+        preparedStatement.setString(1, question.getQuestionId());
+        System.out.println(preparedStatement);
+        resultSet = preparedStatement.executeQuery();
+
+        return resultSet;
+    }
 }

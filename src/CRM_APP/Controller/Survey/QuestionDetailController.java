@@ -9,6 +9,7 @@ import CRM_APP.Database.Survey.SurveyTypeDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Answer;
+import CRM_APP.Model.Question;
 import CRM_APP.Model.Survey;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -108,12 +109,13 @@ public class QuestionDetailController {
             btn_Delete.setVisible(false);
         }
         answerExist = checkAnswerExist();
-//        populateQuestions();
-        listViewThread = new Thread(this::handleThread);
-        listViewThread.start();
-        toggleAnswer();
-        txt_question.setText(questionText);
+        populateQuestions();
+//        listViewThread = new Thread(this::handleThread);
+//        listViewThread.start();
 
+        toggleAnswer();
+
+        txt_question.setText(questionText);
         btn_Back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_Back, QuestionCellController.stackCell, "-X", "/CRM_APP/View/Survey/question.fxml");
@@ -122,6 +124,10 @@ public class QuestionDetailController {
         btn_Delete.setOnAction(e -> {
             deleteQuestion();
             btn_Back.fire();
+        });
+
+        btn_save.setOnAction(e -> {
+            saveQuestion();
         });
     }
 
@@ -148,15 +154,8 @@ public class QuestionDetailController {
         }
     }
 
-    @FXML
-    void closeEvent(ActionEvent event) {
-
-    }
-
     //save question
-    @FXML
-    void saveQuestionEvent(ActionEvent event) throws SQLException, ClassNotFoundException {
-
+    private void saveQuestion(){
         //String date = OtherHandler.curentDateTime();
         if (StringUtils.isEmpty(txt_question.getText()) || cb_surveyType.getValue().equals("") || cb_questionType.getValue().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -169,22 +168,45 @@ public class QuestionDetailController {
                 }
             });
         } else {
-            String question = txt_question.getText().trim();
+            String questionName = txt_question.getText().trim();
             String quesID = OtherHandler.generateId();
             String surID = getIdSurveyType(cb_surveyType.getValue().trim());
             String questionTypeID = getIdQuestionType(cb_questionType.getValue().trim());
-            ResultSet taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
-            while (taskRow.next()) {
-                quesID = OtherHandler.generateId();
-                taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
-            }
-            db.createQuestion(quesID, surID, question, questionTypeID);
-            questionID = quesID;
-            hbox_noAnswer.setVisible(true);
-        }
-        //refresh listview in Question Controller
 
+            //region SAVE
+            if(StringUtils.isEmpty(questionID)){
+                ResultSet taskRow = null;
+                try {
+                    taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+                    while (taskRow.next()) {
+                        quesID = OtherHandler.generateId();
+                        taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+                    }
+                    db.createQuestion(quesID, surID, questionName, questionTypeID);
+                    questionID = quesID;
+                    hbox_noAnswer.setVisible(true);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            //endregion
+            //region UPDATE
+            else{
+                String quesUpdateID = questionID;
+                Question question = new Question();
+                question.setQuestionId(quesUpdateID);
+                question.setQuestionName(questionName);
+                question.setTypeID(questionTypeID);
+                question.setSurID(surID);
+                questionDB = new QuestionDB();
+                questionDB.updateQuestion(question);
+            }
+            //endregion
+        }
     }
+
 
     @FXML
     void unhideEvent(ActionEvent event) {
@@ -197,8 +219,14 @@ public class QuestionDetailController {
         sceneHandler = new SceneHandler();
         database = new Database();
         answers = FXCollections.observableArrayList();
-
+        Question question = new Question();
+        question.setQuestionId(questionID);
         ResultSet row = questionDB.getValidAnswer(questionID);
+        ResultSet rowSur = questionDB.getSur(question);
+        while(rowSur.next()){
+            cb_surveyType.setValue(rowSur.getString(Const.SURVEYTYPE_NAME));
+            cb_questionType.setValue(rowSur.getString(Const.QUESTIONTYPE_NAME));
+        }
         while (row.next()) {
             Answer answer = new Answer();
             answer.setId(row.getString(Const.QUESTIONDETAIL_ID));
@@ -299,6 +327,13 @@ public class QuestionDetailController {
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+    @FXML
+    void closeEvent(ActionEvent event) {
+
     }
 }
 

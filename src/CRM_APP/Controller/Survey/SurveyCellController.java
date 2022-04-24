@@ -46,7 +46,7 @@ public class SurveyCellController extends JFXListCell<Survey> {
     private Label lbl_version;
 
     @FXML
-    private Button btn_view;
+    private Button btn_Detail;
 
     @FXML
     private Button btn_edit;
@@ -89,8 +89,13 @@ public class SurveyCellController extends JFXListCell<Survey> {
 
                 btn_edit.setOnAction(e -> {
                     sceneHandler = new SceneHandler();
-                    SurveyDetailController.surveyID = item.getSurveyID();
+                    ResultController.surveyID = item.getSurveyID();
                     sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyDetail.fxml");
+                });
+
+                btn_Detail.setOnAction(e -> {
+                    sceneHandler = new SceneHandler();
+                    sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/result.fxml");
                 });
                 setText(null);
                 setGraphic(main_pane);

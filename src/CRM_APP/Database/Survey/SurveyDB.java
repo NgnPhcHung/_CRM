@@ -101,4 +101,21 @@ public class SurveyDB {
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+
+    public ResultSet getAnswerBySurvey(SurveyDetail surveyDetail) throws SQLException, ClassNotFoundException {
+        ResultSet  resultSet = null;
+        db = new Database();
+        String query = "SELECT * FROM " + Const.QUESTION_TABLE + " INNER JOIN "
+                        + Const.SURVEY_DETAIL_TABLE + " ON "
+                        + Const.QUESTION_TABLE + "." + Const.QUESTION_ID + " = "
+                        + Const.SURVEY_DETAIL_TABLE + "." +  Const.QUESTION_ID
+                        + " INNER JOIN " + Const.QUESTION_DETAIL_TABLE + " ON "
+                        + Const.QUESTION_TABLE+"."+Const.QUESTIONTYPE_ID + " = "
+                        + Const.QUESTION_TYPE_TABLE + "." + Const.QUESTIONTYPE_ID
+                        + " WHERE " + Const.SURVEY_DETAIL_TABLE + "." + Const.SURVEY_DETAIL_ID + " = ?";
+        PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
+        preparedStatement.setString(1, surveyDetail.getSurveyID());
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
 }
