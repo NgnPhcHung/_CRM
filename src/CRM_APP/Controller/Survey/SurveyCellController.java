@@ -89,12 +89,13 @@ public class SurveyCellController extends JFXListCell<Survey> {
 
                 btn_edit.setOnAction(e -> {
                     sceneHandler = new SceneHandler();
-                    ResultController.surveyID = item.getSurveyID();
+                    SurveyDetailController.surveyID = item.getSurveyID();
                     sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyDetail.fxml");
                 });
 
                 btn_Detail.setOnAction(e -> {
                     sceneHandler = new SceneHandler();
+                    ResultController.surveyID = item.getSurveyID();
                     sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/result.fxml");
                 });
                 setText(null);

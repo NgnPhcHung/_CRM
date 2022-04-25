@@ -98,7 +98,6 @@ public class QuestionDB {
                     + " WHERE " + Const.QUESTION_ID + " =?";
         PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, question.getQuestionId());
-        System.out.println(preparedStatement);
         resultSet = preparedStatement.executeQuery();
 
         return resultSet;

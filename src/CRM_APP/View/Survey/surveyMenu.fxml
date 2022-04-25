@@ -89,20 +89,6 @@
                      <String fx:value="buttonStyle4" />
                   </styleClass>
                </Button>
-               <Button fx:id="btn_survey_result" alignment="CENTER" contentDisplay="TOP" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefHeight="200.0" prefWidth="200.0" text="Survey Result">
-                  <graphic>
-                     <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../../Asset/Image/survey_result_mn.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-                  <styleClass>
-                     <String fx:value="h4" />
-                     <String fx:value="text" />
-                     <String fx:value="buttonStyle4" />
-                  </styleClass>
-               </Button>
             </children>
             <VBox.margin>
                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

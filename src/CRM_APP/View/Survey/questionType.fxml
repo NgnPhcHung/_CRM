@@ -77,7 +77,7 @@
                               <String fx:value="text" />
                               <String fx:value="hBold" />
                            </styleClass></Button>
-                        <JFXButton fx:id="btn_add" text="Add Question Type" textFill="#515151">
+                        <JFXButton fx:id="btn_add" text="Add Question Type" textFill="#515151" visible="false">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
