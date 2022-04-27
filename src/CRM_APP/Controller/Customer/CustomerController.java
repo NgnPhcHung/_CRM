@@ -101,8 +101,6 @@ public class CustomerController {
                     lv_customer.setCellFactory(CustomerCellController -> new CustomerCellController());
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
             }
         });

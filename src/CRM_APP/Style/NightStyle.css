@@ -109,10 +109,6 @@
     -fx-border-insets: 4px;
 }
 
-.textNotification{
-    -fx-text-fill: #ff6b6b;
-}
-
 .buttonStyle1{
     -fx-background-color: #42a5f5;
     -fx-background-radius: 10;
@@ -265,3 +261,9 @@
     -fx-font-size: 20;
 }
 .cellText .text { -fx-strikethrough: true; }
+.scroll-pane > .viewport {
+    -fx-background-color: #78909c;
+}
+.textNotification{
+    -fx-text-fill: #ff6b6b;
+}

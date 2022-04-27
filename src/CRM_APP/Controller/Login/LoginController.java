@@ -105,7 +105,6 @@ public class LoginController {
             while(userRow.next()){
                 counter++;
                 userId=userRow.getString("EmpID");
-//                System.out.println(userId);
             }
             if(counter == 1){
                 userLogin(userId);
@@ -118,7 +117,7 @@ public class LoginController {
                 txt_password.setText("");
                 txt_username.setText("");
             }
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }

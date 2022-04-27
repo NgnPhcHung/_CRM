@@ -27,7 +27,17 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <JFXButton fx:id="btn_manage" text="Manage Staff">
+                  <JFXButton fx:id="btn_Back" layoutX="25.0" layoutY="17.0" text="◄">
+                     <styleClass>
+                        <String fx:value="buttonStyle1" />
+                        <String fx:value="text" />
+                        <String fx:value="hBold" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_Export" text="Export">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>

@@ -240,3 +240,6 @@
     -fx-font-family: Calibri;
     -fx-font-size: 20;
 }
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

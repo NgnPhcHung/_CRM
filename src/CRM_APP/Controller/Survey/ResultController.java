@@ -3,10 +3,13 @@ package CRM_APP.Controller.Survey;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.SurveyDB;
+import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Question;
 import CRM_APP.Model.SurveyDetail;
 import com.jfoenix.controls.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,14 +17,20 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import javax.imageio.ImageIO;
 
 public class ResultController {
 
@@ -32,7 +41,11 @@ public class ResultController {
     private URL location;
 
     @FXML
-    private JFXButton btn_manage;
+    private JFXButton btn_Export;
+
+
+    @FXML
+    private JFXButton btn_Back;
 
     @FXML
     private JFXTextField txt_Find;
@@ -48,13 +61,28 @@ public class ResultController {
     private SurveyDetail surveyDetail;
     private String oldQuestion="";
     private Question  question;
+    private SceneHandler sceneHandler;
+    private  boolean isSameQuestion;
     VBox questionContainer = new VBox();
     VBox answerContainer = new VBox();
-
+    ToggleGroup group = new ToggleGroup();
     @FXML
     void initialize() {
         addDetail();
         sc_container.setContent(contentContainer);
+        btn_Export.setOnAction(e -> {
+            WritableImage image = sc_container.snapshot(new SnapshotParameters(), null);
+            File file = new File("chart.png");
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        btn_Back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_Back, SurveyCellController.cellStack, "-X", "/CRM_APP/View/Survey/survey.fxml");
+        });
     }
 
     private void addDetail(){
@@ -77,8 +105,8 @@ public class ResultController {
 //                JFXCheckBox checkBox = new JFXCheckBox(row.getString(Const.QUESTIONDETAIL_ANSWER));
                 String type =row.getString(Const.QUESTIONTYPE_ID);
                 String ans ="";
-
-                if(currentQuestion.equals(oldQuestion)){
+                isSameQuestion= currentQuestion.equals(oldQuestion);
+                if(isSameQuestion){
                     if(!type.equals("QT01")){
                         ResultSet rs = database.getSomeID(currentQuestion, Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID);
                         while (rs.next()) {
@@ -88,6 +116,7 @@ public class ResultController {
                     }
                     createQuestion(type, ans, answerContainer);
                 }else {
+                    group = new ToggleGroup();
                     answerContainer = new VBox();
                     if(!type.equals("QT01")){
                         ResultSet rs = database.getSomeID(currentQuestion, Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID);
@@ -97,6 +126,9 @@ public class ResultController {
                         }
                     }else createQuestion(type, ans, answerContainer);
 
+                    if (type.equals("QT02") || type.equals("QT03")){
+
+                    }
                     questionContainer.getChildren().addAll(questionText, answerContainer);
 
                     oldQuestion = currentQuestion;
@@ -104,8 +136,10 @@ public class ResultController {
                     questionContainer = new VBox();
                 }
 
-                contentContainer.setStyle("-fx-padding: 0px 0px 10px 15px");
-                questionContainer.setStyle("-fx-padding: 0px 0px 15px 15px");
+                contentContainer.setStyle("-fx-padding: 0px 0px 10px 15px; -fx-spacing: 10px");
+                questionContainer.setStyle( "-fx-padding: 25px;" +
+                                            "-fx-border-insets: 25px ;" +
+                                            "-fx-background-insets: 25px;");
                 answerContainer.setStyle("-fx-spacing: 10px");
                 questionText.getStyleClass().addAll("text", "h4", "hBold");
             }
@@ -119,18 +153,20 @@ public class ResultController {
     private void createQuestion(String type, String ans, VBox ansContain){
         switch (type){
             case "QT01":
-                JFXTextField textArea = new JFXTextField();
-                textArea.setPromptText("he he");
+                JFXTextArea textArea = new JFXTextArea();
+                textArea.setPromptText(". . . ");
+                textArea.setPrefHeight(100);
                 textArea.getStyleClass().addAll("text", "textInput", "h4");
                 ansContain.getChildren().add(textArea);
 
                 break;
             case "QT02" :
-                JFXRadioButton radioButton = new JFXRadioButton(ans);
-                radioButton.getStyleClass().addAll("text", "h4");
-                ansContain.getChildren().add(radioButton);
+            case "QT03" :
+                    JFXRadioButton radioButton = new JFXRadioButton(ans);
+                    radioButton.getStyleClass().addAll("text", "h4");
+                    radioButton.setToggleGroup(group);
+                    ansContain.getChildren().add(radioButton);
                 break;
-            case "QT03":
             case "QT04":
                 JFXCheckBox checkbox = new JFXCheckBox(ans);
                 checkbox.getStyleClass().addAll("text", "h4");

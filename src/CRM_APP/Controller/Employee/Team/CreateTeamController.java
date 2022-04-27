@@ -7,12 +7,14 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.TeamDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Model.Project;
 import CRM_APP.Model.Team;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +46,9 @@ public class CreateTeamController {
 
     @FXML
     private JFXButton btn_back;
+
+    @FXML
+    private JFXListView<Project> lv_Project;
 
     private SceneHandler sceneHandler;
     private Database database;
@@ -129,4 +134,5 @@ public class CreateTeamController {
         database.detele(Const.TEAM_TABLE, Const.TEAM_ID, teamID);
     }
     //endregion
+
 }

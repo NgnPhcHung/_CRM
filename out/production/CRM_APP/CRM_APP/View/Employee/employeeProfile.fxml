@@ -233,7 +233,7 @@
                   </HBox>
                   <VBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Label fx:id="lbl_Noti" styleClass="notification" stylesheets="@../../Style/DetailStyle.css" text="Label" visible="false" />
+                        <Label fx:id="lbl_Noti" styleClass="notification" stylesheets="@../../Style/StyleStatus.css" text="Label" visible="false" />
                         <JFXButton fx:id="btn_Save" text="Save">
                            <styleClass>
                               <String fx:value="text" />

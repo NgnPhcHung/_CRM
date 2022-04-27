@@ -112,8 +112,6 @@ public class EmployeeController {
                 lv_employee.setCellFactory(EmployeeCellController -> new EmployeeCellController());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }));
     }

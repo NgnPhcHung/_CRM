@@ -69,13 +69,13 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
                <children>
-                  <JFXButton fx:id="btn_30" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#filterEvent" text="30">
+                  <JFXButton fx:id="btn_Waiting" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#filterEvent" text="Waiting">
                      <graphic>
                         <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="100.0" styleClass="cardNumberContainer">
                            <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label fx:id="lbl_30" text="30">
+                                    <Label fx:id="lbl_Waiting" text="30">
                                        <styleClass>
                                           <String fx:value="text" />
                                           <String fx:value="h5" />
@@ -99,13 +99,13 @@
                         <String fx:value="hBold" />
                      </styleClass>
                   </JFXButton>
-                  <JFXButton fx:id="btn_70" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="440.0" layoutY="10.0" onAction="#filterEvent" text="70">
+                  <JFXButton fx:id="btn_InProcess" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="440.0" layoutY="10.0" onAction="#filterEvent" text="In Process">
                      <graphic>
                         <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumberContainer">
                            <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label fx:id="lbl_70" text="1">
+                                    <Label fx:id="lbl_InProcess" text="1">
                                        <styleClass>
                                           <String fx:value="text" />
                                           <String fx:value="h5" />
@@ -128,13 +128,13 @@
                         <String fx:value="hBold" />
                      </styleClass>
                   </JFXButton>
-                  <JFXButton fx:id="btn_100" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="100">
+                  <JFXButton fx:id="btn_Done" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="600.0" layoutY="10.0" onAction="#filterEvent" text="Done">
                      <graphic>
                         <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumberContainer">
                            <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label fx:id="lbl_100" text="1">
+                                    <Label fx:id="lbl_Done" text="1">
                                        <styleClass>
                                           <String fx:value="text" />
                                           <String fx:value="h5" />
@@ -157,7 +157,36 @@
                         <String fx:value="hBold" />
                      </styleClass>
                   </JFXButton>
-                  <JFXButton fx:id="btn_All" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#filterEvent" text="Total">
+                  <JFXButton fx:id="btn_Cancel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#filterEvent" text="Cancel">
+                     <graphic>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumberContainer">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="lbl_Cancel" text="5">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="h5" />
+                                       </styleClass></Label>
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="h5" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                 </styleClass>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="cardContainer" />
+                        <String fx:value="textColor4" />
+                        <String fx:value="text" />
+                        <String fx:value="h5" />
+                        <String fx:value="hBold" />
+                     </styleClass>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_All" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="619.0" layoutY="17.0" onAction="#filterEvent" text="Total">
                      <graphic>
                         <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="79.0" styleClass="cardNumberContainer">
                            <children>
@@ -167,7 +196,8 @@
                                        <styleClass>
                                           <String fx:value="text" />
                                           <String fx:value="h5" />
-                                       </styleClass></Label>
+                                       </styleClass>
+                                    </Label>
                                  </children>
                                  <styleClass>
                                     <String fx:value="h5" />

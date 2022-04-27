@@ -98,7 +98,7 @@
             </HBox>
             <HBox fx:id="hbox_noAnswer" alignment="CENTER" spacing="10.0">
                <children>
-                  <Label text="No options yet!">
+                  <Label fx:id="lbl_Notification" text="No options yet!" visible="false">
                      <styleClass>
                         <String fx:value="textNotification" />
                         <String fx:value="hItalic" />
@@ -107,7 +107,7 @@
                         <String fx:value="hBold" />
                      </styleClass>
                   </Label>
-                  <JFXButton fx:id="btn_unhideAddAnswer" onAction="#unhideEvent" text="Create Now" textFill="#686868">
+                  <JFXButton fx:id="btn_unhideAddAnswer" text="Create Answer" textFill="#686868" visible="false">
                      <font>
                         <Font name="Calibri" size="15.0" />
                      </font>

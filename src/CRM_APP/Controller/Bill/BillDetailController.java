@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -119,7 +120,7 @@ public class BillDetailController {
 
         btn_Save.setOnAction(e -> {
                 if(billID.equals("null")){
-                    if(txt_Amount.getText().equals("")){
+                    if(StringUtils.isNullOrEmpty(txt_Amount.getText())){
                         lbl_Noti.setVisible(true);
                         lbl_Noti.setText("Invalid Input!");
 
@@ -129,9 +130,9 @@ public class BillDetailController {
                     }
                 }else{
                     update();
+                    btn_Back.fire();
                 }
-                btn_Back.fire();
-            });
+        });
 
         btn_Delete.setOnAction(e ->{
             delete ();
@@ -264,32 +265,44 @@ public class BillDetailController {
         String projectName = cb_Project.getValue();
         String customerName = cb_Customer.getValue();
         String amount = txt_Amount.getText();
-        if(!amount.equals("") ){
-            billDB = new BillDB();
-            try {
-                database = new Database();
-                bill = new Bill();
-                billDetail = new BillDetail();
-                ResultSet rowProject = database.getSomeID(projectName, Const.PROJECT_TABLE, Const.PROJECT_NAME);
-                ResultSet rowCustomer = database.getSomeID(customerName, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
-                while(rowProject.next() && rowCustomer.next()){
-                    bill.setId(id);
-                    bill.setDate(date);
-                    bill.setTotalAmount(amount);
-                    bill.setPercent(percent);
-                    bill.setStatus(status);
-                    bill.setCustomer(rowCustomer.getString(Const.CUSTOMER_ID));
+        database  = new Database();
+        billDB = new BillDB();
+        try {
+            ResultSet row = billDB.checkProjectExist(projectName);
+            if(row.next()){
+                lbl_Noti.setText("This project already in list");
+                lbl_Noti.setVisible(true);
+            }else{
+                lbl_Noti.setVisible(false);
+                if(!amount.equals("") ){
+                    try {
+                        bill = new Bill();
+                        billDetail = new BillDetail();
+                        ResultSet rowProject = database.getSomeID(projectName, Const.PROJECT_TABLE, Const.PROJECT_NAME);
+                        ResultSet rowCustomer = database.getSomeID(customerName, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+                        while(rowProject.next() && rowCustomer.next()){
+                            bill.setId(id);
+                            bill.setDate(date);
+                            bill.setTotalAmount(amount);
+                            bill.setPercent(percent);
+                            bill.setStatus(status);
+                            bill.setCustomer(rowCustomer.getString(Const.CUSTOMER_ID));
 
-                    billDetail.setBillID(id);
-                    billDetail.setProjectID(rowProject.getString(Const.PROJECT_ID));
-                    billDB.save(bill, billDetail);
+                            billDetail.setBillID(id);
+                            billDetail.setProjectID(rowProject.getString(Const.PROJECT_ID));
+                            billDB.save(bill, billDetail);
+                            btn_Back.fire();
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
-
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
     private void update(){

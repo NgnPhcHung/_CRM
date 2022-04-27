@@ -11,8 +11,6 @@ import CRM_APP.Database.Database;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Bill;
 import com.jfoenix.controls.JFXListCell;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -116,7 +114,7 @@ public class BillCellController extends JFXListCell<Bill> {
         }
     }
     private void handleStatus(String stt){
-        lbl_Status.getStylesheets().add("/CRM_APP/Style/DetailStyle.css");
+        lbl_Status.getStylesheets().add("/CRM_APP/Style/StyleStatus.css");
         switch (stt) {
             case "0":
                 lbl_Status.setText("Waiting");

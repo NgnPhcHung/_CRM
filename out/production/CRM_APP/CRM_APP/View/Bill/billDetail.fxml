@@ -50,7 +50,13 @@
       </HBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
-            <Label fx:id="lbl_Noti" styleClass="notification" text="Label" visible="false" />
+            <Label fx:id="lbl_Noti" text="Label" visible="false">
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textNotification" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass></Label>
             <JFXComboBox fx:id="cb_Project" focusColor="#7e9df8" labelFloat="true" prefHeight="31.0" prefWidth="349.0" promptText="Project" unFocusColor="#f89494">
                <styleClass>
                   <String fx:value="text" />

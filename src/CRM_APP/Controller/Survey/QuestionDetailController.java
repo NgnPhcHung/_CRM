@@ -8,6 +8,7 @@ import CRM_APP.Database.Survey.QuestionTypeDB;
 import CRM_APP.Database.Survey.SurveyTypeDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Handler.ShakerHandler;
 import CRM_APP.Model.Answer;
 import CRM_APP.Model.Question;
 import CRM_APP.Model.Survey;
@@ -29,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -81,6 +83,10 @@ public class QuestionDetailController {
     @FXML
     private VBox vbox_createAnswer;
 
+    @FXML
+    private Label lbl_Notification;
+
+
     private SurveyTypeDB surveyTypeDB = new SurveyTypeDB();
     private QuestionTypeDB questionTypeDB = new QuestionTypeDB();
     private QuestionDB db = new QuestionDB();
@@ -92,30 +98,27 @@ public class QuestionDetailController {
     private ObservableList<String> listQuestionType = FXCollections.observableArrayList();
     private ObservableList<Answer> answers;
     private SceneHandler sceneHandler;
-//    private ObservableList<Answer> answers;
 
     private boolean answerExist = false;
-    public static String questionID;
-    public static String questionText;
-    //public String questionIdCreated = null;
-    private Thread listViewThread;
+    public static String questionID= "";
+    public static String questionText ="";
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         grid_Main.getStylesheets().add(HomeController.styleSheet);
-        hbox_noAnswer.setVisible(false);
+
         comboBoxHandler();
-        if(StringUtils.isEmpty(questionID)){
+        if(com.mysql.cj.util.StringUtils.isNullOrEmpty(questionID)){
             btn_Delete.setVisible(false);
+            txt_question.setText("");
+        }else{
+            txt_question.setText(questionText);
         }
         answerExist = checkAnswerExist();
         populateQuestions();
-//        listViewThread = new Thread(this::handleThread);
-//        listViewThread.start();
 
         toggleAnswer();
 
-        txt_question.setText(questionText);
         btn_Back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_Back, QuestionCellController.stackCell, "-X", "/CRM_APP/View/Survey/question.fxml");
@@ -128,6 +131,9 @@ public class QuestionDetailController {
 
         btn_save.setOnAction(e -> {
             saveQuestion();
+        });
+        btn_unhideAddAnswer.setOnAction(e -> {
+            toggleAnswer();
         });
     }
 
@@ -156,7 +162,6 @@ public class QuestionDetailController {
 
     //save question
     private void saveQuestion(){
-        //String date = OtherHandler.curentDateTime();
         if (StringUtils.isEmpty(txt_question.getText()) || cb_surveyType.getValue().equals("") || cb_questionType.getValue().equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -173,18 +178,28 @@ public class QuestionDetailController {
             String surID = getIdSurveyType(cb_surveyType.getValue().trim());
             String questionTypeID = getIdQuestionType(cb_questionType.getValue().trim());
 
+            database =  new Database();
+
             //region SAVE
             if(StringUtils.isEmpty(questionID)){
-                ResultSet taskRow = null;
                 try {
-                    taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
-                    while (taskRow.next()) {
-                        quesID = OtherHandler.generateId();
+                    ResultSet rsCheckName = database.getSomeID(questionName, Const.QUESTION_TABLE, Const.QUESTION_NAME);
+                    if(rsCheckName.next()) {
+                        ShakerHandler shakerHandler = new ShakerHandler(txt_question, 2, 50);
+                        shakerHandler.shake();
+                        lbl_Notification.setVisible(true);
+                        lbl_Notification.setText("This question already exist");
+                        txt_question.setText("");
+                    }else{
+                        ResultSet taskRow = null;
                         taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+                        while (taskRow.next()) {
+                            quesID = OtherHandler.generateId();
+                            taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+                        }
+                        db.createQuestion(quesID, surID, questionName, questionTypeID);
+                        questionID = quesID;
                     }
-                    db.createQuestion(quesID, surID, questionName, questionTypeID);
-                    questionID = quesID;
-                    hbox_noAnswer.setVisible(true);
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (ClassNotFoundException e) {
@@ -192,6 +207,7 @@ public class QuestionDetailController {
                 }
             }
             //endregion
+
             //region UPDATE
             else{
                 String quesUpdateID = questionID;
@@ -204,14 +220,10 @@ public class QuestionDetailController {
                 questionDB.updateQuestion(question);
             }
             //endregion
+            if(!questionTypeID.equals("QT01")) {
+                btn_unhideAddAnswer.setVisible(true);
+            }
         }
-    }
-
-
-    @FXML
-    void unhideEvent(ActionEvent event) {
-        answerExist = true;
-        toggleAnswer();
     }
 
     //populate list view
@@ -239,8 +251,20 @@ public class QuestionDetailController {
 
     //look at checkAnswerExist() :')
     private void toggleAnswer() {
-        //hbox_noAnswer.setVisible(!answerExist);
-        vbox_createAnswer.setVisible(answerExist);
+        vbox_createAnswer.setVisible(false);
+        database = new Database();
+        try {
+            ResultSet row = database.getSomeID(questionID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+            if(row.next()){
+                if(!row.getString(Const.QUESTIONTYPE_ID).equals("QT01")){
+                    vbox_createAnswer.setVisible(true);
+                } else vbox_createAnswer.setVisible(false);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     //check if answer exist? vbox_createAnswer.visible? !
@@ -254,27 +278,14 @@ public class QuestionDetailController {
 
     //set items for combo box - survey_type
     private void comboBoxHandler() {
-        try {
-            ResultSet surveyDetail = surveyTypeDB.getSurveyType();
-            String sur = "";
-            while (surveyDetail.next()) {
-                sur = surveyDetail.getString(Const.SURVEYTYPE_NAME);
-                listSurveyType.add(sur);
-            }
-            cb_surveyType.setItems(listSurveyType);
-            cb_surveyType.getSelectionModel().select(0);
+        OtherHandler.populateComboBox(cb_surveyType, Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_NAME);
+        OtherHandler.populateComboBox(cb_questionType, Const.QUESTION_TYPE_TABLE, Const.QUESTIONTYPE_NAME);
 
-            ResultSet questionTypeDetail = questionTypeDB.getQuestionType();
-            String ques = "";
-            while (questionTypeDetail.next()) {
-                ques = questionTypeDetail.getString(Const.QUESTIONTYPE_NAME);
-                listQuestionType.add(ques);
+        cb_questionType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.equals("Câu hỏi tự luận")){
+                vbox_createAnswer.setVisible(false);
             }
-            cb_questionType.setItems(listQuestionType);
-            cb_questionType.getSelectionModel().select(0);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     // get id from data list
@@ -309,31 +320,6 @@ public class QuestionDetailController {
         database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID, questionID);
         database = new Database();
         database.detele(Const.QUESTION_TABLE, Const.QUESTION_ID, questionID);
-    }
-
-    private void handleThread() {
-        while (true) {
-            Platform.runLater(() -> {
-                try {
-                    populateQuestions();
-                } catch (SQLException | ClassNotFoundException throwables) {
-                    throwables.printStackTrace();
-                }
-            });
-            try {
-
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
-    @FXML
-    void closeEvent(ActionEvent event) {
-
     }
 }
 

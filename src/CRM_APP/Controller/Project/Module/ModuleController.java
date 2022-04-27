@@ -223,8 +223,6 @@ public class ModuleController {
                 lv_modules.setCellFactory(ModuleCellController -> new ModuleCellController());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }));
     }

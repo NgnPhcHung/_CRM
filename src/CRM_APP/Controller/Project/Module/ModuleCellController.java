@@ -119,7 +119,7 @@ public class ModuleCellController extends JFXListCell<Module> {
     }
 
     private void handleStatus(String stt){
-        lbl_status.getStylesheets().add("/CRM_APP/Style/DetailStyle.css");
+        lbl_status.getStylesheets().add("/CRM_APP/Style/StyleStatus.css");
         switch (stt) {
             case "0":
                 lbl_status.setText("Pending");

@@ -52,7 +52,7 @@ public class CustomerDetailController {
     @FXML
     private JFXButton btn_Detete;
 
-    public static String cusID= "null";
+    public static String cusID= "";
     private Database database;
     private SceneHandler sceneHandler;
     private CustomerDB customerDB;
@@ -61,8 +61,7 @@ public class CustomerDetailController {
     void initialize() {
         TextFieldHandler textFieldHandler = new TextFieldHandler();
         textFieldHandler.numberOnly(txt_Phone);
-        System.out.println("day la cusID " + cusID);
-        if(cusID.equals("null")){
+        if(StringUtils.isNullOrEmpty(cusID)){
             btn_Detete.setVisible(false);
 
         }else{
@@ -78,7 +77,6 @@ public class CustomerDetailController {
             }else{
                 updateCustomer();
             }
-            btn_Back.fire();
         });
         btn_Back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
@@ -105,9 +103,9 @@ public class CustomerDetailController {
     private void createCustomer(){
         customerDB = new CustomerDB();
         customer = new Customer();
+        database = new Database();
         //check
         try {
-            database = new Database();
             String id = OtherHandler.generateId();
             ResultSet check = database.getSomeID(id, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
             customer.setId(id);
@@ -124,15 +122,35 @@ public class CustomerDetailController {
         if(!StringUtils.isNullOrEmpty(txt_Name.getText()) && !StringUtils.isNullOrEmpty(txt_Phone.getText())
         && !StringUtils.isNullOrEmpty(txt_Address.getText()) && !StringUtils.isNullOrEmpty(txt_TIN.getText())){
             String name = txt_Name.getText();
-            String phone = txt_Phone.getText();
-            String address = txt_Address.getText();
-            String TIN = txt_TIN.getText();
+            ResultSet resultSet = null;
+            lbl_Noti.setVisible(false);
+            try {
+                resultSet = database.getSomeID(name, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+                if(resultSet.next()){
+                    lbl_Noti.setVisible(true);
+                    lbl_Noti.setText("This customer already in list");
+                }else{
+                    lbl_Noti.setVisible(false);
+                    String phone = txt_Phone.getText();
+                    String address = txt_Address.getText();
+                    String TIN = txt_TIN.getText();
 
-            customer.setCusName(name);
-            customer.setPhone(phone);
-            customer.setAddress(address);
-            customer.setTIN(TIN);
-            customerDB.create(customer);
+                    customer.setCusName(name);
+                    customer.setPhone(phone);
+                    customer.setAddress(address);
+                    customer.setTIN(TIN);
+                    customerDB.create(customer);
+
+                    btn_Back.fire();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else{
+            lbl_Noti.setVisible(true);
+            lbl_Noti.setText("Invalid Input");
         }
     }
     private void updateCustomer(){
@@ -152,6 +170,8 @@ public class CustomerDetailController {
             customer.setTIN(TIN);
             customer.setId(cusID);
             customerDB.update(customer);
+
+            btn_Back.fire();
         }
     }
     private void deleteCustomer(){
@@ -160,7 +180,7 @@ public class CustomerDetailController {
             ResultSet row = database.getSomeID(cusID, Const.PROJECT_TABLE, Const.PROJECT_CUSTOMER);
             if(row.next()){
                 lbl_Noti.setVisible(true);
-                lbl_Noti.setText("This customer can not delete");
+                lbl_Noti.setText("This customer have constraint can not delete");
             }else{
                 lbl_Noti.setVisible(false);
                 database = new Database();

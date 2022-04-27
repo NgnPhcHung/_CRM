@@ -81,10 +81,13 @@
                   <String fx:value="h4" />
                </styleClass>
             </JFXTextField>
-            <Label fx:id="lbl_Noti" styleClass="notification" text="This is notification" textFill="#ff6b6b" visible="false">
-               <font>
-                  <Font name="Calibri Bold" size="20.0" />
-               </font>
+            <Label fx:id="lbl_Noti" text="This is notification" visible="false">
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="hBold" />
+                  <String fx:value="h4" />
+                  <String fx:value="textNotification" />
+               </styleClass>
             </Label>
             <JFXButton fx:id="btn_Save" prefWidth="100.0" text="Save">
                <styleClass>

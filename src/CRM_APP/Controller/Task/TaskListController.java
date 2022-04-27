@@ -216,8 +216,6 @@ public class TaskListController {
                 lv_tasks.setCellFactory(TaskCellController -> new TaskCellController());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }));
     }

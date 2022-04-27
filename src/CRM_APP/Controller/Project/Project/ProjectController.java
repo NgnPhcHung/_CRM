@@ -115,8 +115,6 @@ public class ProjectController {
                 lv_project.setCellFactory(ProjectCellController -> new ProjectCellController());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }));
     }

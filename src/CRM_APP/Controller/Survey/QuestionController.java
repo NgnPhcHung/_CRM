@@ -51,9 +51,6 @@ public class QuestionController {
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
-        listViewThread = new Thread(this::handleThread);
-        listViewThread.start();
-
         populateQuestions();
         btn_manage.setOnAction(event -> {
             sceneHandler = new SceneHandler();

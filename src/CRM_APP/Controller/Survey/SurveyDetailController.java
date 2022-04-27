@@ -57,9 +57,6 @@ public class SurveyDetailController {
     private TableView tableView;
 
     @FXML
-    private TableView tableViewExist;
-
-    @FXML
     private Label lbl_Header;
 
     @FXML
@@ -77,10 +74,10 @@ public class SurveyDetailController {
     private Question question;
     TableColumn col_Question ;
     TableColumn col_Action;
-    TableColumn col_Selected;
     private Survey survey;
     public static String surveyID;
     private SurveyDB surveyDB;
+    private boolean testBoolean = false;
 
     @FXML
     void initialize() {
@@ -90,7 +87,6 @@ public class SurveyDetailController {
         filterData();
         back();
         cellClickEvent();
-        populateDetail();
     }
 
     private void manageCheckBoxEvent(){
@@ -154,7 +150,6 @@ public class SurveyDetailController {
                         surveyDB.saveDetail(surveyDetail);
 
                         questions.removeAll(listRemove);
-                        populateDetail();
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -205,21 +200,33 @@ public class SurveyDetailController {
 
         tableView.getColumns().addAll(col_Question, col_Action);
         tableView.getStylesheets().add(HomeController.styleSheet);
-        tableViewExist.getStylesheets().add(HomeController.styleSheet);
 
         col_Question.getStyleClass().addAll("h4", "text");
         col_Action.getStyleClass().addAll("h4", "text","custom-align");
 
         //endregion
         try {
+            surveyDB = new SurveyDB();
+            surveyDetail = new SurveyDetail();
+            surveyDetail.setSurveyID(surveyID);
             ResultSet rowQuestion = database.getAllTableValue(Const.QUESTION_TABLE);
+            ResultSet row = surveyDB.getQuestion(surveyDetail);
+
+                ObservableList<String> questionList = FXCollections.observableArrayList();
             while(rowQuestion.next()){
-                surveyDB = new SurveyDB();
-                surveyDetail = new SurveyDetail();
                 question = new Question();
+                String checkQuestion ="";
                 String questionName = rowQuestion.getString(Const.QUESTION_NAME);
 
                 question.setQuestionName(questionName);
+                while(row.next()){
+                    questionList.add(row.getString(Const.QUESTION_NAME));
+                }
+                for(String q: questionList){
+                    if(q.equals(questionName)){
+                        question.getRemark().setSelected(true);
+                    }
+                }
 
                 col_Question.setCellValueFactory(new PropertyValueFactory<Question, String>("questionName"));
                 col_Action.setCellValueFactory(new PropertyValueFactory<Question,String>("remark"));
@@ -233,43 +240,9 @@ public class SurveyDetailController {
         }
     }
 
-    private void populateDetail(){
-        tableViewExist.getColumns().clear();
-        tableViewExist.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
-
-        col_Selected = new TableColumn("Question");
-
-        tableViewExist.getColumns().add(col_Selected);
-        tableViewExist.getStylesheets().add(HomeController.styleSheet);
-
-        col_Selected.getStyleClass().addAll("h4", "text");
-        if(!StringUtils.isEmpty(surveyID) && !surveyID.equals("")){
-            surveyDB = new SurveyDB();
-            surveyDetail = new SurveyDetail();
-            try {
-                ObservableList<Question> listQuestion = FXCollections.observableArrayList();
-                surveyDetail.setSurveyID(surveyID);
-                ResultSet row = surveyDB.getQuestion(surveyDetail);
-                while(row.next()){
-                    question = new Question();
-                    question.setQuestionName(row.getString(Const.QUESTION_NAME));
-                    col_Selected.setCellValueFactory(new PropertyValueFactory<Question, String>("questionName"));
-                    listQuestion.add(question);
-                }
-                tableViewExist.setItems(listQuestion);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }else{
-            fillDetail();
-        }
-    }
     private void populateComboBox(){
         OtherHandler.populateComboBox(cb_Employee, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
     }
-    private boolean testBoolean = false;
     private void cellClickEvent(){
         tableView.setRowFactory( tv -> {
             TableRow<Question> row = new TableRow<>();
@@ -289,30 +262,5 @@ public class SurveyDetailController {
             return row ;
         });
     }
-    //region USE LATER
-    /*
 
-                ObservableList<Question> listQuestion = FXCollections.observableArrayList();
-                surveyDetail.setSurveyID(surveyID);
-                ResultSet row = surveyDB.getQuestion(surveyDetail);
-                while(row.next()){
-                    question = new Question();
-                    question.setQuestionName(row.getString(Const.QUESTION_NAME));
-                    listQuestion.add(question);
-                }
-
-                if(!listQuestion.isEmpty()){
-                    for(Question listItem: listQuestion){
-                        if(listItem.getQuestionName().equals(questionName)){
-                            col_Question.getStyleClass().add("cellText");
-                            System.out.println(col_Question.getStyleClass());
-
-                        }else{
-                            col_Question.getStyleClass().removeIf(style -> style.equals("cellText"));
-                            System.out.println(col_Question.getStyleClass());
-                        }
-                    }
-                }
-     */
-    //endregion
 }
