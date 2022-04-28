@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -13,29 +14,40 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="880.0" styleClass="container" stylesheets="@../../Style/LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Login.LoginController">
+<HBox fx:id="pane_Container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="880.0" style="-fx-background-insets: -10px;" styleClass="container" stylesheets="@../../Style/LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Login.LoginController">
    <children>
-      <VBox fx:id="left_pane" alignment="CENTER" prefHeight="200.0" prefWidth="400.0" styleClass="left_side">
+      <VBox fx:id="left_pane" alignment="CENTER" prefHeight="200.0" prefWidth="400.0" style="-fx-background-radius: 10;">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Asset/Image/CRM-logos_white.png" />
-               </image>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </ImageView>
+            <Label text="CRM" textFill="#fcfcfc">
+               <font>
+                  <Font name="Haettenschweiler" size="60.0" />
+               </font>
+            </Label>
+            <Label layoutX="182.0" layoutY="289.0" style="-fx-border-color: #fcfcfc; -fx-border-width: 2px 2px 0px 2px; -fx-border-radius: 5px;" text=" Your money are mine " textFill="#fcfcfc">
+               <font>
+                  <Font name="HoloLens MDL2 Assets" size="30.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
-      <VBox fx:id="right_pane" prefHeight="600.0" prefWidth="484.0">
+      <VBox fx:id="right_pane" prefHeight="600.0" prefWidth="484.0" style="-fx-background-radius: 10;">
          <children>
-            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0">
+            <HBox alignment="CENTER_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" spacing="10.0">
                <children>
-                  <Button fx:id="btn_close" mnemonicParsing="false" onAction="#closeEvent" styleClass="btnExit" text="X">
+                  <Button fx:id="btn_close" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#closeEvent" styleClass="btnExit">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <graphic>
+                        <FontAwesomeIcon glyphStyle="-fx-fill:white" iconName="CLOSE" size="1.3em" />
+                     </graphic>
                   </Button>
+                  <Button fx:id="btn_Min" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="btnMin">
+                     <graphic>
+                        <FontAwesomeIcon glyphStyle="-fx-fill:white" iconName="MINUS" size="1.3em" />
+                     </graphic>
+                  </Button>
+                  <Label layoutX="66.0" layoutY="28.0" />
                </children>
             </HBox>
             <VBox alignment="CENTER" prefHeight="156.0" prefWidth="482.0">
@@ -49,15 +61,18 @@
             </VBox>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="482.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Asset/Icon/icons8-user-80.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="AD01" unFocusColor="#76b3ff">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #363b41; -fx-background-radius: 5px;">
+                     <graphic>
+                        <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="USER" size="1.5em" />
+                     </graphic>
+                     <font>
+                        <Font name="Calibri" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" labelFloat="true" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="AD01" unFocusColor="#76b3ff" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -69,15 +84,18 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="120.0" prefHeight="50.0" prefWidth="482.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Asset/Icon/icons8-lock-96.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="25.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="123" unFocusColor="#76b3ff" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #363b41; -fx-background-radius: 5px;">
+                     <graphic>
+                        <FontAwesomeIcon glyphStyle="-fx-fill:#ADADAD" iconName="LOCK" size="1.5em" />
+                     </graphic>
+                     <font>
+                        <Font name="Calibri" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" labelFloat="true" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="123" unFocusColor="#76b3ff" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="50.0" />

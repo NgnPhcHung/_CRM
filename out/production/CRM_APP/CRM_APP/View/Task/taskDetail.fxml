@@ -86,40 +86,48 @@
                            <graphic>
                               <Label text="Pending">
                                  <styleClass>
-                                    <String fx:value="text" />
                                     <String fx:value="h5" />
                                     <String fx:value="hBold" />
-                                 </styleClass></Label>
+                                 </styleClass>
+                                 <font>
+                                    <Font name="Calibri" size="15.0" />
+                                 </font></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_work" layoutX="10.0" layoutY="10.0">
                            <graphic>
                               <Label text="Woriking">
                                  <styleClass>
-                                    <String fx:value="text" />
                                     <String fx:value="h5" />
                                     <String fx:value="hBold" />
-                                 </styleClass></Label>
+                                 </styleClass>
+                                 <font>
+                                    <Font name="Calibri" size="15.0" />
+                                 </font></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_review" layoutX="50.0" layoutY="10.0">
                            <graphic>
                               <Label text="Reviewing">
                                  <styleClass>
-                                    <String fx:value="text" />
                                     <String fx:value="h5" />
                                     <String fx:value="hBold" />
-                                 </styleClass></Label>
+                                 </styleClass>
+                                 <font>
+                                    <Font name="Calibri" size="15.0" />
+                                 </font></Label>
                            </graphic>
                         </ToggleButton>
                         <ToggleButton fx:id="tog_done" layoutX="90.0" layoutY="10.0">
                            <graphic>
                               <Label text="Done">
                                  <styleClass>
-                                    <String fx:value="text" />
                                     <String fx:value="h5" />
                                     <String fx:value="hBold" />
-                                 </styleClass></Label>
+                                 </styleClass>
+                                 <font>
+                                    <Font name="Calibri" size="15.0" />
+                                 </font></Label>
                            </graphic>
                         </ToggleButton>
                      </toggles>

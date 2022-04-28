@@ -8,6 +8,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,9 +18,10 @@
 
 <GridPane prefHeight="700.0" prefWidth="800.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Project.Project.ProjectDetailsController">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="80.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,10 +31,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647">
          <children>
-            <Label text="Project Details" textFill="#455a64">
-               <font>
-                  <Font name="Calibri Bold" size="35.0" />
-               </font>
+            <Label text="Project Details">
                <styleClass>
                   <String fx:value="h1" />
                   <String fx:value="text" />
@@ -41,8 +40,22 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
+            <HBox>
+               <children>
+                  <Label text="Information">
+                     <styleClass>
+                        <String fx:value="h3" />
+                        <String fx:value="text" />
+                        <String fx:value="hBold" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
             <JFXTextField fx:id="txt_name" focusColor="#7898f8" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Title" unFocusColor="#ff7d7d">
                <VBox.margin>
                   <Insets />
@@ -90,10 +103,16 @@
                   <String fx:value="h4" />
                </styleClass>
             </JFXTextField>
-            <Label fx:id="lbl_noti" styleClass="notification" text="This is notification" textFill="#ff6b6b" visible="false">
+            <Label fx:id="lbl_noti" text="This is notification" textFill="#ff6b6b" visible="false">
                <font>
                   <Font name="Calibri Bold" size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="textNotification" />
+                  <String fx:value="h4" />
+                  <String fx:value="hBold" />
+               </styleClass>
             </Label>
             <JFXButton fx:id="btn_save" prefWidth="100.0" text="Save" textFill="#686868">
                <font>
@@ -106,6 +125,16 @@
                   <String fx:value="hBold" />
                </styleClass>
             </JFXButton>
+            <JFXButton fx:id="btn_delete" text="Delete">
+               <styleClass>
+                  <String fx:value="esc" />
+                  <String fx:value="h4" />
+                  <String fx:value="text" />
+                  <String fx:value="hBold" />
+               </styleClass>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin></JFXButton>
          </children>
          <GridPane.margin>
             <Insets top="20.0" />
@@ -122,13 +151,33 @@
       </VBox>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <JFXButton fx:id="btn_delete" text="Delete">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="SOMETIMES">
+               <children>
+                  <HBox VBox.vgrow="SOMETIMES">
+                     <children>
+                        <Label text="Teams">
+                           <styleClass>
+                              <String fx:value="h3" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+            <JFXButton fx:id="btn_AddTeam" text="Add Team">
                <styleClass>
-                  <String fx:value="esc" />
+                  <String fx:value="buttonStyle3" />
                   <String fx:value="h4" />
                   <String fx:value="text" />
                   <String fx:value="hBold" />
-               </styleClass></JFXButton>
+               </styleClass>
+            </JFXButton>
          </children>
       </VBox>
    </children>

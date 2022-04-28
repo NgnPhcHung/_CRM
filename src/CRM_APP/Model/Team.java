@@ -1,5 +1,7 @@
 package CRM_APP.Model;
 
+import com.jfoenix.controls.JFXCheckBox;
+
 public class Team {
     private String teamID;
     private String teamName;

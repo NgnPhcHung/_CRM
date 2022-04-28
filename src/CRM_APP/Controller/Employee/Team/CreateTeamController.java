@@ -22,6 +22,9 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
 public class CreateTeamController {
     @FXML
     private ResourceBundle resources;
@@ -46,9 +49,6 @@ public class CreateTeamController {
 
     @FXML
     private JFXButton btn_back;
-
-    @FXML
-    private JFXListView<Project> lv_Project;
 
     private SceneHandler sceneHandler;
     private Database database;

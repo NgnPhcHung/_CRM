@@ -66,7 +66,7 @@ public class AddEmployeeController {
     void initialize() {
         TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.limitTextField(txt_Password, 6);
-        cb_Role.getItems().addAll("Employee", "Admin");
+        cb_Role.getItems().addAll("Employee", "Manager");
         if(emID.equals("null")){
             btn_Delete.setVisible(false);
         }else {
@@ -169,7 +169,7 @@ public class AddEmployeeController {
                 if(str.contains("EM")){
                     cb_Role.setValue("Employee");
                 }else{
-                    cb_Role.setValue("Admin");
+                    cb_Role.setValue("Manager");
                 }
                 txt_Name.setText( row.getString(Const.EMPLOYEE_NAME));
                 txt_Phone.setText(row.getString(Const.EMPLOYEE_PHONE));

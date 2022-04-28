@@ -4,9 +4,11 @@ import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Login.LoginDB;
+import CRM_APP.Handler.FadeTransitionHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
+import CRM_APP.Main;
 import CRM_APP.Model.Employee;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -24,6 +26,7 @@ import java.util.concurrent.Executors;
 
 import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +36,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -46,7 +50,13 @@ public class LoginController {
     private URL location;
 
     @FXML
+    HBox pane_Container;
+
+    @FXML
     private Button btn_close;
+
+    @FXML
+    private Button btn_Min;
 
     @FXML
     private Label lbl_invalid;
@@ -69,19 +79,21 @@ public class LoginController {
     @FXML
     private ImageView imgArrow;
 
-    private Executor exec ;
-
     private SceneHandler sceneHandler;
     private LoginDB database = new LoginDB(); // Khởi tạo database cho login
     private Database mydb = new Database(); // Khởi tạo lớp database
     private Employee employee = new Employee(); // Khai báo đối tượng nhân viên
-
     private String userId;
-
+    double x;
+    double y;
+    private static Stage primaryStage;
     @FXML
     void initialize() {
         ShakerHandler loginShake = new ShakerHandler(imgArrow, Animation.INDEFINITE, 500);
         loginShake.shake();
+        btn_Min.setOnAction(e -> {
+            Main.getPrimaryStage().setIconified(true);
+        });
     }
     //close app event
     @FXML
@@ -123,27 +135,50 @@ public class LoginController {
     }
     //login event
     private void loginSuccess() {
-        try {
-            btn_login.getScene().getWindow().hide();
 
-            // Gọi màn hình home
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/CRM_APP/View/Home/home.fxml"));
-            HomeController.userId = userId;
-            loader.load();
+            FadeTransitionHandler.applyTransition(pane_Container, Duration.seconds(0.5), e ->{
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/CRM_APP/View/Home/home.fxml"));
+                    HomeController.userId = userId;
+                    loader.load();
 
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setHeight(sceneHandler.getScreen()[0]*0.7);
-            stage.setWidth(sceneHandler.getScreen()[1]*0.7);
+                    Parent root = loader.getRoot();
+                    Stage stage = new Stage();
+                    setPrimaryStage(stage);
+                    stage.setScene(new Scene(root));
+                    stage.initStyle(StageStyle.UNDECORATED);
 
+                    stage.setHeight(sceneHandler.getScreen()[0]*0.7);
+                    stage.setWidth(sceneHandler.getScreen()[1]*0.7);
+                    pane_Container.getChildren().removeAll();
+                    btn_login.getScene().getWindow().hide();
 
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                    // Gọi màn hình home
+
+                    stage.show();
+                    root.setOnMousePressed(event -> {
+                        x = event.getSceneX();
+                        y = event.getSceneY();
+                    });
+
+                    root.setOnMouseDragged(event -> {
+                        stage.setX(event.getScreenX() - x);
+                        stage.setY(event.getScreenY() - y);
+                        stage.setOpacity(0.5f);
+                    });
+
+                    root.setOnDragDone(event ->{
+                        stage.setOpacity(1f);
+                    });
+                    root.setOnMouseReleased(event -> {
+                        stage.setOpacity(1f);
+                    });
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
     }
     //this func will fire when login success and be4 change scene
     private void userLogin(String uid){
@@ -167,5 +202,13 @@ public class LoginController {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static void setPrimaryStage(Stage primaryStage) {
+        LoginController.primaryStage = primaryStage;
     }
 }

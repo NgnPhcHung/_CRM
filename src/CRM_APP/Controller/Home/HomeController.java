@@ -1,6 +1,9 @@
 package CRM_APP.Controller.Home;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,18 +13,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import CRM_APP.Controller.Employee.Employee.EmployeeProfileController;
+import CRM_APP.Controller.Login.LoginController;
 import CRM_APP.Controller.Task.FullCalendarView;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Database.Home.HomeDB;
 import CRM_APP.Database.Login.LoginDB;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Main;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -66,10 +74,16 @@ public class HomeController {
     private Button btn_exit;
 
     @FXML
+    private Button btn_Min;
+
+    @FXML
     private Label lbl_name;
 
     @FXML
     private Label lbl_position;
+
+    @FXML
+    private Label lbl_Export;
 
     @FXML
     private JFXToggleButton tog_Style;
@@ -82,6 +96,7 @@ public class HomeController {
     private LoginDB database = new LoginDB();
     public static String userId;
     private Database mydb = new Database();
+    private HomeDB homeDB;
 
     @FXML
     void initialize() {
@@ -105,41 +120,75 @@ public class HomeController {
                 tog_Style.setText("Dark mode");
             }
         }));
+
+        btn_Min.setOnAction(event -> {
+            LoginController.getPrimaryStage().setIconified(true);
+        });
+
+        btn_exit.setOnAction(e -> {
+            closeApplication();
+        });
+        if(userId.equals("SAD")){
+            lbl_Export.setVisible(true);
+            lbl_Export.setOnMouseClicked(event -> {
+                createLogFile();
+            });
+        }
     }
-
-
-    //when user logout
-    @FXML
-    void closeApplication(ActionEvent event) {
+    private void createLogFile(){
+        String fileName = "Log_" + OtherHandler.generateId();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(lbl_Export.getScene().getWindow());
         try {
-            userLogout(getUserId());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            PrintWriter pw = new PrintWriter(selectedDirectory+"\\"+fileName+".csv");
+            StringBuilder sb = new StringBuilder();
+
+            homeDB = new HomeDB();
+            ResultSet row =  homeDB.getLogAuthen();
+            try {
+                while (row.next()){
+                    sb.append(row.getString(Const.EMPLOYEE_ID));
+                    sb.append(", ");
+                    sb.append(row.getString(Const.AUTHEN_LOGTIME));
+                    sb.append(", ");
+                    sb.append(row.getString(Const.AUTHEN_OUTTIME));
+                    sb.append(", ");
+                    sb.append(row.getString(Const.AUTHEN_DEVICE));
+                    sb.append("\r\n");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            pw.write(sb.toString());
+            pw.close();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-//        //close
+    }
+    //when user logout
+    private void closeApplication() {
+        closeMethod();
+        //close
         Platform.exit();
         System.exit(0);
     }
-
-    private void userLogout(String uid) throws SQLException, ClassNotFoundException {
+    private void userLogout(String uid){
         String deviceName = OtherHandler.getDevice();
         String aid = OtherHandler.generateId();
         database = new LoginDB();
         mydb = new Database();
 
-//        try{
-//            ResultSet rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-//            while(rs.next()){
-//                aid = OtherHandler.generateId();
-//                rs = mydb.getSomeID(aid, Const.AUTHEN_TABLE, Const.AUTHEN_AUTHENID);
-//            }
-//        }catch (Exception e){}
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String logTime = dtf.format(now);
         database.authen("logout", aid, uid, logTime, deviceName);
+    }
+    private void closeMethod(){
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                userLogout(getUserId());
+            }
+        }, "Shutdown-thread"));
     }
 
     //check value is in array (now is tab)

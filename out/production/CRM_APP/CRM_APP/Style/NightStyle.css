@@ -267,3 +267,23 @@
 .textNotification{
     -fx-text-fill: #ff6b6b;
 }
+.btnExit{
+    -fx-background-color: transparent;
+    -fx-text-fill: #686868;
+    -fx-font-size: 20;
+    -fx-background-radius: 5px;
+}
+.btnExit:hover{
+    -fx-background-color: #ff595f;
+}
+.btnMin{
+    -fx-background-color: transparent;
+    -fx-text-fill: #686868;
+    -fx-font-size: 20;
+    -fx-background-radius: 5px;
+}
+.btnMin:hover{
+    -fx-background-color: #686868;
+    -fx-text-fill: #e0e0e0;
+    -fx-fill: #e0e0e0;
+}

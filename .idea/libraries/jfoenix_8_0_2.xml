@@ -4,6 +4,7 @@
       <root url="jar://$PROJECT_DIR$/src/CRM_APP/Package/jfoenix-8.0.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/CRM_APP/Package/mysql-connector-java-8.0.26.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/CRM_APP/Package/scenebuilder-8.5.0-all.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/CRM_APP/Package/fontawesomefx-8.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

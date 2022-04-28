@@ -5,11 +5,12 @@
     -fx-background-color: transparent;
 }
 .button{
+
+}
+.buttonLogin{
     -fx-background-color: #2196f3;
     -fx-background-radius: 15px;
     -fx-font-family: Calibri;
-}
-.buttonLogin{
     -fx-text-fill: #eceff1;
     -fx-font-weight: bold;
     -fx-font-size: 20;
@@ -17,17 +18,34 @@
 .btnExit{
     -fx-background-color: transparent;
     -fx-text-fill: #686868;
-    -fx-font-size: 30;
+    -fx-font-size: 20;
+    -fx-background-radius: 5px;
 }
+.btnExit:hover{
+    -fx-background-color: #ff595f;
+}
+.btnMin{
+    -fx-background-color: transparent;
+    -fx-text-fill: #686868;
+    -fx-font-size: 20;
+    -fx-background-radius: 5px;
+}
+.btnMin:hover{
+    -fx-background-color: #171717;
+}
+
 .imgLogin{
     -fx-rotate: 90;
 }
 .jfx-text-field {
-    -fx-prompt-text-fill: #989898;
-    -fx-text-fill: #686868;
+    -fx-prompt-text-fill: #cfd8dc;
+    -fx-text-fill: #ffffff;
     -fx-font-family: Calibri;
     -fx-font-size: 15px;
+    -fx-background-color: #90a4ae;
 }
 .container{
     -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-color: #29434e;
 }

@@ -183,16 +183,16 @@
 }
 
 .tab{
-    -fx-background-color: #455a64;
+    -fx-background-color: #cfd8dc;
 }
 .tab-header-background{
-    -fx-background-color: #455a64;
+    -fx-background-color: #cfd8dc;
 }
 .tab-close-button{
     -fx-background-color: #cfd8dc;
 }
 .tab-label {
-    -fx-text-fill: #cfd8dc;
+    -fx-text-fill: #686868;
     -fx-font-weight: bold;
     -fx-font-family: Calibri;
     -fx-font-size: 20;
@@ -242,4 +242,22 @@
 }
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
+}
+.btnExit{
+    -fx-background-color: transparent;
+    -fx-text-fill: #686868;
+    -fx-font-size: 20;
+    -fx-background-radius: 5px;
+}
+.btnExit:hover{
+    -fx-background-color: #ff595f;
+}
+.btnMin{
+    -fx-background-color: transparent;
+    -fx-text-fill: #686868;
+    -fx-font-size: 20;
+    -fx-background-radius: 5px;
+}
+.btnMin:hover{
+    -fx-background-color:  #e0e0e0;
 }

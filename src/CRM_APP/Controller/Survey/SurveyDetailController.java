@@ -82,11 +82,11 @@ public class SurveyDetailController {
     @FXML
     void initialize() {
         fillDetail();
+        filterData();
+        cellClickEvent();
         manageCheckBoxEvent();
         save();
-        filterData();
         back();
-        cellClickEvent();
     }
 
     private void manageCheckBoxEvent(){
@@ -139,17 +139,17 @@ public class SurveyDetailController {
                         surveyDetail.setEmpID(rowEmp.getString(Const.EMPLOYEE_ID));
                     }
                     surveyDetail.setSurveyID(surveyID);
-                        surveyDB = new SurveyDB();
-                        ResultSet rowQuestionExist = surveyDB.checkQuestion(surveyDetail);
-                        if(rowQuestionExist.next()){
-                            continue;
-                        }
+                    surveyDB = new SurveyDB();
+                    ResultSet rowQuestionExist = surveyDB.checkQuestion(surveyDetail);
+                    if(rowQuestionExist.next()){
+                        continue;
+                    }
 
-                        surveyDB = new SurveyDB();
-                        database = new Database();
-                        surveyDB.saveDetail(surveyDetail);
+                    surveyDB = new SurveyDB();
+                    database = new Database();
+                    surveyDB.saveDetail(surveyDetail);
 
-                        questions.removeAll(listRemove);
+                    questions.removeAll(listRemove);
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -190,19 +190,19 @@ public class SurveyDetailController {
         database = new Database();
         questions = FXCollections.observableArrayList();
         //region SETTING SOME STYLE
-        tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+            tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
 
-        col_Question = new TableColumn("Question");
-        col_Action = new TableColumn("Action");
+            col_Question = new TableColumn("Question");
+            col_Action = new TableColumn("Action");
 
-        col_Question.setMaxWidth( 1f * Integer.MAX_VALUE * 80 ); // 20% width
-        col_Action.setMaxWidth( 1f * Integer.MAX_VALUE * 5 ); // 10% width
+            col_Question.setMaxWidth( 1f * Integer.MAX_VALUE * 80 ); // 20% width
+            col_Action.setMaxWidth( 1f * Integer.MAX_VALUE * 10 ); // 10% width
 
-        tableView.getColumns().addAll(col_Question, col_Action);
-        tableView.getStylesheets().add(HomeController.styleSheet);
+            tableView.getColumns().addAll(col_Question, col_Action);
+            tableView.getStylesheets().add(HomeController.styleSheet);
 
-        col_Question.getStyleClass().addAll("h4", "text");
-        col_Action.getStyleClass().addAll("h4", "text","custom-align");
+            col_Question.getStyleClass().addAll("h4", "text");
+            col_Action.getStyleClass().addAll("h4", "text","custom-align");
 
         //endregion
         try {
@@ -212,10 +212,9 @@ public class SurveyDetailController {
             ResultSet rowQuestion = database.getAllTableValue(Const.QUESTION_TABLE);
             ResultSet row = surveyDB.getQuestion(surveyDetail);
 
-                ObservableList<String> questionList = FXCollections.observableArrayList();
+            ObservableList<String> questionList = FXCollections.observableArrayList();
             while(rowQuestion.next()){
                 question = new Question();
-                String checkQuestion ="";
                 String questionName = rowQuestion.getString(Const.QUESTION_NAME);
 
                 question.setQuestionName(questionName);
@@ -248,7 +247,7 @@ public class SurveyDetailController {
             TableRow<Question> row = new TableRow<>();
             JFXCheckBox checkBox = new JFXCheckBox();
             checkBox.setOnMouseClicked(e-> {
-                System.out.println("ok");
+
             });
             row.setOnMouseClicked(event -> {
                 testBoolean= !testBoolean;

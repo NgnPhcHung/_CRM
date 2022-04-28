@@ -42,7 +42,7 @@ public class ProjectDB {
             preparedStatement.setString(5, project.getEndTime());
             preparedStatement.setString(6, project.getManager());
             preparedStatement.setString(7, project.getAmount()+"");
-            System.out.println(preparedStatement);
+
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {
@@ -68,6 +68,30 @@ public class ProjectDB {
             preparedStatement.setString(5, project.getManager());
             preparedStatement.setString(6, project.getCusId());
             preparedStatement.setString(7, project.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getProjectTeam(Project project){
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM " +  Const.PROJECT_TEAM_DETAIL  + " WHERE "
+                        + Const.PROJECT_ID + " = ?";
+
+        return resultSet;
+    }
+    public void insertProjectTeam(Project project){
+        database = new Database();
+        String query = "INSERT INTO " + Const.PROJECT_TEAM_DETAIL + " ("
+                + Const.PROJECT_ID + "," + Const.TEAM_ID +") VALUES(?, ?)";
+        try {
+            PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, project.getId());
+            preparedStatement.setString(2, project.getProjectTeamID());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {

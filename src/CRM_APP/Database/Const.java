@@ -18,7 +18,7 @@ public class Const {
     public static final String CUSTOMER_TABLE = "customer";
     public static final String BILL_TABLE = "bill";
     public static final String BILL_DETAIL_TABLE = "bill_detail";
-
+    public static final String PROJECT_TEAM_DETAIL = "project_team_detail";
     //columns name
     //employee
     public static final String EMPLOYEE_ID = "EmpID";

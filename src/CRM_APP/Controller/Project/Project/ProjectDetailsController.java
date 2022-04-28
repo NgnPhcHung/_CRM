@@ -1,5 +1,6 @@
 package CRM_APP.Controller.Project.Project;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -9,6 +10,8 @@ import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.TextFieldHandler;
 import CRM_APP.Model.Project;
+import CRM_APP.Model.Question;
+import CRM_APP.Model.Team;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -29,6 +32,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ProjectDetailsController {
 
@@ -63,16 +69,27 @@ public class ProjectDetailsController {
     private JFXButton btn_save;
 
     @FXML
+    private JFXButton btn_AddTeam;
+
+    @FXML
     private Button btn_back;
 
     @FXML
     private JFXButton btn_delete;
+
+    @FXML
+    private TableView tableView;
 
     SceneHandler sceneHandler;
     private ProjectDB projectDB;
     private Database database;
     public static String projectID = null;
     private ObservableList<String> list;
+    private ObservableList<Project> projects;
+    private Team team;
+    private Project project;
+    TableColumn col_Team;
+    TableColumn col_Action;
 
     @FXML
     void initialize() {
@@ -103,9 +120,54 @@ public class ProjectDetailsController {
         btn_delete.setOnAction(e->{
             delete();
         });
+        fillTable();
+        btn_AddTeam.setOnAction(e -> {
+            saveTeamDetail();
+        });
     }
 
     //region WORK WITH DATABASE
+
+    private void fillTable(){
+        tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+        col_Team = new TableColumn("Team");
+        col_Action = new TableColumn("Action");
+
+        tableView.getColumns().addAll(col_Team, col_Action);
+        tableView.getStylesheets().add(HomeController.styleSheet);
+
+        col_Team.setMaxWidth( 1f * Integer.MAX_VALUE * 80 ); // 20% width
+        col_Action.setMaxWidth( 1f * Integer.MAX_VALUE * 10 ); // 10% width
+
+        col_Team.getStyleClass().addAll("h4", "text");
+        col_Action.getStyleClass().addAll("h4", "text","custom-align");
+
+        try {
+            project = new Project();
+            database = new Database();
+            project.setId(projectID);
+            projects = FXCollections.observableArrayList();
+            ResultSet resultSet = database.getAllTableValue(Const.TEAM_TABLE);
+            ObservableList<String> teamList = FXCollections.observableArrayList();
+
+            while(resultSet.next()){
+                project = new Project();
+                String teamID = resultSet.getString(Const.TEAM_ID);
+                ResultSet rs = database.getSomeID(teamID, Const.TEAM_TABLE, Const.TEAM_ID);
+                if(rs.next())
+                    project.setProjectTeamName(rs.getString(Const.TEAM_NAME));
+
+                col_Team.setCellValueFactory(new PropertyValueFactory<Project, String>("projectTeamName"));
+                col_Action.setCellValueFactory(new PropertyValueFactory<Question,String>("remark"));
+                projects.add(project);
+            }
+            tableView.setItems(projects);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void populateComboBoxData(){
         try{
@@ -223,6 +285,38 @@ public class ProjectDetailsController {
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-X", "/CRM_APP/View/Project/project.fxml");
         }
     }
+
+    private void saveTeamDetail(){
+        database = new Database();
+        projectDB = new ProjectDB();
+        ObservableList<Project> listRemove = FXCollections.observableArrayList();
+        for (Project project: projects){
+            if(project.getRemark().isSelected()){
+                listRemove.add(project);
+            }
+        }
+        database.detele(Const.PROJECT_TEAM_DETAIL, Const.PROJECT_ID, projectID);
+        for (Project item: listRemove){
+            String teamName = item.getProjectTeamName();
+            project = new Project();
+            try {
+                ResultSet rowTeam = database.getSomeID(teamName, Const.TEAM_TABLE, Const.TEAM_NAME);
+                while(rowTeam.next()){
+                    project.setProjectTeamID(rowTeam.getString(Const.TEAM_ID));
+                }
+                project.setId(projectID);
+                projectDB.insertProjectTeam(project);
+                lbl_noti.setText("Save Success");
+                lbl_noti.setVisible(true);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     private void save (){
         projectDB = new ProjectDB();
         database = new Database();

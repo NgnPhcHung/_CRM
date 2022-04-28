@@ -25,7 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
-public class BillController {
+public class BillController extends Thread{
 
     @FXML
     private StackPane main_Stack;
@@ -79,24 +79,32 @@ public class BillController {
 
     @FXML
     void initialize() {
-        fillCard();
         database = new Database();
-        try {
-            ResultSet rs = database.getAllTableValue(Const.BILL_TABLE);
-            if (rs.next()){
-                populateList();
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
+        Thread thread3 = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = database.getAllTableValue(Const.BILL_TABLE);
+                    if (rs.next()){
+                        populateList();
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        thread3.start();
+
+        filterText();
+        fillCard();
         btn_Add.setOnAction(e -> {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_All, main_Stack, "X", "/CRM_APP/View/Bill/billDetail.fxml");
         });
-        filterText();
     }
 
     private void populateList(){

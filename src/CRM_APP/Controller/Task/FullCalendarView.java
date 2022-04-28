@@ -124,8 +124,28 @@ public class FullCalendarView {
         //endregion
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
-        myThread= new Thread(this::handleThread);
-        myThread.start();
+        Thread thread = new Thread(myThread){
+            @Override
+            public void run() {
+                super.run();
+                myThread= new Thread(this::handleThread);
+                myThread.start();
+            }
+            private void handleThread(){
+                while(true){
+                    Platform.runLater(() ->{
+                        populateCalendar(currentYearMonth);
+                    });
+                    try{
+
+                        Thread.sleep(1000);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
         //endregion
     }
 
@@ -244,19 +264,6 @@ public class FullCalendarView {
 
 
     //refresh listview
-    private void handleThread(){
-        while(true){
-            Platform.runLater(() ->{
-                populateCalendar(currentYearMonth);
-            });
-            try{
-
-                Thread.sleep(1000);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-    }
 
 
 //     Move the month back by one. Repopulate the calendar with the correct dates.

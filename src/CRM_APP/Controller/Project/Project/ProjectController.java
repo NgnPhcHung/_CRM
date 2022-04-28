@@ -52,7 +52,14 @@ public class ProjectController {
 
     @FXML
     void initialize() {
-        populateList();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                populateList();
+            }
+        };
+        thread.start();
         filterCell();
         btn_new.setOnAction(e->{
             ProjectDetailsController.projectID = "null";

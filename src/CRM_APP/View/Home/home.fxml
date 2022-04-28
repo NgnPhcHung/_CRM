@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -44,13 +46,21 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </HBox>
-                        <Button fx:id="btn_exit" mnemonicParsing="false" onAction="#closeApplication" prefHeight="60.0" prefWidth="60.0" text="✘">
-                           <styleClass>
-                              <String fx:value="esc" />
-                              <String fx:value="hBold" />
-                              <String fx:value="h4" />
-                              <String fx:value="text" />
-                           </styleClass></Button>
+                        <Button fx:id="btn_Min" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="btnMin">
+                           <graphic>
+                              <FontAwesomeIcon iconName="MINUS" styleClass="text" />
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="btn_exit" layoutX="1248.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="btnExit">
+                           <graphic>
+                              <FontAwesomeIcon iconName="CLOSE" styleClass="text" />
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="5.0" />
@@ -74,6 +84,9 @@
                               <String fx:value="h4" />
                               <String fx:value="text" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button fx:id="btn_customer" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="655.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Customer">
                            <graphic>
@@ -91,6 +104,9 @@
                               <String fx:value="h4" />
                               <String fx:value="text" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button fx:id="btn_employee" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Employee">
                            <graphic>
@@ -108,6 +124,9 @@
                               <String fx:value="h4" />
                               <String fx:value="text" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                      <padding>
@@ -141,6 +160,9 @@
                               <String fx:value="h4" />
                               <String fx:value="text" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button fx:id="btn_project" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="545.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Project">
                            <graphic>
@@ -158,6 +180,9 @@
                               <String fx:value="h4" />
                               <String fx:value="text" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button fx:id="btn_bill" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" prefWidth="200.0" text="Bill">
                            <graphic>
@@ -175,11 +200,30 @@
                               <String fx:value="h4" />
                               <String fx:value="text" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </HBox>
                   <VBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
                      <children>
+                        <Label fx:id="lbl_Export" style="-fx-underline: true;" text="Export Logfile" textFill="#6daeff" visible="false">
+                           <styleClass>
+                              <String fx:value="hBold" />
+                              <String fx:value="h4" />
+                              <String fx:value="hItalic" />
+                           </styleClass>
+                           <font>
+                              <Font name="Calibri" size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="15.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
                         <JFXToggleButton fx:id="tog_Style" text="Light Mode" toggleColor="#909090" toggleLineColor="#4a4a4a" unToggleLineColor="#e2f1f8">
                            <styleClass>
                               <String fx:value="text" />

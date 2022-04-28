@@ -84,15 +84,17 @@ public class ModuleController {
     private Module module;
     @FXML
     void initialize() {
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                populateList("nor");
+
+            }
+        };
+        thread.start();
         filterCell();
-        populateList("nor");
-        try {
-            fillCard();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        fillCard();
         btn_back.setOnAction(e -> {
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
         });
@@ -103,28 +105,36 @@ public class ModuleController {
         });
     }
 
-    private void fillCard() throws SQLException, ClassNotFoundException {
+    private void fillCard(){
         moduleDB = new ModuleDB();
-        ResultSet row = moduleDB.getCountStatus(projectID);
-        ResultSet row2 = moduleDB.countAll(projectID);
-        String pending = "";
-        String reviewing = "";
-        String working = "";
-        String done = "";
-        String total  = "";
-        if(row.next() && row2.next()){
-            pending = row.getString("Pending");
-            working = row.getString("Working");
-            reviewing = row.getString("Reviewing");
-            done = row.getString("Done");
-            total = row2.getString(1);
+        ResultSet row = null;
+        try {
+            row = moduleDB.getCountStatus(projectID);
+            ResultSet row2 = moduleDB.countAll(projectID);
+            String pending = "";
+            String reviewing = "";
+            String working = "";
+            String done = "";
+            String total  = "";
+            if(row.next() && row2.next()){
+                pending = row.getString("Pending");
+                working = row.getString("Working");
+                reviewing = row.getString("Reviewing");
+                done = row.getString("Done");
+                total = row2.getString(1);
+            }
+
+            lbl_pending.setText(pending);
+            lbl_working.setText(working);
+            lbl_reviewing.setText(reviewing);
+            lbl_done.setText(done);
+            lbl_Total.setText(total);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        lbl_pending.setText(pending);
-        lbl_working.setText(working);
-        lbl_reviewing.setText(reviewing);
-        lbl_done.setText(done);
-        lbl_Total.setText(total);
     }
 
     private void populateList(String status) {
