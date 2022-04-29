@@ -60,6 +60,11 @@ public class ProjectController {
             }
         };
         thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         filterCell();
         btn_new.setOnAction(e->{
             ProjectDetailsController.projectID = "null";

@@ -2,6 +2,8 @@ package CRM_APP.Database.Task;
 
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Handler.ThreadHandler;
+import CRM_APP.Model.Project;
 import CRM_APP.Model.Task;
 
 import java.sql.PreparedStatement;
@@ -23,13 +25,6 @@ public class TaskDB {
                         +" VALUES(?,?,?,?,?,?,?) " ;
         try {
             PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
-//            preparedStatement.setString(1, id);
-//            preparedStatement.setString(2, emp);
-//            preparedStatement.setString(3, task);
-//            preparedStatement.setString(4, status);
-//            preparedStatement.setString(5, color);
-//            preparedStatement.setString(6, start);
-//            preparedStatement.setString(7, end);
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -108,6 +103,46 @@ public class TaskDB {
         return resultSet;
     }
 
+    public ResultSet getDetailTeamMember(Project project){
+        ThreadHandler threadHandler = new ThreadHandler();
+        Thread thread = new Thread(threadHandler){
+            @Override
+            public void run() {
+                super.run();
+                ResultSet resultSet = null;
+                db = new Database();
+
+                String query = " SELECT * FROM " + Const.PROJECT_TEAM_DETAIL
+                        + " INNER JOIN " + Const.TEAM_TABLE
+                        + " ON " + Const.PROJECT_TEAM_DETAIL +"."+Const.TEAM_ID + " = " + Const.TEAM_TABLE +"." + Const.TEAM_ID
+                        + " INNER JOIN " + Const.TEAM_DETAIL_TABLE
+                        + " ON " + Const.TEAM_DETAIL_TABLE + "." + Const.TEAM_ID + " = " + Const.TEAM_TABLE +"." + Const.TEAM_ID
+                        + " INNER JOIN " + Const.EMPLOYEE_TABLE
+                        + " ON " + Const.EMPLOYEE_TABLE + "." + Const.EMPLOYEE_ID + " = " + Const.TEAM_DETAIL_TABLE + "." + Const.EMPLOYEE_ID
+                        + " WHERE " + Const.PROJECT_ID + " =?";
+
+                PreparedStatement preparedStatement = null;
+                try {
+                    preparedStatement = db.getDbConnection().prepareStatement(query);
+                    preparedStatement.setString(1, project.getId());
+                    resultSet = preparedStatement.executeQuery();
+                    threadHandler.setRs(resultSet);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return threadHandler.getRs();
+    }
     //region ADMIN QUERY
     public void save(Task task){
         db= new Database();

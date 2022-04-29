@@ -133,7 +133,7 @@
                   <String fx:value="hBold" />
                </styleClass>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="30.0" />
                </VBox.margin></JFXButton>
          </children>
          <GridPane.margin>

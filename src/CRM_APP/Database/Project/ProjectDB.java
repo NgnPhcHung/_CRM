@@ -79,9 +79,19 @@ public class ProjectDB {
 
     public ResultSet getProjectTeam(Project project){
         ResultSet resultSet = null;
+        database = new Database();
+
         String query = "SELECT * FROM " +  Const.PROJECT_TEAM_DETAIL  + " WHERE "
                         + Const.PROJECT_ID + " = ?";
-
+        try {
+            PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, project.getId());
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return resultSet;
     }
     public void insertProjectTeam(Project project){

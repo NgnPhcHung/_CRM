@@ -24,6 +24,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -90,7 +91,9 @@ public class ProjectDetailsController {
     private Project project;
     TableColumn col_Team;
     TableColumn col_Action;
-
+    private String cusID = "";
+    private String emID = "";
+    private String newProjectID = "";
     @FXML
     void initialize() {
         //region FORMAT ON START
@@ -145,17 +148,33 @@ public class ProjectDetailsController {
         try {
             project = new Project();
             database = new Database();
+            projectDB = new ProjectDB();
             project.setId(projectID);
             projects = FXCollections.observableArrayList();
             ResultSet resultSet = database.getAllTableValue(Const.TEAM_TABLE);
+            ResultSet rowTeam = projectDB.getProjectTeam(project);
             ObservableList<String> teamList = FXCollections.observableArrayList();
 
             while(resultSet.next()){
                 project = new Project();
                 String teamID = resultSet.getString(Const.TEAM_ID);
-                ResultSet rs = database.getSomeID(teamID, Const.TEAM_TABLE, Const.TEAM_ID);
-                if(rs.next())
-                    project.setProjectTeamName(rs.getString(Const.TEAM_NAME));
+                String teamName="";
+                ResultSet rowName = database.getSomeID(teamID, Const.TEAM_TABLE, Const.TEAM_ID);
+
+                if(rowName.next()){
+                    teamName = rowName.getString(Const.TEAM_NAME);
+                    project.setProjectTeamName(teamName);
+                }
+
+                while(rowTeam.next()){
+                    teamList.add(rowTeam.getString(Const.TEAM_ID));
+                }
+
+                for(String s: teamList){
+                    if(s.equals(teamID)){
+                        project.getRemark().setSelected(true);
+                    }
+                }
 
                 col_Team.setCellValueFactory(new PropertyValueFactory<Project, String>("projectTeamName"));
                 col_Action.setCellValueFactory(new PropertyValueFactory<Question,String>("remark"));
@@ -238,11 +257,13 @@ public class ProjectDetailsController {
         database = new Database();
         String empName = cb_manager.getValue();
         String CusName = cb_customer.getValue();
-        String emID = "";
-        String cusID = "";
+        emID = "";
+        cusID = "";
         if(txt_name.getText().equals("") && txt_amount.getText().equals("")){
             lbl_noti.setText("Invalid Information");
+            lbl_noti.setVisible(true);
         }else{
+            lbl_noti.setVisible(false);
             String manager = cb_manager.getValue();
             try {
                 ResultSet row = database.getSomeID(manager, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
@@ -322,64 +343,43 @@ public class ProjectDetailsController {
         database = new Database();
         sceneHandler = new SceneHandler();
         Project project = new Project();
-        String cusID = "";
-        String emID = "";
-        if(txt_name.getText().equals("") && txt_amount.getText().equals("")){
+
+        if(StringUtils.isNullOrEmpty(txt_name.getText()) && StringUtils.isNullOrEmpty(txt_amount.getText())){
             lbl_noti.setText("Invalid Information");
-        }
-        //region CREATE CHECK ID EXIST
-        String newProjectID ="";
-        try {
-            newProjectID = OtherHandler.generateId();
-            ResultSet check = database.getSomeID(newProjectID, Const.PROJECT_TABLE, Const.PROJECT_ID);
-            while(check.next()){
-                newProjectID = OtherHandler.generateId();
-                check = database.getSomeID(newProjectID, Const.PROJECT_TABLE, Const.PROJECT_ID);
+        }else{
+            try {
+                String newProjectID = createProjectID();
+                String employeeID = convertToEmID();
+                String customerID = convertToCusID();
+                String projectName = txt_name.getText();
+                String start = dp_start.getValue().toString();
+                String end = dp_end.getValue().toString();
+                if(isProjectExist(projectName)) {
+                    project.setId(newProjectID);
+                    project.setName(projectName);
+                    project.setCusId(customerID);
+                    project.setManager(employeeID);
+                    project.setBeginTime(start);
+                    project.setEndTime(end);
+                    projectDB.insertProject(project);
+
+                    sceneHandler = new SceneHandler();
+                    sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
+                }else {
+                    lbl_noti.setVisible(true);
+                    lbl_noti.setText("This project already in list");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
+
+
         //endregion
-        //region CONVERT CUSTOMER NAME  TO ID
-        try {
-            String customerNameToId = cb_customer.getValue();
-            ResultSet check = database.getSomeID(customerNameToId, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
-            if(check.next()){
-                cusID = check.getString(Const.CUSTOMER_ID);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        //endregion
-        //region CONVERT EMPLOYEE NAME  TO ID
-        try {
-            String emName = cb_manager.getValue();
-            ResultSet check = database.getSomeID(emName, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
-            if(check.next()){
-                emID = check.getString(Const.EMPLOYEE_ID);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        //endregion
-        //region PACKAGE AND SEND TO DB HANDLE
-        project.setId(newProjectID);
-        project.setName(txt_name.getText());
-        project.setCusId(cusID);
-        project.setManager(emID);
-        project.setBeginTime(dp_start.getValue().toString());
-        project.setEndTime(dp_end.getValue().toString());
-        //endregion
-        projectDB.insertProject(project);
-        sceneHandler = new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
+
     }
     private void delete(){
         database = new Database();
@@ -402,6 +402,59 @@ public class ProjectDetailsController {
 
     }
 
+    private boolean isProjectExist(String name) throws SQLException, ClassNotFoundException {
+        boolean boo;
+            ResultSet checkNameExist = database.getSomeID(name, Const.PROJECT_TABLE, Const.PROJECT_NAME);
+            if(!checkNameExist.next()){
+                boo = true;
+            }else boo = false;
+
+        return boo;
+    }
+    private String convertToEmID(){
+        try {
+            String emName = cb_manager.getValue();
+            ResultSet check = database.getSomeID(emName, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+            if(check.next()){
+                emID = check.getString(Const.EMPLOYEE_ID);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return emID;
+    }
+    private String convertToCusID(){
+        try {
+            String customerNameToId = cb_customer.getValue();
+            ResultSet check = database.getSomeID(customerNameToId, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+            if(check.next()){
+                cusID = check.getString(Const.CUSTOMER_ID);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return cusID;
+    }
+
+    private String createProjectID (){
+        try {
+            newProjectID = OtherHandler.generateId();
+            ResultSet check = database.getSomeID(newProjectID, Const.PROJECT_TABLE, Const.PROJECT_ID);
+            while(check.next()){
+                newProjectID = OtherHandler.generateId();
+                check = database.getSomeID(newProjectID, Const.PROJECT_TABLE, Const.PROJECT_ID);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return newProjectID;
+    }
     //endregion
 
     //region WORKING WITH UI

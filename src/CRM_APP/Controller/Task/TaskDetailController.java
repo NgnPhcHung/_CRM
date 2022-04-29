@@ -5,8 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import CRM_APP.Controller.Home.HomeController;
+import CRM_APP.Controller.Project.Module.ModuleController;
 import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -14,6 +16,7 @@ import CRM_APP.Database.Task.TaskDB;
 import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Model.Project;
 import CRM_APP.Model.Task;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
@@ -221,7 +224,29 @@ public class TaskDetailController {
         });
     }
     private void populateComboBox() {
-        OtherHandler.populateComboBox(cb_employ, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+        taskDB = new TaskDB();
+        String projectID = ModuleController.projectID;
+        Project project = new Project();
+        project.setId(projectID);
+        ResultSet resultSet = taskDB.getDetailTeamMember(project);
+        ObservableList<String> importList = FXCollections.observableArrayList();
+        ObservableList<String> exportList = FXCollections.observableArrayList();
+
+        try {
+            while(resultSet.next()){
+                String name = resultSet.getString(Const.EMPLOYEE_NAME);
+                importList.add(name);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        for(String item: importList){
+            if(!exportList.contains(item)){
+                exportList.add(item);
+            }
+        }
+        cb_employ.setItems(exportList);
+//        OtherHandler.populateComboBox(cb_employ, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
         OtherHandler.populateComboBox(cb_module, Const.MODULE_TABLE, Const.MODULE_NAME);
         if (isAdmin) {
             cb_employ.getSelectionModel().select(0);
