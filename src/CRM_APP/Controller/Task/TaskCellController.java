@@ -97,7 +97,7 @@ public class TaskCellController extends JFXListCell<Task> {
             btn_edit.setOnAction(e -> {
                 sceneHandler = new SceneHandler();
                 TaskDetailController.isAdmin = true;
-                TaskDetailController.taskId = item.getTaskID();
+                TaskDetailController.modID = item.getModID();
                 sceneHandler.slideScene(btn_edit, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
             });
             setText(null);

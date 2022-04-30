@@ -20,15 +20,14 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 
 import javax.imageio.ImageIO;
 
@@ -48,9 +47,6 @@ public class ResultController {
     private JFXButton btn_Back;
 
     @FXML
-    private JFXTextField txt_Find;
-
-    @FXML
     private ScrollPane sc_container;
 
     private VBox contentContainer = new VBox();
@@ -66,18 +62,14 @@ public class ResultController {
     VBox questionContainer = new VBox();
     VBox answerContainer = new VBox();
     ToggleGroup group = new ToggleGroup();
+    private String surveyName = "";
     @FXML
     void initialize() {
         addDetail();
         sc_container.setContent(contentContainer);
+        sc_container.setFitToWidth(true);
         btn_Export.setOnAction(e -> {
-            WritableImage image = sc_container.snapshot(new SnapshotParameters(), null);
-            File file = new File("chart.png");
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            export();
         });
         btn_Back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
@@ -90,9 +82,8 @@ public class ResultController {
         surveyDetail = new SurveyDetail();
         surveyDetail.setSurveyID(surveyID);
         String currentQuestion ="";
+        title();
         database = new Database();
-
-        ObservableList<Question> questions = FXCollections.observableArrayList();;
         try {
             surveyDetail.setSurveyID(surveyID);
             ResultSet row = surveyDB.getNormalQuestion(surveyDetail);
@@ -101,8 +92,6 @@ public class ResultController {
                 questionContainer = new VBox();
                 Label questionText = new Label(row.getString(Const.QUESTION_NAME));
 
-
-//                JFXCheckBox checkBox = new JFXCheckBox(row.getString(Const.QUESTIONDETAIL_ANSWER));
                 String type =row.getString(Const.QUESTIONTYPE_ID);
                 String ans ="";
                 isSameQuestion= currentQuestion.equals(oldQuestion);
@@ -173,5 +162,50 @@ public class ResultController {
                 ansContain.getChildren().add(checkbox);
                 break;
         }
+    }
+
+    private void title(){
+        surveyDB = new SurveyDB();
+        VBox vBoxTitle = new VBox();
+        vBoxTitle.setAlignment(Pos.CENTER);
+        ResultSet row = surveyDB.getCustomer(surveyID);
+        try {
+            if(row.next()){
+                surveyName = row.getString(Const.SURVEY_NAME);
+                Label bigHeader = new Label(surveyName);
+                bigHeader.getStyleClass().addAll("h1", "hBold", "text");
+                Label customer = new Label("Customer: "+row.getString(Const.CUSTOMER_NAME));
+                customer.getStyleClass().addAll("h2", "hBold", "hItalic", "text");
+                Label employee = new Label("Employee: " +row.getString(Const.EMPLOYEE_NAME));
+                employee.getStyleClass().addAll("h4", "hBold", "text");
+                vBoxTitle.getChildren().addAll(bigHeader, customer, employee);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        contentContainer.getChildren().add(vBoxTitle);
+    }
+
+    private void export(){
+        String fileName = surveyName ;
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(btn_Back.getScene().getWindow());
+        WritableImage image = sc_container.snapshot(new SnapshotParameters(), null);
+        File file = new File(selectedDirectory + "\\"+ fileName + ".png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            showAlertWithHeaderText(file+ "");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    private void showAlertWithHeaderText(String loc) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Save success");
+        alert.setHeaderText("Your file location : ");
+        alert.setContentText(loc);
+
+        alert.showAndWait();
     }
 }

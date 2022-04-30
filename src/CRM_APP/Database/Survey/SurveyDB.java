@@ -2,6 +2,7 @@ package CRM_APP.Database.Survey;
 
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Handler.ThreadHandler;
 import CRM_APP.Model.Survey;
 import CRM_APP.Model.SurveyDetail;
 import CRM_APP.Model.SurveyType;
@@ -119,4 +120,43 @@ public class SurveyDB {
         return resultSet;
     }
 
+    public ResultSet getCustomer(String sur){
+        ThreadHandler threadHandler = new ThreadHandler();
+        Thread thread = new Thread(threadHandler){
+            @Override
+            public void run() {
+                super.run();
+                db = new Database();
+                String query = " SELECT * FROM " + Const.SURVEY_TABLE + " INNER JOIN "
+                        + Const.CUSTOMER_TABLE
+                        + " ON " + Const.SURVEY_TABLE + "." + Const.CUSTOMER_ID
+                        + " = " + Const.CUSTOMER_TABLE + "." + Const.CUSTOMER_ID
+                        + " INNER JOIN " + Const.SURVEY_DETAIL_TABLE + " ON "
+                        + Const.SURVEY_DETAIL_TABLE + "." + Const.SURVEY_ID
+                        + " = " + Const.SURVEY_TABLE + "." + Const.SURVEY_ID
+                        + " INNER JOIN " + Const.EMPLOYEE_TABLE + " ON "
+                        + Const.EMPLOYEE_TABLE + "." + Const.EMPLOYEE_ID + " = "
+                        + Const.SURVEY_DETAIL_TABLE + "." + Const.EMPLOYEE_ID
+                        + " WHERE " + Const.SURVEY_TABLE + "." + Const.SURVEY_ID + " = ?";
+                PreparedStatement preparedStatement = null;
+                try {
+                    preparedStatement = db.getDbConnection().prepareStatement(query);
+                    preparedStatement.setString(1, sur);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    threadHandler.setRs(resultSet);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return threadHandler.getRs();
+    }
 }

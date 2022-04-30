@@ -24,7 +24,7 @@ public class TextFieldHandler {
     }
 
     //validate email type
-    public boolean validateEmail(final JFXTextField field){
+    public boolean validEmail(final JFXTextField field){
         Pattern p =  Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
         Matcher m = p.matcher(field.getText());
         if(m.find() && m.group().equals(field.getText())){
@@ -65,5 +65,12 @@ public class TextFieldHandler {
                 }
             }
         });
+    }
+
+    public boolean checkPhone(String str){
+        boolean flag;
+        String phonePattern = "(\\d{3})?\\d{2}\\d{7}";
+        flag = str.matches(phonePattern);
+        return flag;
     }
 }

@@ -119,7 +119,6 @@ public class OtherHandler {
                 list.add(name);
             }
             cb.setItems(list);
-            cb.getSelectionModel().select(0);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {

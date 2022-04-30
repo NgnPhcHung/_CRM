@@ -14,6 +14,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import com.mysql.cj.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -81,8 +83,6 @@ public class AddEmployeeController {
             }else{
                 update();
             }
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employee.fxml");
         });
         btn_Back.setOnAction(e ->{
             sceneHandler = new SceneHandler();
@@ -107,52 +107,59 @@ public class AddEmployeeController {
             }
         });
     }
-    //region DATABASE PROCESS
     private void save(){
-        //region INITIALIZE
-        String number = OtherHandler.generateNumber();
-        String name = txt_Name.getText().trim();
-        String phone = txt_Phone.getText().trim();
-        String address = txt_Address.getText().trim();
-        String position = txt_Position.getText().trim();
+
         String password = txt_Password.getText().trim();
-        if(number.equals("") || name.equals("")
-            || phone.equals("") || address.equals("") || position.equals("") || password.equals("")){
+        if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
+                || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())
+                || StringUtils.isNullOrEmpty(txt_Password.getText())){
             lbl_Noti.setVisible(true);
             lbl_Noti.setText("Invalid Input");
         }
-        //endregion
-
-        //region SAVE
         else{
             lbl_Noti.setVisible(false);
-            String prefix = combine();
-            String userID = prefix + number;
+            database = new Database();
+
+            String number = OtherHandler.generateNumber();
+            String name = txt_Name.getText().trim();
+            String phone = txt_Phone.getText().trim();
+            String address = txt_Address.getText().trim();
+            String position = txt_Position.getText().trim();
+
             try {
-                database = new Database();
                 //Regenerate number if user's number exist
-                ResultSet row = database.getSomeID(userID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
-                while(row.next()){
-                    number = OtherHandler.generateNumber();
-                    userID = prefix + number;
-                    row = database.getSomeID(userID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
+                ResultSet isName = database.getSomeID(name, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+                if(isName.next()){
+                    lbl_Noti.setVisible(true);
+                    lbl_Noti.setText("This staff already in list");
+                }else{
+                    String prefix = combine();
+                    String userID = prefix + number;
+                    ResultSet row = database.getSomeID(userID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
+                    while(row.next()){
+                        number = OtherHandler.generateNumber();
+                        userID = prefix + number;
+                        row = database.getSomeID(userID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
+                    }
+
+                    employeeDB = new EmployeeDB();
+                    employee = new Employee();
+                    employee.setId(userID);
+                    employee.setName(name);
+                    employee.setAddress(address);
+                    employee.setPhone(phone);
+                    employee.setPosition(position);
+                    employee.setPassword(password);
+                    employeeDB.saveEmp(employee);
+                    btn_Back.fire();
                 }
+
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            employeeDB = new EmployeeDB();
-            employee = new Employee();
-            employee.setId(userID);
-            employee.setName(name);
-            employee.setAddress(address);
-            employee.setPhone(phone);
-            employee.setPosition(position);
-            employee.setPassword(password);
-            employeeDB.saveEmp(employee);
         }
-        //endregion
     }
     private void delete(){
         database = new Database();
@@ -188,28 +195,35 @@ public class AddEmployeeController {
         sceneHandler = new SceneHandler();
         employee = new Employee();
         employeeDB = new EmployeeDB();
+        textfieldHandler = new TextFieldHandler();
 
-        String name = txt_Name.getText().trim();
-        String phone = txt_Phone.getText().trim();
-        String address = txt_Address.getText().trim();
-        String position = txt_Position.getText().trim();
-        String password = txt_Password.getText().trim();
-        if(name.equals("") || phone.equals("") || address.equals("") || position.equals("") || password.equals("")){
+        if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
+            || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())
+            || StringUtils.isNullOrEmpty(txt_Password.getText())){
             lbl_Noti.setVisible(true);
             lbl_Noti.setText("Information can not be null");
         }else{
-            lbl_Noti.setVisible(false);
-            employee.setName(name);
-            employee.setPhone(phone);
-            employee.setAddress(address);
-            employee.setPosition(position);
-            employee.setPassword(password);
-            employee.setId(emID);
-            employeeDB.updateAdmin(employee);
+            String name = txt_Name.getText().trim();
+            String phone = txt_Phone.getText().trim();
+            String address = txt_Address.getText().trim();
+            String position = txt_Position.getText().trim();
+            String password = txt_Password.getText().trim();
+
+            if(textfieldHandler.checkPhone(phone)){
+                lbl_Noti.setVisible(false);
+                employee.setName(name);
+                employee.setPhone(phone);
+                employee.setAddress(address);
+                employee.setPosition(position);
+                employee.setPassword(password);
+                employee.setId(emID);
+                employeeDB.updateAdmin(employee);
+            }else{
+                lbl_Noti.setVisible(true);
+                lbl_Noti.setText("Invalid Phone number");
+            }
         }
     }
-    //endregion
-
     private String combine(){
         String _prefix = cb_Role.getValue();
         String pre = (_prefix.equals("Employee")) ? "EM" : "AD";

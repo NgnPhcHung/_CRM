@@ -19,15 +19,13 @@ import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Project;
 import CRM_APP.Model.Task;
 import com.jfoenix.controls.*;
+import com.mysql.cj.util.StringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -83,6 +81,7 @@ public class TaskDetailController {
 
     @FXML
     private Button btn_delete;
+
     @FXML
     private GridPane grid_Main;
 
@@ -90,7 +89,9 @@ public class TaskDetailController {
     private Database database = new Database();
     public static LocalDate dates;
     public static String taskId="";
+    public static String modID ="";
     public static boolean isAdmin = false;
+
     private String status;
     private SceneHandler sceneHandler;
     private ObservableList<String> list;
@@ -100,77 +101,66 @@ public class TaskDetailController {
         grid_Main.getStylesheets().add(HomeController.styleSheet);
         //if not admin logged in
         if(!isAdmin){
-            cb_employ.setDisable(true);
-            cb_module.setDisable(true);
-            tog_pend.setDisable(true);
-            txt_name.setDisable(true);
-            btn_back.setVisible(false);
-            btn_delete.setVisible(false);
-            datePick_taskDate.setDisable(true);
-            datePick_taskEnd.setDisable(true);
-            populateDetail();
-            populateComboBox();
-            manageToggle();
-            manageTogglePopulate();
-            btn_save.setOnAction(e ->{
-                empSave();
-                btn_save.getScene().getWindow().hide();
-            });
+            employeeConfig();
         }else{
-            //region ADMIN
-            manageTogglePopulate();
-            if(taskId.equals("")){
-                newTask();
-                datePick_taskDate.setValue(LocalDate.now());
-            }
-            populateComboBox();
-            populateDetail();
-            LocalDate dateStart = datePick_taskDate.getValue();
-            DateTimePickerHandler.disableDate(datePick_taskEnd, dateStart);
-            datePick_taskEnd.setValue(dateStart);
-            catchStartDateEnd();
-
-            btn_back.setOnAction(e -> {
-                sceneHandler = new SceneHandler();
-                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
-            });
-            btn_delete.setOnAction(e -> {
-                delete();
-            });
-            btn_save.setOnAction(e -> {
-                if(taskId == ""){
-                    save();
-                }else {
-                    update();
-                }
-                sceneHandler = new SceneHandler();
-                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
-            });
-            //endregion
+            adminConfig();
         }
 
-        //region SET TOGGLE DATA & HANDLE EVENT VALUE CHANGE
-        ToggleGroup group = new ToggleGroup();
-        tog_pend.setUserData(0);
-        tog_work.setUserData(1);
-        tog_review.setUserData(2);
-        tog_done.setUserData(3);
+        toggleChangeEvent();
 
-        tog_pend.setToggleGroup(group);
-        tog_work.setToggleGroup(group);
-        tog_done.setToggleGroup(group);
-        tog_review.setToggleGroup(group);
-        status=group.getSelectedToggle().getUserData()+"";
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-                if (group.getSelectedToggle() != null) {
-                    status=group.getSelectedToggle().getUserData()+"";
-                }
+        if (StringUtils.isNullOrEmpty(cb_employ.getValue())){
+            btn_save.setVisible(false);
+        }
+    }
+
+    private void employeeConfig(){
+        cb_employ.setDisable(true);
+        cb_module.setDisable(true);
+        tog_pend.setDisable(true);
+        txt_name.setDisable(true);
+        btn_back.setVisible(false);
+        btn_delete.setVisible(false);
+        datePick_taskDate.setDisable(true);
+        datePick_taskEnd.setDisable(true);
+        populateDetail();
+        populateComboBox();
+        manageToggle();
+        manageTogglePopulate();
+        btn_save.setOnAction(e ->{
+            empSave();
+            btn_save.getScene().getWindow().hide();
+        });
+    }
+
+    private void adminConfig(){
+        manageTogglePopulate();
+        if(taskId.equals("")){
+            newTask();
+            datePick_taskDate.setValue(LocalDate.now());
+        }
+        populateComboBox();
+        populateDetail();
+        LocalDate dateStart = datePick_taskDate.getValue();
+        DateTimePickerHandler.disableDate(datePick_taskEnd, dateStart);
+        datePick_taskEnd.setValue(dateStart);
+        catchStartDateEnd();
+
+        btn_back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
+        });
+        btn_delete.setOnAction(e -> {
+            delete();
+        });
+        btn_save.setOnAction(e -> {
+            if(taskId == ""){
+                save();
+            }else {
+                update();
             }
         });
-        //endregion
     }
-    
+
     private void newTask(){
         database = new Database();
         try {
@@ -248,9 +238,23 @@ public class TaskDetailController {
         cb_employ.setItems(exportList);
 //        OtherHandler.populateComboBox(cb_employ, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
         OtherHandler.populateComboBox(cb_module, Const.MODULE_TABLE, Const.MODULE_NAME);
+
+        database = new Database();
+        try {
+            ResultSet row = database.getSomeID(modID, Const.MODULE_TABLE, Const.TASK_MOD_ID);
+            if(row.next()){
+                String modName = row.getString(Const.MODULE_NAME);
+                cb_module.setValue(modName);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
         if (isAdmin) {
             cb_employ.getSelectionModel().select(0);
-            cb_module.getSelectionModel().select(0);
         }
     }
 
@@ -275,7 +279,6 @@ public class TaskDetailController {
                     cb_employ.setValue(row2.getString(Const.EMPLOYEE_NAME));
                 }
                 while(row3.next()){
-                    System.out.println(row3.getString(Const.MODULE_NAME));
                     cb_module.setValue(row3.getString(Const.MODULE_NAME));
                 }
             }
@@ -300,53 +303,60 @@ public class TaskDetailController {
 
     //admin action
     private void save(){
-        database = new Database();
-        task= new Task();
-        taskDB = new TaskDB();
-        String id = OtherHandler.generateId();
-        String name = txt_name.getText();
-        LocalDate start = datePick_taskDate.getValue();
-        LocalDate end = datePick_taskEnd.getValue();
-        String em = cb_employ.getValue();
-        String mod = cb_module.getValue();
-        String des = txt_des.getText();
-        String color = colorPicker_taskColor.getValue()+"";
-        String emID;
-        String modID;
-        ResultSet row = null;
-        ResultSet rowID = null;
-        ResultSet rowMod = null;
+        if(!StringUtils.isNullOrEmpty(txt_name.getText()) && !StringUtils.isNullOrEmpty(cb_employ.getValue())){
+            database = new Database();
+            task= new Task();
+            taskDB = new TaskDB();
+            String id = OtherHandler.generateId();
+            String name = txt_name.getText();
+            LocalDate start = datePick_taskDate.getValue();
+            LocalDate end = datePick_taskEnd.getValue();
+            String em = cb_employ.getValue();
+            String mod = cb_module.getValue();
+            String des = txt_des.getText();
+            String color = colorPicker_taskColor.getValue()+"";
+            String emID;
+            String modID;
+            ResultSet row = null;
+            ResultSet rowID = null;
+            ResultSet rowMod = null;
 
-        try {
-            row = database.getSomeID(em, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
-            rowID = database.getSomeID(id,  Const.TASK_TABLE, Const.TASK_ID);
-            rowMod = database.getSomeID(mod,  Const.MODULE_TABLE, Const.MODULE_NAME);
-            while (rowID.next()){
-                id = OtherHandler.generateId();
+            try {
+                row = database.getSomeID(em, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
                 rowID = database.getSomeID(id,  Const.TASK_TABLE, Const.TASK_ID);
+                rowMod = database.getSomeID(mod,  Const.MODULE_TABLE, Const.MODULE_NAME);
+                while (rowID.next()){
+                    id = OtherHandler.generateId();
+                    rowID = database.getSomeID(id,  Const.TASK_TABLE, Const.TASK_ID);
+                }
+                if(row.next()){
+                    emID = row.getString(Const.EMPLOYEE_ID);
+                    task.setEmpID(emID);
+                }
+                if(rowMod.next()){
+                    modID = rowMod.getString(Const.MODULE_ID);
+                    task.setModID(modID);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            if(row.next()){
-                emID = row.getString(Const.EMPLOYEE_ID);
-                task.setEmpID(emID);
-            }
-            if(rowMod.next()){
-                modID = rowMod.getString(Const.MODULE_ID);
-                task.setModID(modID);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+
+            task.setTaskID(id);
+            task.setTaskName(name);
+            task.setStartDate(start);
+            task.setEndDate(end);
+            task.setDes(des);
+            task.setColor(color);
+            task.setStatus(status);
+            taskDB.save(task);
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
+        }else{
+            showAlertWithHeaderText();
         }
 
-        task.setTaskID(id);
-        task.setTaskName(name);
-        task.setStartDate(start);
-        task.setEndDate(end);
-        task.setDes(des);
-        task.setColor(color);
-        task.setStatus(status);
-        taskDB.save(task);
     }
     private void delete(){
         database = new Database();
@@ -417,5 +427,33 @@ public class TaskDetailController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    private void toggleChangeEvent(){
+        ToggleGroup group = new ToggleGroup();
+        tog_pend.setUserData(0);
+        tog_work.setUserData(1);
+        tog_review.setUserData(2);
+        tog_done.setUserData(3);
+
+        tog_pend.setToggleGroup(group);
+        tog_work.setToggleGroup(group);
+        tog_done.setToggleGroup(group);
+        tog_review.setToggleGroup(group);
+        status=group.getSelectedToggle().getUserData()+"";
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
+                if (group.getSelectedToggle() != null) {
+                    status=group.getSelectedToggle().getUserData()+"";
+                }
+            }
+        });
+    }
+    private void showAlertWithHeaderText() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Input Error");
+        alert.setHeaderText("Empty:");
+        alert.setContentText("Your input invalid!");
+
+        alert.showAndWait();
     }
 }

@@ -123,6 +123,8 @@ public class TaskListController {
         btn_addNew.setOnAction(e->{
             sceneHandler = new SceneHandler();
             TaskDetailController.isAdmin = true;
+            TaskDetailController.taskId= "";
+            TaskDetailController.modID = modID;
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
         });
     }

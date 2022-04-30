@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -155,25 +156,29 @@ public class ModuleDetailController {
         Module module = new Module();
         database = new Database();
 
-        String proId ="";
-        String projectName = cb_project.getSelectionModel().getSelectedItem();
-        try {
-            ResultSet row = database.getSomeID(projectName, Const.PROJECT_TABLE, "ProjectName");
-            if (row.next()){
-                proId= row.getString("ProjectID");
-                module.setModuleID(OtherHandler.generateId());
-                module.setModName(txt_name.getText().trim());
-                module.setStatus(status);
-                module.setProjectID(proId);
-                moduleDB.insertModule(module);
+        if(!StringUtils.isNullOrEmpty(txt_name.getText())){
+            String proId ="";
+            String projectName = cb_project.getSelectionModel().getSelectedItem();
+            try {
+                ResultSet row = database.getSomeID(projectName, Const.PROJECT_TABLE, "ProjectName");
+                if (row.next()){
+                    proId= row.getString("ProjectID");
+                    module.setModuleID(OtherHandler.generateId());
+                    module.setModName(txt_name.getText().trim());
+                    module.setStatus(status);
+                    module.setProjectID(proId);
+                    moduleDB.insertModule(module);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/module.fxml");
+        }else{
+           showAlertWithHeaderText();
         }
-        sceneHandler = new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/module.fxml");
     }
     private void delete(){
         database = new Database();
@@ -234,5 +239,12 @@ public class ModuleDetailController {
     private void comboBoxHandler() {
         OtherHandler.populateComboBox(cb_project, Const.PROJECT_TABLE, Const.PROJECT_NAME);
     }
+    private void showAlertWithHeaderText() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Input Error");
+        alert.setHeaderText("Empty:");
+        alert.setContentText("Your input invalid!");
 
+        alert.showAndWait();
+    }
 }

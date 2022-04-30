@@ -52,15 +52,17 @@ public class CustomerDetailController {
     @FXML
     private JFXButton btn_Detete;
 
-    public static String cusID= "";
+    public static String cusID;
     private Database database;
     private SceneHandler sceneHandler;
     private CustomerDB customerDB;
     private Customer customer;
+    private TextFieldHandler textFieldHandler;
     @FXML
     void initialize() {
-        TextFieldHandler textFieldHandler = new TextFieldHandler();
+        textFieldHandler = new TextFieldHandler();
         textFieldHandler.numberOnly(txt_Phone);
+            System.out.println(cusID.isEmpty());
         if(StringUtils.isNullOrEmpty(cusID)){
             btn_Detete.setVisible(false);
 
@@ -72,7 +74,7 @@ public class CustomerDetailController {
             btn_Back.fire();
         });
         btn_Save.setOnAction(e ->{
-            if(cusID.equals("null")){
+            if(StringUtils.isNullOrEmpty(cusID)){
                 createCustomer();
             }else{
                 updateCustomer();
@@ -130,18 +132,26 @@ public class CustomerDetailController {
                     lbl_Noti.setVisible(true);
                     lbl_Noti.setText("This customer already in list");
                 }else{
+                    textFieldHandler = new TextFieldHandler();
+
                     lbl_Noti.setVisible(false);
                     String phone = txt_Phone.getText();
                     String address = txt_Address.getText();
                     String TIN = txt_TIN.getText();
+                    if(textFieldHandler.checkPhone(phone)){
 
-                    customer.setCusName(name);
-                    customer.setPhone(phone);
-                    customer.setAddress(address);
-                    customer.setTIN(TIN);
-                    customerDB.create(customer);
+                        customer.setCusName(name);
+                        customer.setPhone(phone);
+                        customer.setAddress(address);
+                        customer.setTIN(TIN);
+                        customerDB.create(customer);
+                        lbl_Noti.setVisible(false);
+                        btn_Back.fire();
 
-                    btn_Back.fire();
+                    }else{
+                        lbl_Noti.setVisible(true);
+                        lbl_Noti.setText("Invalid Phone number");
+                    }
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -156,22 +166,26 @@ public class CustomerDetailController {
     private void updateCustomer(){
         customerDB = new CustomerDB();
         customer = new Customer();
-
+        textFieldHandler = new TextFieldHandler();
         if(!StringUtils.isNullOrEmpty(txt_Name.getText()) && !StringUtils.isNullOrEmpty(txt_Phone.getText())
                 && !StringUtils.isNullOrEmpty(txt_Address.getText()) && !StringUtils.isNullOrEmpty(txt_TIN.getText())){
             String name = txt_Name.getText();
             String phone = txt_Phone.getText();
             String address = txt_Address.getText();
             String TIN = txt_TIN.getText();
+            if(textFieldHandler.checkPhone(phone)){
+                customer.setCusName(name);
+                customer.setPhone(phone);
+                customer.setAddress(address);
+                customer.setTIN(TIN);
+                customer.setId(cusID);
+                customerDB.update(customer);
 
-            customer.setCusName(name);
-            customer.setPhone(phone);
-            customer.setAddress(address);
-            customer.setTIN(TIN);
-            customer.setId(cusID);
-            customerDB.update(customer);
-
-            btn_Back.fire();
+                btn_Back.fire();
+            }else{
+                lbl_Noti.setVisible(true);
+                lbl_Noti.setText("Invalid Phone number");
+            }
         }
     }
     private void deleteCustomer(){
