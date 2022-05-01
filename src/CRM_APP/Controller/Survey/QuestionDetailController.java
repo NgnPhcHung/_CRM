@@ -33,6 +33,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
 
@@ -102,7 +103,9 @@ public class QuestionDetailController {
     private boolean answerExist = false;
     public static String questionID= "";
     public static String questionText ="";
+    public static StackPane backPane;
 
+    QuestionController questionController = new QuestionController();
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         grid_Main.getStylesheets().add(HomeController.styleSheet);
@@ -121,7 +124,7 @@ public class QuestionDetailController {
 
         btn_Back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Back, QuestionCellController.stackCell, "-X", "/CRM_APP/View/Survey/question.fxml");
+            sceneHandler.slideScene(btn_Back, backPane, "-X", "/CRM_APP/View/Survey/question.fxml");
         });
 
         btn_Delete.setOnAction(e -> {

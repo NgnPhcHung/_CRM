@@ -36,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 
 public class ProjectDetailsController {
 
@@ -94,6 +95,9 @@ public class ProjectDetailsController {
     private String cusID = "";
     private String emID = "";
     private String newProjectID = "";
+
+    public static StackPane backPane;
+
     @FXML
     void initialize() {
         //region FORMAT ON START
@@ -127,9 +131,10 @@ public class ProjectDetailsController {
         btn_AddTeam.setOnAction(e -> {
             saveTeamDetail();
         });
+        btn_back.setOnAction(e -> {
+            changeScene();
+        });
     }
-
-    //region WORK WITH DATABASE
 
     private void fillTable(){
         tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
@@ -259,9 +264,10 @@ public class ProjectDetailsController {
         String CusName = cb_customer.getValue();
         emID = "";
         cusID = "";
-        if(txt_name.getText().equals("") && txt_amount.getText().equals("")){
-            lbl_noti.setText("Invalid Information");
+        if(StringUtils.isNullOrEmpty(txt_name.getText()) || StringUtils.isNullOrEmpty(txt_amount.getText())
+            || StringUtils.isNullOrEmpty(cb_customer.getValue()) || StringUtils.isNullOrEmpty(cb_manager.getValue())){
             lbl_noti.setVisible(true);
+            lbl_noti.setText("Invalid Information");
         }else{
             lbl_noti.setVisible(false);
             String manager = cb_manager.getValue();
@@ -302,8 +308,7 @@ public class ProjectDetailsController {
             project.setEndTime(dp_end.getValue()+"");
             project.setAmount(Integer.parseInt(txt_amount.getText()));
             projectDB.updateProject(project);
-            sceneHandler =  new SceneHandler();
-            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-X", "/CRM_APP/View/Project/project.fxml");
+            btn_back.fire();
         }
     }
 
@@ -344,9 +349,12 @@ public class ProjectDetailsController {
         sceneHandler = new SceneHandler();
         Project project = new Project();
 
-        if(StringUtils.isNullOrEmpty(txt_name.getText()) && StringUtils.isNullOrEmpty(txt_amount.getText())){
+        if(StringUtils.isNullOrEmpty(txt_name.getText()) || StringUtils.isNullOrEmpty(txt_amount.getText())
+            || StringUtils.isNullOrEmpty(cb_customer.getValue()) || StringUtils.isNullOrEmpty(cb_manager.getValue())){
+            lbl_noti.setVisible(true);
             lbl_noti.setText("Invalid Information");
         }else{
+            lbl_noti.setVisible(false);
             try {
                 String newProjectID = createProjectID();
                 String employeeID = convertToEmID();
@@ -363,8 +371,7 @@ public class ProjectDetailsController {
                     project.setEndTime(end);
                     projectDB.insertProject(project);
 
-                    sceneHandler = new SceneHandler();
-                    sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
+                    btn_back.fire();
                 }else {
                     lbl_noti.setVisible(true);
                     lbl_noti.setText("This project already in list");
@@ -388,7 +395,8 @@ public class ProjectDetailsController {
             if(!OtherHandler.checkExist(Const.MODULE_TABLE, Const.MODULE_PROJECT_ID, projectID)){
                 database.detele(Const.PROJECT_TABLE, Const.PROJECT_ID, projectID);
                 lbl_noti.setVisible(false);
-                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Project/project.fxml");
+
+                btn_back.fire();
             }else{
                 lbl_noti.setVisible(true);
                 lbl_noti.setText("Project have Module inside, can not delete!");
@@ -455,9 +463,7 @@ public class ProjectDetailsController {
         }
         return newProjectID;
     }
-    //endregion
 
-    //region WORKING WITH UI
     private void catchStartDateEnd(){
         dp_start.valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
@@ -466,10 +472,11 @@ public class ProjectDetailsController {
             }
         });
     }
-    @FXML
-    void changeScene(ActionEvent event) {
+
+
+    void changeScene() {
         sceneHandler =  new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Project/project.fxml");
+        sceneHandler.slideScene(btn_back, backPane, "X", "/CRM_APP/View/Project/project.fxml");
         txt_name.setText("");
         cb_customer.getSelectionModel().clearSelection();
         cb_manager.getSelectionModel().clearSelection();
@@ -477,5 +484,4 @@ public class ProjectDetailsController {
         dp_end.getEditor().clear();
         lbl_noti.setText("");
     }
-    //endregion
 }

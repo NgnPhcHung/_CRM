@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 public class TeamDetailController {
 
@@ -50,6 +51,7 @@ public class TeamDetailController {
     private SceneHandler sceneHandler;
     private ObservableList<Team> teams;
     public static String teamID;
+    public static StackPane backPane;
 
     @FXML
     void initialize() {

@@ -24,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.StackPane;
 
 public class CreateTeamController {
     @FXML
@@ -56,14 +57,15 @@ public class CreateTeamController {
     private Team team;
     private TeamDB teamDB;
     public static String teamID = "";
-
+    public static StackPane backPane;
     @FXML
     void initialize() {
         OtherHandler.populateComboBox(cb_employee, Const.EMPLOYEE_TABLE,Const.EMPLOYEE_NAME);
         cb_employee.getItems().add("");
+
         btn_back.setOnAction(e->{
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_save, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/Team/team.fxml");
+            sceneHandler.slideScene(btn_save, backPane,"Y","/CRM_APP/View/Employee/Team/team.fxml");
         });
         if(!teamID.equals("")){
             detail();
@@ -111,8 +113,7 @@ public class CreateTeamController {
                 team.setTeamID(id);
                 team.setTeamName(name);
                 teamDB.save(team);
-                sceneHandler = new SceneHandler();
-                sceneHandler.slideScene(btn_save, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/Team/team.fxml");
+                btn_back.fire();
             }
     }
     private void detail(){

@@ -28,6 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 
 public class BillDetailController {
 
@@ -94,6 +95,8 @@ public class BillDetailController {
     private BillDetail billDetail;
     private String percent;
     private String status;
+    public static StackPane backPane;
+
     @FXML
     void initialize() {
         setDetail();
@@ -115,7 +118,7 @@ public class BillDetailController {
 
         btn_Back.setOnAction(e ->{
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Back, BillCellController.cellStack, "-X", "/CRM_APP/View/Bill/bill.fxml");
+            sceneHandler.slideScene(btn_Back, backPane, "-X", "/CRM_APP/View/Bill/bill.fxml");
         });
 
         btn_Save.setOnAction(e -> {
@@ -317,7 +320,7 @@ public class BillDetailController {
         database = new Database();
         database.detele(Const.BILL_DETAIL_TABLE, Const.BILL_ID, billID);
         database.detele(Const.BILL_TABLE, Const.BILL_ID, billID);
-//        btn_Back.fire();
+        btn_Back.fire();
 
     }
 }

@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.ResultSet;
@@ -53,6 +54,9 @@ public class SurveyTypeCreateController {
     private SurveyType surveyType;
     private ShakerHandler shakerHandler;
     private TextFieldHandler textfieldHandler;
+    private SurveyTypeController surveyTypeController;
+
+    public static StackPane backPane;
 
     @FXML
     void initialize() {
@@ -64,7 +68,11 @@ public class SurveyTypeCreateController {
             btn_Delete.setVisible(true);
         }
         // onclick button
-        onClick();
+        btn_Back.setOnAction(e -> {
+            sceneHandler = new SceneHandler();
+            sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
+        });
+
     }
 
     private void onClick() {
@@ -77,14 +85,10 @@ public class SurveyTypeCreateController {
                 }
             });
 
-            btn_Back.setOnAction(e -> {
-                sceneHandler = new SceneHandler();
-                sceneHandler.slideScene(btn_Back, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
-            });
 
             btn_Delete.setOnAction(e -> {
                 try {
-                    // LƯỜI CHECK XÓA, EM TỰ CHECK NHA HƯNG :))) .(CHECK XEM CÓ ĐANG SỬ DỤNG LOẠI KHẢO SÁT KHÔNG MỚI ĐƯỢC XÓA)
+
                     delete();
                     sceneHandler = new SceneHandler();
                     sceneHandler.slideScene(btn_Delete, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
@@ -114,6 +118,7 @@ public class SurveyTypeCreateController {
     //region DATABASE PROCESS
     private void save() {
         //region INITIALIZE
+        surveyTypeController = new SurveyTypeController();
         String number = OtherHandler.generateNumber();
         String nameSurType = txt_Name.getText().trim();
         String des = txt_Des.getText().trim();
@@ -142,7 +147,7 @@ public class SurveyTypeCreateController {
             surveyType.setDes(des);
             surveyTypeDB.saveSurveyType(surveyType);
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
+            sceneHandler.slideScene(btn_Save, surveyTypeController.main_stack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
         }
         //endregion
     }

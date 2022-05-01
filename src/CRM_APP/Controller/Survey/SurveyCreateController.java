@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import org.apache.commons.lang3.StringUtils;
 
 public class SurveyCreateController {
@@ -52,12 +53,14 @@ public class SurveyCreateController {
     private Survey survey;
     private SceneHandler sceneHandler;
 
+    public static StackPane backPane;
+
     @FXML
     void initialize() {
         populateComboBox();
         btn_Back.setOnAction(e ->{
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Back, SurveyCellController.cellStack, "Y", "/CRM_APP/View/Survey/survey.fxml");
+            sceneHandler.slideScene(btn_Back, backPane, "Y", "/CRM_APP/View/Survey/survey.fxml");
         });
 
         btn_Save.setOnAction(e -> {

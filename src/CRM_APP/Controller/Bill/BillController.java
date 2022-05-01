@@ -103,6 +103,7 @@ public class BillController extends Thread{
         fillCard();
         btn_Add.setOnAction(e -> {
             sceneHandler = new SceneHandler();
+            BillDetailController.backPane = main_Stack;
             sceneHandler.slideScene(btn_All, main_Stack, "X", "/CRM_APP/View/Bill/billDetail.fxml");
         });
     }

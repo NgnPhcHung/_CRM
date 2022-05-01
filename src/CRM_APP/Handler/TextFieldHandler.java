@@ -69,8 +69,8 @@ public class TextFieldHandler {
 
     public boolean checkPhone(String str){
         boolean flag;
-        String phonePattern = "(\\d{3})?\\d{2}\\d{7}";
-        flag = str.matches(phonePattern);
+        Pattern phonePattern = Pattern.compile("^0[23456789]{1}\\d{8,9}$");
+        flag = phonePattern.matcher(str).find();
         return flag;
     }
 }

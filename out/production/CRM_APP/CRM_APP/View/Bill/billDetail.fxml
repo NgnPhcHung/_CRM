@@ -20,8 +20,8 @@
 
 <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Bill.BillDetailController">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="486.0" />
   </columnConstraints>
   <rowConstraints>
@@ -48,7 +48,7 @@
             <Insets />
          </GridPane.margin>
       </HBox>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.rowIndex="1" GridPane.rowSpan="2">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="contentContainer" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
             <Label fx:id="lbl_Noti" text="Label" visible="false">
                <styleClass>

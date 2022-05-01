@@ -68,6 +68,7 @@ public class ProjectController {
         filterCell();
         btn_new.setOnAction(e->{
             ProjectDetailsController.projectID = "null";
+            ProjectDetailsController.backPane = main_stack;
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_new, main_stack, "-X", "/CRM_APP/View/Project/projectDetail.fxml");
         });

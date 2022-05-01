@@ -53,17 +53,19 @@ public class TeamController {
     private ObservableList<Team> teams;
     private Team team;
     private TeamDB teamDB;
+    public static StackPane backPane;
 
     @FXML
     void initialize() {
         populateList();
         btn_addNew.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_addNew, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/Team/createTeam.fxml");
+            CreateTeamController.backPane =backPane;
+            sceneHandler.slideScene(btn_addNew, backPane,"Y","/CRM_APP/View/Employee/Team/createTeam.fxml");
         });
         btn_back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_addNew, EmployeeCellController.cellStack,"Y","/CRM_APP/View/Employee/employee.fxml");
+            sceneHandler.slideScene(btn_addNew, backPane,"Y","/CRM_APP/View/Employee/employee.fxml");
         });
     }
 
@@ -81,6 +83,7 @@ public class TeamController {
 
                 teams.add(team);
             }
+            TeamCellController.cellStack = backPane;
             lv_team.setItems(teams);
             lv_team.setCellFactory(TeamCellController -> new TeamCellController());
         } catch (SQLException throwables) {

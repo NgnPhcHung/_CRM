@@ -78,7 +78,9 @@ public class TeamCellController extends JFXListCell<Team> {
             btn_edit.setOnAction(e -> {
                 sceneHandler = new SceneHandler();
                 TeamDetailController.teamID = item.getTeamID();
-                sceneHandler.slideScene(btn_edit, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/teamDetail.fxml");
+                TeamDetailController.backPane = cellStack;
+
+                sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Employee/Team/teamDetail.fxml");
             });
             btn_details.setOnAction(e -> {
                 sceneHandler = new SceneHandler();

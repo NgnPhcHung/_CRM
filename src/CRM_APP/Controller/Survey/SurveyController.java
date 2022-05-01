@@ -52,6 +52,8 @@ public class SurveyController {
         populateList();
         btn_add.setOnAction(e -> {
             SurveyTypeCreateController.surID = null;
+            SurveyCreateController.backPane = main_stack;
+
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_add, main_stack, "X", "/CRM_APP/View/Survey/surveyCreate.fxml");
         });

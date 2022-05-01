@@ -1,6 +1,7 @@
 package CRM_APP.Controller.Employee.Employee;
 
 import CRM_APP.Controller.Employee.Employee.EmployeeCellController;
+import CRM_APP.Controller.Employee.Team.TeamController;
 import CRM_APP.Controller.Task.TaskCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -57,10 +58,12 @@ public class EmployeeController {
         populateList();
         btn_add.setOnAction(e -> {
             sceneHandler = new SceneHandler();
+            AddEmployeeController.backPane = main_stack;
             sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Employee/addEmployee.fxml");
         });
         btn_team.setOnAction(e -> {
             sceneHandler = new SceneHandler();
+            TeamController.backPane = main_stack;
             sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Employee/Team/team.fxml");
         });
     }

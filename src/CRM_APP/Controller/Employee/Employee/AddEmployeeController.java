@@ -19,6 +19,7 @@ import com.mysql.cj.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 public class AddEmployeeController {
 
@@ -64,6 +65,8 @@ public class AddEmployeeController {
     private Employee employee;
     private SceneHandler sceneHandler;
     public static String emID = "null";
+    public static StackPane backPane;
+
     @FXML
     void initialize() {
         TextFieldHandler textfieldHandler = new TextFieldHandler();
@@ -86,15 +89,14 @@ public class AddEmployeeController {
         });
         btn_Back.setOnAction(e ->{
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employee.fxml");
+            sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Employee/employee.fxml");
         });
         btn_Delete.setOnAction(e -> {
             try {
                 if(!OtherHandler.checkExist(Const.TASK_TABLE, Const.TASK_EMP_ID, emID)
                     && OtherHandler.checkExist(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID)){
                     delete();
-                    sceneHandler = new SceneHandler();
-                    sceneHandler.slideScene(btn_Save, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/employee.fxml");
+                    btn_Back.fire();
                     lbl_Noti.setVisible(false);
                 }else{
                     lbl_Noti.setVisible(true);
@@ -108,7 +110,6 @@ public class AddEmployeeController {
         });
     }
     private void save(){
-
         String password = txt_Password.getText().trim();
         if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
                 || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())

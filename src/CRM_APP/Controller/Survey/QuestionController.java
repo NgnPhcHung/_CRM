@@ -55,8 +55,7 @@ public class QuestionController {
         btn_manage.setOnAction(event -> {
             sceneHandler = new SceneHandler();
             QuestionDetailController.questionID = null;
-            SurveyController surveyController = new SurveyController();
-
+            QuestionDetailController.backPane = main_stack;
             sceneHandler.slideScene(btn_Back, main_stack, "-X", "/CRM_APP/View/Survey/questionDetail.fxml");
 
         });
@@ -85,8 +84,10 @@ public class QuestionController {
             QuestionCellController.stackCell = main_stack;
             questions.addAll(question);
         }
-        lv_questionlist.setItems(questions);
-        lv_questionlist.setCellFactory(QuestionCellController -> new QuestionCellController());
+        if(!questions.isEmpty()) {
+            lv_questionlist.setItems(questions);
+            lv_questionlist.setCellFactory(QuestionCellController -> new QuestionCellController());
+        }
     }
 
     //refresh listview

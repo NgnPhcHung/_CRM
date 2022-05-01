@@ -19,6 +19,7 @@ import com.mysql.cj.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 public class CustomerDetailController {
 
@@ -58,14 +59,14 @@ public class CustomerDetailController {
     private CustomerDB customerDB;
     private Customer customer;
     private TextFieldHandler textFieldHandler;
+    public static StackPane backPane;
+
     @FXML
     void initialize() {
         textFieldHandler = new TextFieldHandler();
         textFieldHandler.numberOnly(txt_Phone);
-            System.out.println(cusID.isEmpty());
         if(StringUtils.isNullOrEmpty(cusID)){
             btn_Detete.setVisible(false);
-
         }else{
             populateDetail();
         }
@@ -82,7 +83,7 @@ public class CustomerDetailController {
         });
         btn_Back.setOnAction(e -> {
             sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Back, CustomerCellController.cellStack, "X", "/CRM_APP/View/Customer/customer.fxml");
+            sceneHandler.slideScene(btn_Back, backPane, "X", "/CRM_APP/View/Customer/customer.fxml");
         });
     }
 
