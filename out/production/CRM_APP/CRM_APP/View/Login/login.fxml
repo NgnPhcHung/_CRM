@@ -72,7 +72,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" labelFloat="true" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="AD01" unFocusColor="#76b3ff" HBox.hgrow="ALWAYS">
+                  <JFXTextField fx:id="txt_username" focusColor="#ff9177" labelFloat="true" prefHeight="31.0" prefWidth="310.0" promptText="Username" text="SAD" unFocusColor="#76b3ff" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -95,7 +95,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" labelFloat="true" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="123" unFocusColor="#76b3ff" HBox.hgrow="ALWAYS" />
+                  <JFXPasswordField fx:id="txt_password" focusColor="#ff9177" labelFloat="true" prefHeight="31.0" prefWidth="310.0" promptText="Password" styleClass="jfx-text-field" text="admin" unFocusColor="#76b3ff" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="50.0" />
