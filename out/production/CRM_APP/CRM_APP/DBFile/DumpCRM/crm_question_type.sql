@@ -16,30 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `module`
+-- Table structure for table `question_type`
 --
 
-DROP TABLE IF EXISTS `module`;
+DROP TABLE IF EXISTS `question_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `module` (
-  `ModID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `ModName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `ProjectID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  PRIMARY KEY (`ModID`),
-  KEY `ProjectID` (`ProjectID`),
-  CONSTRAINT `module_ibfk_1` FOREIGN KEY (`ProjectID`) REFERENCES `project` (`ProjectID`)
+CREATE TABLE `question_type` (
+  `QTypeID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `QTypeName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Des` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  PRIMARY KEY (`QTypeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `module`
+-- Dumping data for table `question_type`
 --
 
-LOCK TABLES `module` WRITE;
-/*!40000 ALTER TABLE `module` DISABLE KEYS */;
-/*!40000 ALTER TABLE `module` ENABLE KEYS */;
+LOCK TABLES `question_type` WRITE;
+/*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
+INSERT INTO `question_type` VALUES ('QT01','Câu hỏi tự luận',' Khách tự trả lời'),('QT02','Chỉ chọn 1','Cho phép chọn chỉ 1 đáp án'),('QT04','Cho chọn nhiều','Cho phép chọn nhiều đáp án');
+/*!40000 ALTER TABLE `question_type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-01 17:26:22
+-- Dump completed on 2022-05-01 20:56:48

@@ -1,5 +1,6 @@
 package CRM_APP.Controller.Employee.Employee;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
@@ -92,21 +93,7 @@ public class AddEmployeeController {
             sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Employee/employee.fxml");
         });
         btn_Delete.setOnAction(e -> {
-            try {
-                if(!OtherHandler.checkExist(Const.TASK_TABLE, Const.TASK_EMP_ID, emID)
-                    && OtherHandler.checkExist(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID)){
-                    delete();
-                    btn_Back.fire();
-                    lbl_Noti.setVisible(false);
-                }else{
-                    lbl_Noti.setVisible(true);
-                    lbl_Noti.setText("This Staff have task, can not delete!");
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            }
+            delete();
         });
     }
     private void save(){
@@ -163,10 +150,30 @@ public class AddEmployeeController {
         }
     }
     private void delete(){
-        database = new Database();
-        database.detele(Const.AUTHEN_TABLE, Const.EMPLOYEE_ID, emID);
-        database.detele(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID);
-        database.detele(Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID, emID);
+        try {
+            if(emID.equals("SAD")){
+                lbl_Noti.setVisible(true);
+                lbl_Noti.setText("This is admin you can not delete him");
+            }else if(emID.equals(HomeController.userId)){
+                lbl_Noti.setVisible(true);
+                lbl_Noti.setText("This is you, you can not your self");
+            }else if(!OtherHandler.checkExist(Const.TASK_TABLE, Const.TASK_EMP_ID, emID)
+                    && OtherHandler.checkExist(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID)){
+                lbl_Noti.setVisible(true);
+                lbl_Noti.setText("This Staff have constrain, can not delete");
+            }else{
+                lbl_Noti.setVisible(false);
+                database = new Database();
+                database.detele(Const.AUTHEN_TABLE, Const.EMPLOYEE_ID, emID);
+                database.detele(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID);
+                database.detele(Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID, emID);
+                btn_Back.fire();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }
     }
     private void populateDetail(){
         try {

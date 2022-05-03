@@ -16,30 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `team_details`
+-- Table structure for table `project`
 --
 
-DROP TABLE IF EXISTS `team_details`;
+DROP TABLE IF EXISTS `project`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `team_details` (
-  `EmpID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `TeamID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `Status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  PRIMARY KEY (`EmpID`,`TeamID`),
-  KEY `TeamID` (`TeamID`),
-  CONSTRAINT `team_details_ibfk_1` FOREIGN KEY (`EmpID`) REFERENCES `employee` (`EmpID`),
-  CONSTRAINT `team_details_ibfk_2` FOREIGN KEY (`TeamID`) REFERENCES `team` (`TeamID`)
+CREATE TABLE `project` (
+  `ProjectID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `CusID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `ProjectName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `BeginTime` datetime DEFAULT NULL,
+  `EndTime` datetime DEFAULT NULL,
+  `Manager` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `TotalEployee` int DEFAULT NULL,
+  `TotalAmount` int DEFAULT NULL,
+  PRIMARY KEY (`ProjectID`),
+  KEY `CusID` (`CusID`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`CusID`) REFERENCES `customer` (`CusID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `team_details`
+-- Dumping data for table `project`
 --
 
-LOCK TABLES `team_details` WRITE;
-/*!40000 ALTER TABLE `team_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `team_details` ENABLE KEYS */;
+LOCK TABLES `project` WRITE;
+/*!40000 ALTER TABLE `project` DISABLE KEYS */;
+/*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-01 17:26:21
+-- Dump completed on 2022-05-01 20:56:49

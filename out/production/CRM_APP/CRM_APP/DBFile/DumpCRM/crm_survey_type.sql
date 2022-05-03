@@ -16,32 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `authen`
+-- Table structure for table `survey_type`
 --
 
-DROP TABLE IF EXISTS `authen`;
+DROP TABLE IF EXISTS `survey_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `authen` (
-  `AuthenID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `EmpID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `LoginTime` datetime DEFAULT NULL,
-  `LogOutTime` datetime DEFAULT NULL,
-  `Device` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  PRIMARY KEY (`AuthenID`,`EmpID`),
-  KEY `EmpID` (`EmpID`),
-  CONSTRAINT `authen_ibfk_1` FOREIGN KEY (`EmpID`) REFERENCES `employee` (`EmpID`)
+CREATE TABLE `survey_type` (
+  `SurID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `SurName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Des` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  PRIMARY KEY (`SurID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `authen`
+-- Dumping data for table `survey_type`
 --
 
-LOCK TABLES `authen` WRITE;
-/*!40000 ALTER TABLE `authen` DISABLE KEYS */;
-INSERT INTO `authen` VALUES ('kuXeyRt6v','SAD','2022-05-01 17:23:55','2022-05-01 17:24:04','LAPTOP-01S24DLH');
-/*!40000 ALTER TABLE `authen` ENABLE KEYS */;
+LOCK TABLES `survey_type` WRITE;
+/*!40000 ALTER TABLE `survey_type` DISABLE KEYS */;
+INSERT INTO `survey_type` VALUES ('S2938661','new type','type new');
+/*!40000 ALTER TABLE `survey_type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-01 17:26:21
+-- Dump completed on 2022-05-01 20:56:48

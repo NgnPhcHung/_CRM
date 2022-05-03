@@ -16,27 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `question_type`
+-- Table structure for table `team_details`
 --
 
-DROP TABLE IF EXISTS `question_type`;
+DROP TABLE IF EXISTS `team_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `question_type` (
-  `QTypeID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `QTypeName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Des` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  PRIMARY KEY (`QTypeID`)
+CREATE TABLE `team_details` (
+  `EmpID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `TeamID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `Status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  PRIMARY KEY (`EmpID`,`TeamID`),
+  KEY `TeamID` (`TeamID`),
+  CONSTRAINT `team_details_ibfk_1` FOREIGN KEY (`EmpID`) REFERENCES `employee` (`EmpID`),
+  CONSTRAINT `team_details_ibfk_2` FOREIGN KEY (`TeamID`) REFERENCES `team` (`TeamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `question_type`
+-- Dumping data for table `team_details`
 --
 
-LOCK TABLES `question_type` WRITE;
-/*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
-/*!40000 ALTER TABLE `question_type` ENABLE KEYS */;
+LOCK TABLES `team_details` WRITE;
+/*!40000 ALTER TABLE `team_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `team_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-01 17:26:20
+-- Dump completed on 2022-05-01 20:56:48

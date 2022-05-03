@@ -215,6 +215,8 @@
     -fx-border-color: #686868;
     -fx-border-radius:  10;
     -fx-border-width: 5;
+    -fx-border-insets: 10px 50px 10px 50px;
+    -fx-padding: 10px 50px 10px 50px;
 }
 
 .headerContainer{

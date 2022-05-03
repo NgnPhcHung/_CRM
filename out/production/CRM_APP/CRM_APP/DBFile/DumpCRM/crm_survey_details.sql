@@ -16,34 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `project`
+-- Table structure for table `survey_details`
 --
 
-DROP TABLE IF EXISTS `project`;
+DROP TABLE IF EXISTS `survey_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `project` (
-  `ProjectID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `CusID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `ProjectName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `BeginTime` datetime DEFAULT NULL,
-  `EndTime` datetime DEFAULT NULL,
-  `Manager` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `TotalEployee` int DEFAULT NULL,
-  `TotalAmount` int DEFAULT NULL,
-  PRIMARY KEY (`ProjectID`),
-  KEY `CusID` (`CusID`),
-  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`CusID`) REFERENCES `customer` (`CusID`)
+CREATE TABLE `survey_details` (
+  `SurveyID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `QuestionID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `EmpID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `Result` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  KEY `SurveyID` (`SurveyID`),
+  KEY `survey_result_ibfk_2` (`QuestionID`),
+  KEY `survey_result_ibfk_3_idx` (`Result`),
+  KEY `survey_details_ibfk_3` (`EmpID`),
+  CONSTRAINT `survey_details_ibfk_1` FOREIGN KEY (`SurveyID`) REFERENCES `survey` (`SurveyID`),
+  CONSTRAINT `survey_details_ibfk_2` FOREIGN KEY (`QuestionID`) REFERENCES `question` (`QuestionID`),
+  CONSTRAINT `survey_details_ibfk_3` FOREIGN KEY (`EmpID`) REFERENCES `employee` (`EmpID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `project`
+-- Dumping data for table `survey_details`
 --
 
-LOCK TABLES `project` WRITE;
-/*!40000 ALTER TABLE `project` DISABLE KEYS */;
-/*!40000 ALTER TABLE `project` ENABLE KEYS */;
+LOCK TABLES `survey_details` WRITE;
+/*!40000 ALTER TABLE `survey_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `survey_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-01 17:26:21
+-- Dump completed on 2022-05-01 20:56:48

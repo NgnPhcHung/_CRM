@@ -16,28 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `question_details`
+-- Table structure for table `project_team_detail`
 --
 
-DROP TABLE IF EXISTS `question_details`;
+DROP TABLE IF EXISTS `project_team_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `question_details` (
-  `AID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `Answer` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `QuestionID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  KEY `QuestionID` (`QuestionID`),
-  CONSTRAINT `question_details_ibfk_1` FOREIGN KEY (`QuestionID`) REFERENCES `question` (`QuestionID`)
+CREATE TABLE `project_team_detail` (
+  `TeamID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `ProjectID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  PRIMARY KEY (`TeamID`,`ProjectID`),
+  KEY `ProjectID` (`ProjectID`),
+  CONSTRAINT `project_team_detail_ibfk_1` FOREIGN KEY (`ProjectID`) REFERENCES `project` (`ProjectID`),
+  CONSTRAINT `project_team_detail_ibfk_2` FOREIGN KEY (`TeamID`) REFERENCES `team` (`TeamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `question_details`
+-- Dumping data for table `project_team_detail`
 --
 
-LOCK TABLES `question_details` WRITE;
-/*!40000 ALTER TABLE `question_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `question_details` ENABLE KEYS */;
+LOCK TABLES `project_team_detail` WRITE;
+/*!40000 ALTER TABLE `project_team_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `project_team_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-01 17:26:21
+-- Dump completed on 2022-05-01 20:56:48

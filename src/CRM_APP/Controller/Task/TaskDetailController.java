@@ -231,11 +231,13 @@ public class TaskDetailController {
             throwables.printStackTrace();
         }
         for(String item: importList){
+            System.out.println(item+"null");
             if(!exportList.contains(item)){
                 exportList.add(item);
             }
         }
-        cb_employ.setItems(exportList);
+
+        cb_employ.setItems(importList);
 //        OtherHandler.populateComboBox(cb_employ, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
         OtherHandler.populateComboBox(cb_module, Const.MODULE_TABLE, Const.MODULE_NAME);
 
