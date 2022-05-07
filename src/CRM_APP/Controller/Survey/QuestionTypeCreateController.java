@@ -49,6 +49,8 @@ public class QuestionTypeCreateController {
 
     @FXML
     void initialize() {
+        btn_Save.setVisible(false);
+        btn_Delete.setVisible(false);
         if (questionTypeID == null) {
             btn_Delete.setVisible(false);
         } else {
