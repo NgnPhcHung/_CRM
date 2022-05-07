@@ -59,6 +59,7 @@ public class EmployeeController {
         btn_add.setOnAction(e -> {
             sceneHandler = new SceneHandler();
             AddEmployeeController.backPane = main_stack;
+            AddEmployeeController.emID = "";
             sceneHandler.slideScene(btn_add, main_stack, "-X", "/CRM_APP/View/Employee/addEmployee.fxml");
         });
         btn_team.setOnAction(e -> {

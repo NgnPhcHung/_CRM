@@ -65,7 +65,7 @@ public class AddEmployeeController {
     private EmployeeDB employeeDB;
     private Employee employee;
     private SceneHandler sceneHandler;
-    public static String emID = "null";
+    public static String emID = "";
     public static StackPane backPane;
 
     @FXML
@@ -73,7 +73,7 @@ public class AddEmployeeController {
         TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.limitTextField(txt_Password, 6);
         cb_Role.getItems().addAll("Employee", "Manager");
-        if(emID.equals("null")){
+        if(StringUtils.isNullOrEmpty(emID)){
             btn_Delete.setVisible(false);
         }else {
             populateDetail();
@@ -82,7 +82,7 @@ public class AddEmployeeController {
         textfieldHandler = new TextFieldHandler();
         textfieldHandler.numberOnly(txt_Phone);
         btn_Save.setOnAction(e ->{
-            if(emID.equals("null")){
+            if(StringUtils.isNullOrEmpty(emID)){
                 save();
             }else{
                 update();
