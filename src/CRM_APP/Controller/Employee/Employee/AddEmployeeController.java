@@ -72,6 +72,7 @@ public class AddEmployeeController {
     void initialize() {
         TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.limitTextField(txt_Password, 6);
+
         cb_Role.getItems().addAll("Employee", "Manager");
         if(StringUtils.isNullOrEmpty(emID)){
             btn_Delete.setVisible(false);
@@ -98,6 +99,7 @@ public class AddEmployeeController {
     }
     private void save(){
         String password = txt_Password.getText().trim();
+        TextFieldHandler textFieldHandler = new TextFieldHandler();
         if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
                 || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())
                 || StringUtils.isNullOrEmpty(txt_Password.getText())){
@@ -120,7 +122,11 @@ public class AddEmployeeController {
                 if(isName.next()){
                     lbl_Noti.setVisible(true);
                     lbl_Noti.setText("This staff already in list");
-                }else{
+                }else if(textFieldHandler.checkPhone(phone)){
+                    lbl_Noti.setVisible(true);
+                    lbl_Noti.setText("Invalid Phone number");
+                }
+                else{
                     String prefix = combine();
                     String userID = prefix + number;
                     ResultSet row = database.getSomeID(userID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
