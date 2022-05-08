@@ -34,7 +34,7 @@ public class LoginDB {
                         throwables.printStackTrace();
                     }
                 }else{
-                    System.out.println("error from login getUser");
+
                 }
                 threadHandler.setRs(resultSet);
             }

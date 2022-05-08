@@ -79,7 +79,6 @@ public class QuestionTypeCreateController {
 
             btn_Delete.setOnAction(e -> {
                 try {
-                    // LƯỜI CHECK XÓA, EM TỰ CHECK NHA HƯNG :))) .(CHECK XEM CÓ ĐANG SỬ DỤNG LOẠI KHẢO SÁT KHÔNG MỚI ĐƯỢC XÓA)
                     delete();
                     sceneHandler = new SceneHandler();
                     sceneHandler.slideScene(btn_Delete, QuestionTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/questionType.fxml");

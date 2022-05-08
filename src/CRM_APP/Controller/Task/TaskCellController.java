@@ -98,6 +98,7 @@ public class TaskCellController extends JFXListCell<Task> {
                 sceneHandler = new SceneHandler();
                 TaskDetailController.isAdmin = true;
                 TaskDetailController.modID = item.getModID();
+                TaskDetailController.taskId = item.getTaskID();
                 sceneHandler.slideScene(btn_edit, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskDetail.fxml");
             });
             setText(null);
@@ -121,7 +122,7 @@ public class TaskCellController extends JFXListCell<Task> {
                 break;
             case "3":
                 lbl_status.setText("Done");
-                lbl_status.getStyleClass().add("done");
+                lbl_status.getStyleClass().add("assigned");
                 break;
             default: break;
         }

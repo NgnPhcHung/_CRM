@@ -107,7 +107,10 @@ public class TaskDetailController {
         }
 
         toggleChangeEvent();
-
+        populateDetail();
+        populateComboBox();
+        manageToggle();
+        manageTogglePopulate();
         if (StringUtils.isNullOrEmpty(cb_employ.getValue())){
             btn_save.setVisible(false);
         }
@@ -231,7 +234,6 @@ public class TaskDetailController {
             throwables.printStackTrace();
         }
         for(String item: importList){
-            System.out.println(item+"null");
             if(!exportList.contains(item)){
                 exportList.add(item);
             }

@@ -35,7 +35,6 @@ public class SurveyTypeDB {
             preparedStatement.setString(1, surveyType.getSurID());
             preparedStatement.setString(2, surveyType.getSurName());
             preparedStatement.setString(3, surveyType.getDes());
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException throwables) {

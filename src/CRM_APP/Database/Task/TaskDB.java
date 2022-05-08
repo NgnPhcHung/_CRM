@@ -125,7 +125,6 @@ public class TaskDB {
                 try {
                     preparedStatement = db.getDbConnection().prepareStatement(query);
                     preparedStatement.setString(1, project.getId());
-                    System.out.println(preparedStatement);
                     resultSet = preparedStatement.executeQuery();
                     threadHandler.setRs(resultSet);
                 } catch (SQLException throwables) {

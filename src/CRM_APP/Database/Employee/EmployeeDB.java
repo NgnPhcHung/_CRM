@@ -28,7 +28,6 @@ public class EmployeeDB {
                 preparedStatement.setString(4, employee.getPhone());
                 preparedStatement.setString(5, employee.getPosition());
                 preparedStatement.setString(6, employee.getPassword());
-            System.out.println(preparedStatement);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
         } catch (SQLException throwables) {

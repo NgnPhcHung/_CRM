@@ -36,7 +36,6 @@ public class QuestionTypeDB {
             preparedStatement.setString(1, questionType.getqTypeID());
             preparedStatement.setString(2, questionType.getqTypeName());
             preparedStatement.setString(3, questionType.getDes());
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException throwables) {
