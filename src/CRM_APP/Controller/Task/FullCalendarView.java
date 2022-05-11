@@ -138,14 +138,26 @@ public class FullCalendarView {
                     });
                     try{
 
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     }catch(InterruptedException e){
                         e.printStackTrace();
                     }
                 }
             }
         };
-        thread.start();
+
+
+        view.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene == null) {
+                // not showing...
+                System.out.println("thread interrupted");
+                thread.interrupt();
+            } else {
+                // showing ...
+                System.out.println("thread started");
+                thread.start();
+            }
+        });
         //endregion
     }
 

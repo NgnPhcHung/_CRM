@@ -14,6 +14,7 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Task.TaskDB;
 import CRM_APP.Handler.DateTimePickerHandler;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Project;
@@ -96,8 +97,11 @@ public class TaskDetailController {
     private SceneHandler sceneHandler;
     private ObservableList<String> list;
     private Task task;
+    private NotificationHandler notification;
+
     @FXML
     void initialize() {
+
         grid_Main.getStylesheets().add(HomeController.styleSheet);
         //if not admin logged in
         if(!isAdmin){
@@ -296,6 +300,9 @@ public class TaskDetailController {
     //employee action
     void empSave(){
         task = new Task();
+        notification = new NotificationHandler();
+
+        String nameTask = txt_name.getText();
         Color color = colorPicker_taskColor.getValue();
         String des = txt_des.getText();
         task.setTaskID(taskId);
@@ -303,14 +310,17 @@ public class TaskDetailController {
         task.setDes(des);
         task.setStatus(status);
         taskDB.empUpdateTask(task);
+        notification.popup(notification.success, "Task " + nameTask + " updated success");
     }
 
     //admin action
     private void save(){
+        notification = new NotificationHandler();
         if(!StringUtils.isNullOrEmpty(txt_name.getText()) && !StringUtils.isNullOrEmpty(cb_employ.getValue())){
             database = new Database();
             task= new Task();
             taskDB = new TaskDB();
+            sceneHandler = new SceneHandler();
             String id = OtherHandler.generateId();
             String name = txt_name.getText();
             LocalDate start = datePick_taskDate.getValue();
@@ -324,22 +334,100 @@ public class TaskDetailController {
             ResultSet row = null;
             ResultSet rowID = null;
             ResultSet rowMod = null;
+            ResultSet rowTask = null;
 
             try {
-                row = database.getSomeID(em, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
-                rowID = database.getSomeID(id,  Const.TASK_TABLE, Const.TASK_ID);
-                rowMod = database.getSomeID(mod,  Const.MODULE_TABLE, Const.MODULE_NAME);
-                while (rowID.next()){
-                    id = OtherHandler.generateId();
+                rowTask = database.getSomeID(name, Const.TASK_TABLE, Const.TASK_NAME);
+                //check if task exist
+                if(rowTask.next()){
+                    notification.popup(notification.warning, "This task already in list");
+                }else{
+                    row = database.getSomeID(em, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
                     rowID = database.getSomeID(id,  Const.TASK_TABLE, Const.TASK_ID);
+                    rowMod = database.getSomeID(mod,  Const.MODULE_TABLE, Const.MODULE_NAME);
+
+                    while (rowID.next()){
+                        id = OtherHandler.generateId();
+                        rowID = database.getSomeID(id,  Const.TASK_TABLE, Const.TASK_ID);
+                    }
+
+                    if(row.next()){
+                        emID = row.getString(Const.EMPLOYEE_ID);
+                        task.setEmpID(emID);
+                    }
+
+                    if(rowMod.next()){
+                        modID = rowMod.getString(Const.MODULE_ID);
+                        task.setModID(modID);
+                    }
+
+                    task.setTaskID(id);
+                    task.setTaskName(name);
+                    task.setStartDate(start);
+                    task.setEndDate(end);
+                    task.setDes(des);
+                    task.setColor(color);
+                    task.setStatus(status);
+                    taskDB.save(task);
+                    notification.popup(notification.success, "Task " + name + " has been saved");
+                    sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
                 }
-                if(row.next()){
-                    emID = row.getString(Const.EMPLOYEE_ID);
-                    task.setEmpID(emID);
-                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else{
+            notification.popup(notification.success, "Task or Employee cannot be blank");
+        }
+
+    }
+    private void delete(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Do you want to delete this task?");
+        alert.setContentText("Please check again!");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                database = new Database();
+                sceneHandler = new SceneHandler();
+                notification = new NotificationHandler();
+
+                database.detele(Const.TASK_TABLE, Const.TASK_ID, taskId);
+                notification.popup(notification.success, "Task " + txt_name.getText() + " has been deleted");
+                sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
+            }
+        });
+
+    }
+    private void update(){
+        database = new Database();
+        task= new Task();
+        taskDB = new TaskDB();
+        notification = new NotificationHandler();
+        if(!StringUtils.isNullOrEmpty(txt_name.getText()) && !StringUtils.isNullOrEmpty(cb_employ.getValue())){
+            String name = txt_name.getText();
+            LocalDate start = datePick_taskDate.getValue();
+            LocalDate end = datePick_taskEnd.getValue();
+            String em = cb_employ.getValue();
+            String mod = cb_module.getValue();
+            String des = txt_des.getText();
+            String color = colorPicker_taskColor.getValue()+"";
+            String emID;
+            String modID;
+            ResultSet rowEm = null;
+            ResultSet rowMod = null;
+
+            try {
+                rowEm = database.getSomeID(em, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+                rowMod = database.getSomeID(mod,  Const.MODULE_TABLE, Const.MODULE_NAME);
                 if(rowMod.next()){
                     modID = rowMod.getString(Const.MODULE_ID);
                     task.setModID(modID);
+                }
+                if(rowEm.next()){
+                    emID = rowEm.getString(Const.EMPLOYEE_ID);
+                    task.setEmpID(emID);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -347,69 +435,19 @@ public class TaskDetailController {
                 e.printStackTrace();
             }
 
-            task.setTaskID(id);
+            task.setTaskID(taskId);
             task.setTaskName(name);
             task.setStartDate(start);
             task.setEndDate(end);
+            task.setStatus(status);
             task.setDes(des);
             task.setColor(color);
-            task.setStatus(status);
-            taskDB.save(task);
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
+            taskDB.update(task);
+            notification.popup(notification.success, "Task " + name + " has been updated");
         }else{
-            showAlertWithHeaderText();
+            notification.popup(notification.error, "Something does not right, please check again");
         }
 
-    }
-    private void delete(){
-        database = new Database();
-        database.detele(Const.TASK_TABLE, Const.TASK_ID, taskId);
-        sceneHandler = new SceneHandler();
-        sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Task/taskList.fxml");
-    }
-    private void update(){
-        database = new Database();
-        task= new Task();
-        taskDB = new TaskDB();
-
-        String name = txt_name.getText();
-        LocalDate start = datePick_taskDate.getValue();
-        LocalDate end = datePick_taskEnd.getValue();
-        String em = cb_employ.getValue();
-        String mod = cb_module.getValue();
-        String des = txt_des.getText();
-        String color = colorPicker_taskColor.getValue()+"";
-        String emID;
-        String modID;
-        ResultSet rowEm = null;
-        ResultSet rowMod = null;
-
-        try {
-            rowEm = database.getSomeID(em, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
-            rowMod = database.getSomeID(mod,  Const.MODULE_TABLE, Const.MODULE_NAME);
-            if(rowMod.next()){
-                modID = rowMod.getString(Const.MODULE_ID);
-                task.setModID(modID);
-            }
-            if(rowEm.next()){
-                emID = rowEm.getString(Const.EMPLOYEE_ID);
-                task.setEmpID(emID);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        task.setTaskID(taskId);
-        task.setTaskName(name);
-        task.setStartDate(start);
-        task.setEndDate(end);
-        task.setStatus(status);
-        task.setDes(des);
-        task.setColor(color);
-        taskDB.update(task);
     }
     private void manageTogglePopulate(){
         try {
@@ -452,12 +490,6 @@ public class TaskDetailController {
             }
         });
     }
-    private void showAlertWithHeaderText() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Input Error");
-        alert.setHeaderText("Empty:");
-        alert.setContentText("Your input invalid!");
 
-        alert.showAndWait();
-    }
+
 }

@@ -110,10 +110,7 @@
                   <Font name="Calibri Bold" size="20.0" />
                </font>
             </Label>
-            <JFXButton fx:id="btn_Save" prefWidth="100.0" text="Save" textFill="#686868">
-               <font>
-                  <Font name="Calibri Bold" size="20.0" />
-               </font>
+            <JFXButton fx:id="btn_Save" prefWidth="100.0" text="Save">
                <styleClass>
                   <String fx:value="buttonStyle3" />
                   <String fx:value="h4" />

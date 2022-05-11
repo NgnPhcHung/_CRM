@@ -41,6 +41,24 @@
                                     </Label>
                                  </children>
                               </VBox>
+                              <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Button fx:id="btn_Logout" mnemonicParsing="false" text="Logout">
+                                       <graphic>
+                                          <FontAwesomeIcon iconName="SIGN_OUT" />
+                                       </graphic>
+                                       <styleClass>
+                                          <String fx:value="btnExit" />
+                                          <String fx:value="text" />
+                                          <String fx:value="h5" />
+                                          <String fx:value="hBold" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="30.0" right="30.0" />
+                                 </HBox.margin>
+                              </HBox>
                            </children>
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -53,6 +71,14 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
+                        <Button fx:id="btn_Max" layoutX="1216.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="btnMin">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <FontAwesomeIcon iconName="SQUARE_ALT" />
+                           </graphic>
+                        </Button>
                         <Button fx:id="btn_exit" layoutX="1248.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="btnExit">
                            <graphic>
                               <FontAwesomeIcon iconName="CLOSE" styleClass="text" />

@@ -19,17 +19,21 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Home.HomeDB;
 import CRM_APP.Database.Login.LoginDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Main;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import de.jensd.fx.glyphs.GlyphIcon;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -77,6 +81,9 @@ public class HomeController {
     private Button btn_Min;
 
     @FXML
+    private Button btn_Max;
+
+    @FXML
     private Label lbl_name;
 
     @FXML
@@ -88,6 +95,8 @@ public class HomeController {
     @FXML
     private JFXToggleButton tog_Style;
 
+    @FXML
+    private Button btn_Logout;
 
     //setting style
     private String light = "/CRM_APP/Style/LightStyle.css";
@@ -97,7 +106,11 @@ public class HomeController {
     public static String userId;
     private Database mydb = new Database();
     private HomeDB homeDB;
-
+    private Thread myThread;
+    private FontAwesomeIcon fontAwesomeIcon;
+    public static Stage primStage;
+    private NotificationHandler notification;
+    private boolean isFullScreen = false;
     @FXML
     void initialize() {
         styleSheet = light;
@@ -120,20 +133,25 @@ public class HomeController {
                 tog_Style.setText("Dark mode");
             }
         }));
-
         btn_Min.setOnAction(event -> {
             LoginController.getPrimaryStage().setIconified(true);
         });
-
+        btn_Max.setOnAction(e ->{
+            resizeScreen();
+        });
         btn_exit.setOnAction(e -> {
             closeApplication();
         });
+
         if(userId.equals("SAD")){
             lbl_Export.setVisible(true);
             lbl_Export.setOnMouseClicked(event -> {
                 createLogFile();
             });
         }
+        btn_Logout.setOnAction(e -> {
+            userLogout();
+        });
     }
     private void createLogFile(){
         String fileName = "Log_" + OtherHandler.generateId();
@@ -165,7 +183,8 @@ public class HomeController {
             e.printStackTrace();
         }
     }
-    //when user logout
+
+    //region LOGOUT
     private void closeApplication() {
         closeMethod();
         //close
@@ -190,8 +209,9 @@ public class HomeController {
             }
         }, "Shutdown-thread"));
     }
+    //endregion
 
-    //check value is in array (now is tab)
+    //check check tab name exist
     private boolean check(String arr[], String valueCheck) {
         boolean test = false;
         for (int i = 0; i < arr.length; i++) {
@@ -208,73 +228,6 @@ public class HomeController {
         a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;
-    }
-
-    //show confirm when button survey fired (only survey)
-    private void showConfirmation(Tab tab) throws IOException {
-        Label label = new Label();
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setTitle("Select type");
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        alert.setX(bounds.getMaxX() - 1240);//vertical
-        alert.setY(bounds.getMaxY() - 900); //horizontal
-        alert.getDialogPane().setStyle(
-                "-fx-background-radius: 10px;" +
-                        "-fx-background-color: transparent;");
-        alert.getDialogPane().getScene().setFill(Color.TRANSPARENT); // Used for better visual representation of the bug
-        alert.setHeaderText("");
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.initStyle(StageStyle.TRANSPARENT);
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add("/CRM_APP/Style/MyDialogs.css");
-        dialogPane.getStyleClass().add("myDialog");
-
-        ButtonType Result = new ButtonType("Result");
-        ButtonType Question = new ButtonType("Question");
-        ButtonType Close = new ButtonType("X");
-
-        // remove default buttontype settings
-        alert.getButtonTypes().clear();
-
-        alert.getButtonTypes().addAll(Close, Result, Question);
-        //style X button
-        alert.getDialogPane().getChildren().forEach(node -> {
-            if (node instanceof ButtonBar) {
-                ButtonBar buttonBar = (ButtonBar) node;
-                buttonBar.getButtons().forEach(possibleButtons -> {
-                    if (possibleButtons instanceof Button) {
-                        Button b = (Button) possibleButtons;
-                        if (b.getText().equals("X")) {
-                            b.setStyle("-fx-background-color: #ff5252;  -fx-text-fill: #ffffff;");
-                        }
-                    }
-                });
-            }
-        });
-        // option != null.
-        Optional<ButtonType> option = alert.showAndWait();
-
-        if (option.get() == null) {
-            label.setText("No selection!");
-        } else if (option.get() == Result) {
-            GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getChooseFileFxml("result", "Survey")));
-            if (tabManage("Result")) {
-                tab.setContent(newPane);
-                tab.setText("Result");
-                tp_homeMain.getTabs().add(tab);
-            }
-        } else if (option.get() == Question) {
-            GridPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getChooseFileFxml("question", "Survey")));
-            if (tabManage("Question")) {
-                tab.setContent(newPane);
-                tab.setText("Question");
-                tp_homeMain.getTabs().add(tab);
-            }
-        } else if (option.get() == Close) {
-            alert.close();
-        } else {
-            label.setText("-");
-        }
     }
 
     //this will get all opened tab
@@ -308,7 +261,6 @@ public class HomeController {
             tp_homeMain.setStyle("tab-close-button: #cfd8dc");
 
             if (btnName.equals("Survey")) {
-                //showConfirmation(tab);
                 StackPane newPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/CRM_APP/View/Survey/surveyMenu.fxml")));
                 tab.setContent(newPane);
             } else if (btnName.equals("Task")) {
@@ -323,6 +275,7 @@ public class HomeController {
                 StackPane newPane = FXMLLoader.load(getClass().getResource(SceneHandler.getFileFXML(btnName)));
                 tab.setContent(newPane);
             }
+            tp_homeMain.getSelectionModel().select(tab);
 
             tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
                     "    -fx-font-weight: bold;\n" +
@@ -330,7 +283,6 @@ public class HomeController {
                     "    -fx-font-size: 20;");
 
             tp_homeMain.getTabs().add(tab);
-
         }
     }
 
@@ -350,7 +302,6 @@ public class HomeController {
         }
 
     }
-
     //get set
     public void setUserId(String userId) {
         this.userId = userId;
@@ -358,5 +309,37 @@ public class HomeController {
 
     public String getUserId() {
         return this.userId;
+    }
+
+    private void resizeScreen(){
+        SceneHandler sceneHandler= new SceneHandler();
+        isFullScreen = !isFullScreen;
+        if(isFullScreen){
+            LoginController.getPrimaryStage().setMaximized(isFullScreen);
+            LoginController.getPrimaryStage().setWidth(sceneHandler.getScreen()[1]);
+            LoginController.getPrimaryStage().setHeight(sceneHandler.getScreen()[0]*0.95);
+        }else{
+            LoginController.getPrimaryStage().setMaximized(isFullScreen);
+            LoginController.getPrimaryStage().setHeight(sceneHandler.getScreen()[0]*0.7);
+            LoginController.getPrimaryStage().setWidth(sceneHandler.getScreen()[1]*0.7);
+        }
+    }
+    private void userLogout(){
+        try {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/CRM_APP/View/Login/login.fxml"));
+
+        loader.load();
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.initStyle(StageStyle.UNDECORATED);
+        userLogout(getUserId());
+        btn_Logout.getScene().getWindow().hide();
+        stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

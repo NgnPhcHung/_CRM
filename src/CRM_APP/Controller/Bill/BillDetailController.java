@@ -1,5 +1,6 @@
 package CRM_APP.Controller.Bill;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Bill.BillDB;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -88,7 +89,7 @@ public class BillDetailController {
 
     private SceneHandler sceneHandler;
     private Database database;
-    public static String billID ="null";
+    public static String billID ="";
     private ObservableList<Module> modules;
     private BillDB billDB;
     private Bill bill;
@@ -101,7 +102,7 @@ public class BillDetailController {
     void initialize() {
         setDetail();
         toggleEvent();
-        if(billID.equals("null")){
+        if(StringUtils.isNullOrEmpty(billID) || !HomeController.userId.contains("AD")){
             btn_Delete.setVisible(false);
         }
         else{
@@ -122,7 +123,7 @@ public class BillDetailController {
         });
 
         btn_Save.setOnAction(e -> {
-                if(billID.equals("null")){
+                if(StringUtils.isNullOrEmpty(billID)){
                     if(StringUtils.isNullOrEmpty(txt_Amount.getText())){
                         lbl_Noti.setVisible(true);
                         lbl_Noti.setText("Invalid Input!");
@@ -301,7 +302,6 @@ public class BillDetailController {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         } catch (SQLException throwables) {
@@ -321,6 +321,5 @@ public class BillDetailController {
         database.detele(Const.BILL_DETAIL_TABLE, Const.BILL_ID, billID);
         database.detele(Const.BILL_TABLE, Const.BILL_ID, billID);
         btn_Back.fire();
-
     }
 }

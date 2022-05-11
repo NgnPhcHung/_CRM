@@ -107,6 +107,8 @@ public class BillCellController extends JFXListCell<Bill> {
             btn_Edit.setOnAction(e -> {
                 sceneHandler = new SceneHandler();
                 BillDetailController.billID = item.getId();
+                BillDetailController.backPane = cellStack;
+
                 sceneHandler.slideScene(btn_Edit, cellStack, "X", "/CRM_APP/View/Bill/billDetail.fxml");
             });
             setText(null);

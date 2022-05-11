@@ -104,6 +104,7 @@ public class BillController extends Thread{
         btn_Add.setOnAction(e -> {
             sceneHandler = new SceneHandler();
             BillDetailController.backPane = main_Stack;
+            BillDetailController.billID = "";
             sceneHandler.slideScene(btn_All, main_Stack, "X", "/CRM_APP/View/Bill/billDetail.fxml");
         });
     }

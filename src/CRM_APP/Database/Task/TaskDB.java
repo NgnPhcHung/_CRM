@@ -134,6 +134,7 @@ public class TaskDB {
                 }
             }
         };
+        thread.setName("getDetailTeamMember");
         thread.start();
         try {
             thread.join();

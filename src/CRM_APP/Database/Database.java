@@ -39,6 +39,7 @@ public class Database extends Configs{
                 }
             }
         };
+        thread.setName("getSomeID");
         thread.start();
         try {
             thread.join();
@@ -65,7 +66,7 @@ public class Database extends Configs{
                 }
             }
         };
-
+        thread.setName("getAllTableValue");
         thread.start();
         try {
             thread.join();
@@ -94,6 +95,7 @@ public class Database extends Configs{
                 }
             }
         };
+        thread.setName("detele");
         thread.start();
         try {
             thread.join();
@@ -122,6 +124,7 @@ public class Database extends Configs{
                 }
             }
         };
+        thread.setName("filterDataInput");
         thread.start();
         try {
             thread.join();
