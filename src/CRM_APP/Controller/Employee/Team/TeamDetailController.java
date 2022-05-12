@@ -85,8 +85,6 @@ public class TeamDetailController {
             lv_emp.setCellFactory(TeamDetailCellController -> new TeamDetailCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

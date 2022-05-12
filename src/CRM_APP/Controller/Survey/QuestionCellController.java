@@ -78,7 +78,7 @@ public class QuestionCellController extends JFXListCell<Question> {
             this.setOnMouseClicked(e -> {
                 QuestionDetailController.questionID=questionId;
                 QuestionDetailController.questionText=questionText;
-
+                QuestionDetailController.backPane = stackCell;
                 sceneHandler.slideScene(btn_edit, stackCell, "-X", "/CRM_APP/View/Survey/questionDetail.fxml");
 
             });

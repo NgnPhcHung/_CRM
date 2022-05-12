@@ -1,8 +1,10 @@
 package CRM_APP.Controller.Survey;
 
+import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.SurveyDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Survey;
@@ -13,11 +15,13 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import com.mysql.cj.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import org.apache.commons.lang3.StringUtils;
+
 
 public class SurveyCreateController {
 
@@ -52,8 +56,11 @@ public class SurveyCreateController {
     private SurveyDB surveyDB;
     private Survey survey;
     private SceneHandler sceneHandler;
+    private NotificationHandler notification;
+    private NotificationHandler notfication;
 
     public static StackPane backPane;
+    public static String surveyID;
 
     @FXML
     void initialize() {
@@ -65,15 +72,22 @@ public class SurveyCreateController {
 
         btn_Save.setOnAction(e -> {
             save();
-            btn_Back.fire();
         });
+        btn_Delete.setVisible(true);
+        btn_Delete.setOnAction(e -> {
+            deleteSurvey();
+        });
+        if(!StringUtils.isNullOrEmpty(surveyID)){
+            populateSurvey();
+        }
     }
 
     private void populateComboBox(){
         OtherHandler.populateComboBox(cb_Customer, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
     }
     private void save(){
-        if(!StringUtils.isEmpty(txt_Name.getText())){
+        notfication = new NotificationHandler();
+        if(!StringUtils.isNullOrEmpty(txt_Name.getText())){
             String name = txt_Name.getText();
             database = new Database();
             try {
@@ -89,26 +103,65 @@ public class SurveyCreateController {
                 if(rowName.next()){
                     lbl_Noti.setVisible(true);
                     lbl_Noti.setText("This Survey Already Exist");
+                    notfication.popup(notfication.warning, "This Survey Already Exist");
                 }else if (rowCus.next()){
-                    surveyDB = new SurveyDB();
-                    survey = new Survey();
-                    survey.setSurveyName(name);
-                    survey.setSurveyID(id);
-                    survey.setCusID(rowCus.getString(Const.CUSTOMER_ID));
-                    surveyDB.save(survey);
-                    lbl_Noti.setVisible(false);
+                    String cusID = rowCus.getString(Const.CUSTOMER_ID);
+                    
+                    if(StringUtils.isNullOrEmpty(surveyID)){
+                        createSurvey(id, name, cusID);
+                    }else{
+                        updateSurvey(name, cusID);
+                    }
+                    btn_Back.fire();
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
         }else{
              lbl_Noti.setVisible(true);
              lbl_Noti.setText("Invalid Input");
+             notfication.popup(notfication.error, "Invalid Input");
         }
     }
+
+    private void populateSurvey(){
+        database = new Database();
+        try {
+            ResultSet resultSet = database.getSomeID(surveyID, Const.SURVEY_TABLE, Const.SURVEY_ID);
+            if(resultSet.next()){
+                ResultSet rs = database.getSomeID(resultSet.getNString(Const.CUSTOMER_ID), Const.CUSTOMER_TABLE, Const.CUSTOMER_ID);
+                if(rs.next()){
+                    txt_Name.setText(resultSet.getString(Const.SURVEY_NAME));
+                    cb_Customer.setValue(rs.getString(Const.CUSTOMER_NAME));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void updateSurvey(String name, String cusID){
+        surveyDB = new SurveyDB();
+        survey = new Survey();
+        survey.setSurveyName(name);
+        survey.setSurveyID(surveyID);
+        survey.setCusID(cusID);
+        surveyDB.update(survey);
+        notfication.popup(notfication.success, "Survey name "+ name + " updated");
+    }
+
+    private void createSurvey(String id, String name, String cusID){
+        surveyDB = new SurveyDB();
+        survey = new Survey();
+        survey.setSurveyName(name);
+        survey.setSurveyID(id);
+        survey.setCusID(cusID);
+        surveyDB.save(survey);
+        notfication.popup(notfication.success, "Survey name "+ name + " created");
+        lbl_Noti.setVisible(false);
+    }
+
     private void deleteSurvey(){
         database = new Database();
 

@@ -92,8 +92,6 @@ public class TeamDetailCellController extends JFXListCell<Team> {
                 });
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }
         setText(null);

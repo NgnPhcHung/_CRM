@@ -87,10 +87,18 @@ public class SurveyCellController extends JFXListCell<Survey> {
                     lbl_customer.setText(row.getString(Const.CUSTOMER_NAME));
                 }
 
-                btn_edit.setOnAction(e -> {
+                this.setOnMouseClicked(e -> {
                     sceneHandler = new SceneHandler();
                     SurveyDetailController.surveyID = item.getSurveyID();
+                    SurveyDetailController.surveyName = item.getSurveyName();
                     sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyDetail.fxml");
+                });
+
+                btn_edit.setOnAction(e -> {
+                    sceneHandler = new SceneHandler();
+                    SurveyCreateController.surveyID= item.getSurveyID();
+                    SurveyCreateController.backPane = cellStack;
+                    sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyCreate.fxml");
                 });
 
                 btn_Detail.setOnAction(e -> {

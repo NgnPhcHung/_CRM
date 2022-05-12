@@ -97,8 +97,6 @@ public class ModuleDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         //region SET TOGGLE DATA & HANDLE EVENT VALUE CHANGE
         group = new ToggleGroup();
@@ -171,8 +169,6 @@ public class ModuleDetailController {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "X", "/CRM_APP/View/Module/module.fxml");
@@ -216,8 +212,6 @@ public class ModuleDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -231,10 +225,7 @@ public class ModuleDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
     }
     private void comboBoxHandler() {
         OtherHandler.populateComboBox(cb_project, Const.PROJECT_TABLE, Const.PROJECT_NAME);

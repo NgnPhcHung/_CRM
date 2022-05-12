@@ -91,8 +91,6 @@ public class ModuleCellController extends JFXListCell<Module> {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
             String modID = item.getModuleID();
 

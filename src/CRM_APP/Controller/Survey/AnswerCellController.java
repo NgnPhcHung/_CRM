@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Answer;
 import com.jfoenix.controls.JFXListCell;
@@ -32,9 +33,11 @@ public class AnswerCellController extends JFXListCell<Answer> {
     @FXML
     private Button btn_edit;
 
-    FXMLLoader fxmlLoader;
-    SceneHandler sceneHandler = new SceneHandler();
-    Database database;
+    private FXMLLoader fxmlLoader;
+    private SceneHandler sceneHandler = new SceneHandler();
+    private Database database;
+    private NotificationHandler notification;
+
     @FXML
     void initialize() {
 
@@ -58,12 +61,13 @@ public class AnswerCellController extends JFXListCell<Answer> {
                     e.printStackTrace();
                 }
             }
-
+            notification = new NotificationHandler();
             lbl_answer.setText(item.getAnswer());
             btn_edit.setOnAction(e ->{
                database = new Database();
                String ans = lbl_answer.getText();
                database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ANSWER, ans);
+               notification.popup(notification.success, ans + " has been deleted");
             });
             setText(null);
             setGraphic(main_pane);

@@ -3,6 +3,7 @@ package CRM_APP.Controller.Survey;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.SurveyDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Question;
 import CRM_APP.Model.SurveyDetail;
@@ -59,10 +60,12 @@ public class ResultController {
     private Question  question;
     private SceneHandler sceneHandler;
     private  boolean isSameQuestion;
+    private String surveyName = "";
+    private NotificationHandler notification;
     VBox questionContainer = new VBox();
     VBox answerContainer = new VBox();
     ToggleGroup group = new ToggleGroup();
-    private String surveyName = "";
+
     @FXML
     void initialize() {
         addDetail();
@@ -189,23 +192,16 @@ public class ResultController {
 
     private void export(){
         String fileName = surveyName ;
+        notification = new NotificationHandler();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(btn_Back.getScene().getWindow());
         WritableImage image = sc_container.snapshot(new SnapshotParameters(), null);
         File file = new File(selectedDirectory + "\\"+ fileName + ".png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            showAlertWithHeaderText(file+ "");
+            notification.popup(notification.success, "Your file saved at: " + file);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-    private void showAlertWithHeaderText(String loc) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Save success");
-        alert.setHeaderText("Your file location : ");
-        alert.setContentText(loc);
-
-        alert.showAndWait();
     }
 }

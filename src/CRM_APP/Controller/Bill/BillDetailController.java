@@ -183,8 +183,6 @@ public class BillDetailController {
             lv_Module.setCellFactory(BillDetailCellController -> new BillDetailCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
     }
@@ -217,8 +215,6 @@ public class BillDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     private void toggleEvent(){
@@ -299,8 +295,6 @@ public class BillDetailController {
                         }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
                     }
                 }
             }

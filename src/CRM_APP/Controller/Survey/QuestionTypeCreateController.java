@@ -3,6 +3,7 @@ package CRM_APP.Controller.Survey;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.QuestionTypeDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
@@ -46,18 +47,10 @@ public class QuestionTypeCreateController {
     private QuestionTypeDB questionTypeDB;
     private QuestionType questionType;
     private ShakerHandler shakerHandler;
-
+    private NotificationHandler notification;
     @FXML
     void initialize() {
-        btn_Save.setVisible(false);
-        btn_Delete.setVisible(false);
-        if (questionTypeID == null) {
-            btn_Delete.setVisible(false);
-        } else {
-            lbl_title.setText("Update Question Type");
-            populateDetail();
-            btn_Delete.setVisible(true);
-        }
+        populateDetail();
         // onclick button
         onClick();
     }
@@ -65,27 +58,12 @@ public class QuestionTypeCreateController {
     private void onClick() {
         try {
             btn_Save.setOnAction(e -> {
-                if (questionTypeID == null) {
-                    save();
-                } else {
-                    update();
-                }
+                update();
             });
 
             btn_Back.setOnAction(e -> {
                 sceneHandler = new SceneHandler();
                 sceneHandler.slideScene(btn_Back, QuestionTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/questionType.fxml");
-            });
-
-            btn_Delete.setOnAction(e -> {
-                try {
-                    delete();
-                    sceneHandler = new SceneHandler();
-                    sceneHandler.slideScene(btn_Delete, QuestionTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/questionType.fxml");
-                    lbl_Noti.setVisible(false);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,60 +78,20 @@ public class QuestionTypeCreateController {
                 txt_Name.setText(row.getString(Const.QUESTIONTYPE_NAME));
                 txt_Des.setText(row.getString(Const.QUESTIONTYPE_DES));
             }
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    }
-
-    //region DATABASE PROCESS
-    private void save() {
-        //region INITIALIZE
-        String number = OtherHandler.generateNumber();
-        String nameQuesType = txt_Name.getText().trim();
-        String des = txt_Des.getText().trim();
-        if (nameQuesType.equals("")) {
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Invalid Input");
-        } else {
-            lbl_Noti.setVisible(false);
-            String questionTypeID = "QT" + number;
-            try {
-                database = new Database();
-                //Regenerate number if user's number exist
-                ResultSet row = database.getSomeID(questionTypeID, Const.QUESTION_TYPE_TABLE, Const.QUESTIONTYPE_ID);
-                while (row.next()) {
-                    number = OtherHandler.generateNumber();
-                    questionTypeID = "QT" + number;
-                    row = database.getSomeID(questionTypeID, Const.QUESTION_TYPE_TABLE, Const.QUESTIONTYPE_ID);
-                }
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
-            }
-            questionTypeDB = new QuestionTypeDB();
-            questionType = new QuestionType();
-            questionType.setqTypeID(questionTypeID);
-            questionType.setqTypeName(nameQuesType);
-            questionType.setDes(des);
-            questionTypeDB.save(questionType);
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, QuestionTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/questionType.fxml");
-        }
-        //endregion
-    }
-
-    private void delete() {
-        database = new Database();
-        database.detele(Const.QUESTION_TYPE_TABLE, Const.QUESTIONTYPE_ID, questionTypeID);
     }
 
     private void update() {
         sceneHandler = new SceneHandler();
         questionType = new QuestionType();
         questionTypeDB = new QuestionTypeDB();
-
+        notification = new NotificationHandler();
         if (StringUtils.isEmpty(txt_Name.getText()) || StringUtils.isEmpty(txt_Des.getText())) {
             lbl_Noti.setVisible(true);
             lbl_Noti.setText("Information can not be null");
+            notification.popup(notification.warning, "Information can not be null");
         } else {
             String name = txt_Name.getText().trim();
             String des = txt_Des.getText().trim();
@@ -164,8 +102,8 @@ public class QuestionTypeCreateController {
             questionTypeDB.update(questionType);
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_Save, QuestionTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/questionType.fxml");
+            notification.popup(notification.success, "Question updated");
         }
     }
-    //endregion
 
 }

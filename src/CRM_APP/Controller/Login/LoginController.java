@@ -140,9 +140,9 @@ public class LoginController {
                     notification = new NotificationHandler();
                     userShake.shake();
                     passShake.shake();
-                    notification.popup(notification.error, "Username or password are not correct");
+                    notification.popup(notification.error, "Username/password wrong");
                     lbl_invalid.setVisible(true);
-                    lbl_invalid.setText("Username or password are not correct");
+                    lbl_invalid.setText("Username/password wrong");
                     txt_password.setText("");
                     txt_username.setText("");
                 }
@@ -218,7 +218,7 @@ public class LoginController {
             String logTime = dtf.format(now);
 
             database.authen("login", aid, uid, logTime, deviceName);
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }

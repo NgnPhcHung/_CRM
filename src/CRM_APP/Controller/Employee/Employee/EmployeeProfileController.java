@@ -137,8 +137,6 @@ public class EmployeeProfileController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     private void changePassword(){
@@ -214,8 +212,6 @@ public class EmployeeProfileController {
             lv_JoinTeam.setCellFactory(EmployeeProfileCellController -> new EmployeeProfileCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

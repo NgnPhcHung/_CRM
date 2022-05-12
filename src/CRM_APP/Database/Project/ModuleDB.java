@@ -11,22 +11,32 @@ import java.sql.SQLException;
 public class ModuleDB {
     Database database = new Database();
 
+    public ResultSet getModule(){
+        ResultSet rs = null;
+        String query = " SELECT * FROM " + Const.MODULE_TABLE + " ORDER BY "
+                        + Const.MODULE_STATUS + " ASC";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = database.getDbConnection().prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public ResultSet getCountStatus(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
-        String query = "SELECT COUNT(CASE WHEN Status = \"0\" THEN 1\n" +
-                "                  ELSE NULL\n" +
-                "             END) AS Pending\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"1\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Working\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"2\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Reviewing\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"3\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Done\n" +
-                "    FROM crm.module WHERE " + Const.PROJECT_ID +"=?";
-        PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
+        String query = "SELECT COUNT(CASE WHEN status = 0 THEN 1 END ) AS \"Pending\", \n" +
+                        "COUNT(CASE WHEN status = 1 THEN 1 END ) AS \"Working\", \n" +
+                        "COUNT(CASE WHEN status = 2 THEN 1 END ) AS \"Reviewing\", \n" +
+                        "COUNT(CASE WHEN status = 3 THEN 1 END ) AS \"Done\"" +
+                        " FROM " + Const.MODULE_TABLE +
+                        " WHERE " + Const.PROJECT_ID +"=?";
+
+        PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, id);
         resultSet = preparedStatement.executeQuery();
         return resultSet;

@@ -119,7 +119,19 @@ public class TaskListController {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_back, ProjectCellController.cellStack, "-Y", "/CRM_APP/View/Module/module.fxml");
         });
-        populateTask("nor");
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                populateTask("nor");
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         btn_addNew.setOnAction(e->{
             sceneHandler = new SceneHandler();
             TaskDetailController.isAdmin = true;
@@ -133,10 +145,12 @@ public class TaskListController {
         sceneHandler= new SceneHandler();
         database = new Database();
         tasks = FXCollections.observableArrayList();
+        taskDB = new TaskDB();
         ResultSet row = null;
         if(status.equals("nor")){
             try {
-                row = database.getSomeID(modID, Const.TASK_TABLE, "ModID");
+//                row = database.getSomeID(modID, Const.TASK_TABLE, "ModID");
+                row = taskDB.getTask(modID);
                 while(row.next()){
                     Task task = new Task();
 
@@ -157,8 +171,6 @@ public class TaskListController {
                 lv_tasks.setCellFactory(TaskCellController -> new TaskCellController());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }else{
             try {

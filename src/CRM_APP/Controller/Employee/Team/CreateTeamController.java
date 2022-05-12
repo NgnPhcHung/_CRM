@@ -105,9 +105,8 @@ public class CreateTeamController {
                     }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
+
                 teamDB = new TeamDB();
                 team = new Team();
                 team.setTeamID(id);
@@ -125,8 +124,6 @@ public class CreateTeamController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     private void delete(){

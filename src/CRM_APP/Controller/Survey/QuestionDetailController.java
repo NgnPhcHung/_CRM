@@ -6,6 +6,7 @@ import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.QuestionDB;
 import CRM_APP.Database.Survey.QuestionTypeDB;
 import CRM_APP.Database.Survey.SurveyTypeDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
@@ -22,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,7 +37,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import org.apache.commons.lang3.StringUtils;
 
 public class QuestionDetailController {
 
@@ -105,7 +106,9 @@ public class QuestionDetailController {
     public static String questionText ="";
     public static StackPane backPane;
 
-    QuestionController questionController = new QuestionController();
+    private QuestionController questionController = new QuestionController();
+    private NotificationHandler notification;
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         grid_Main.getStylesheets().add(HomeController.styleSheet);
@@ -129,107 +132,115 @@ public class QuestionDetailController {
 
         btn_Delete.setOnAction(e -> {
             deleteQuestion();
-            btn_Back.fire();
         });
 
         btn_save.setOnAction(e -> {
-            saveQuestion();
+            saveOrUpdateQuestion();
         });
         btn_unhideAddAnswer.setOnAction(e -> {
             toggleAnswer();
         });
     }
 
-    //work with questionDetailCell.fxml
+
     @FXML
     void addEvent(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String ans = txt_answer.getText().trim();
-        String ansId = OtherHandler.generateId();
+        notification = new NotificationHandler();
+        database = new Database();
 
-        if (!ans.equals("")) {
-            ResultSet taskRow = database.getSomeID(ansId, Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ID);
-            while (taskRow.next()) {
-                ansId = OtherHandler.generateId();
-                taskRow = database.getSomeID(ansId, Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ID);
-            }
+        if(StringUtils.isNullOrEmpty(txt_answer.getText())){
+            notification.popup(notification.error, "Answer cannot be blank");
+        }else{
+            String ans = txt_answer.getText();
 
-            questionDB.createQuestionDetail(ansId, questionID, ans);
-            try {
-                populateQuestions();
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
+            ResultSet ansExist = database.getSomeID(ans, Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ANSWER);
+            if(ansExist.next()){
+                notification.popup(notification.warning, "Answer " + ans +" existed");
+            }else{
+                String ansId = OtherHandler.generateId();
+
+                ResultSet ansRow = database.getSomeID(ansId, Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ID);
+                while (ansRow.next()) {
+                    ansId = OtherHandler.generateId();
+                    ansRow = database.getSomeID(ansId, Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ID);
+                }
+                questionDB.createQuestionDetail(ansId, questionID, ans);
+                try {
+                    populateQuestions();
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
             }
             txt_answer.setText("");
         }
     }
 
     //save question
-    private void saveQuestion(){
-        if (StringUtils.isEmpty(txt_question.getText()) || cb_surveyType.getValue().equals("") || cb_questionType.getValue().equals("")) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText("Please input data");
-            alert.setContentText("Question, survey type and question can't empty!");
-            alert.showAndWait().ifPresent(rs -> {
-                if (rs == ButtonType.OK) {
-                    System.out.println("Pressed OK.");
-                }
-            });
-        } else {
-            String questionName = txt_question.getText().trim();
+    private void saveOrUpdateQuestion(){
+        notification = new NotificationHandler();
+        if (StringUtils.isNullOrEmpty(txt_question.getText())
+            || StringUtils.isNullOrEmpty(cb_surveyType.getValue())
+            || StringUtils.isNullOrEmpty( cb_questionType.getValue()) ) {
+            notification.popup(notification.warning, "Question & survey/question type can't empty!");
+        }else if(lv_answerList.getItems().stream().count() <2 && !cb_questionType.getValue().equals("Câu hỏi tự luận")){
+            notification.popup(notification.error, cb_questionType.getValue() + " must have at least 2 answers");
+        }else {
+            String questionName = txt_question.getText();
             String quesID = OtherHandler.generateId();
-            String surID = getIdSurveyType(cb_surveyType.getValue().trim());
-            String questionTypeID = getIdQuestionType(cb_questionType.getValue().trim());
+            String surID = getIdSurveyType(cb_surveyType.getValue());
+            String questionTypeID = getIdQuestionType(cb_questionType.getValue());
 
-            database =  new Database();
-
-            //region SAVE
-            if(StringUtils.isEmpty(questionID)){
-                try {
-                    ResultSet rsCheckName = database.getSomeID(questionName, Const.QUESTION_TABLE, Const.QUESTION_NAME);
-                    if(rsCheckName.next()) {
-                        ShakerHandler shakerHandler = new ShakerHandler(txt_question, 2, 50);
-                        shakerHandler.shake();
-                        lbl_Notification.setVisible(true);
-                        lbl_Notification.setText("This question already exist");
-                        txt_question.setText("");
-                    }else{
-                        ResultSet taskRow = null;
-                        taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
-                        while (taskRow.next()) {
-                            quesID = OtherHandler.generateId();
-                            taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
-                        }
-                        db.createQuestion(quesID, surID, questionName, questionTypeID);
-                        questionID = quesID;
-                    }
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+            if(StringUtils.isNullOrEmpty((questionID)) ){
+                saveQuestion(quesID, surID, questionName, questionTypeID);
             }
-            //endregion
-
-            //region UPDATE
             else{
-                String quesUpdateID = questionID;
-                Question question = new Question();
-                question.setQuestionId(quesUpdateID);
-                question.setQuestionName(questionName);
-                question.setTypeID(questionTypeID);
-                question.setSurID(surID);
-                questionDB = new QuestionDB();
-                questionDB.updateQuestion(question);
+                updateQuestion(questionName, questionTypeID, surID);
             }
-            //endregion
-            if(!questionTypeID.equals("QT01")) {
-                btn_unhideAddAnswer.setVisible(true);
-            }
+
         }
     }
+    private void saveQuestion(String quesID, String surID, String questionName, String questionTypeID){
+        database =  new Database();
+        notification = new NotificationHandler();
+        try {
+            ResultSet rsCheckName = database.getSomeID(questionName, Const.QUESTION_TABLE, Const.QUESTION_NAME);
+            if(rsCheckName.next()) {
+                ShakerHandler shakerHandler = new ShakerHandler(txt_question, 2, 50);
+                shakerHandler.shake();
+                lbl_Notification.setVisible(true);
+                lbl_Notification.setText("This question already exist");
+                txt_question.setText("");
+                notification.popup(notification.warning, "This question already exist");
+            }else{
+                ResultSet taskRow = null;
+                taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+                while (taskRow.next()) {
+                    quesID = OtherHandler.generateId();
+                    taskRow = database.getSomeID(quesID, Const.QUESTION_TABLE, Const.QUESTION_ID);
+                }
+                db.createQuestion(quesID, surID, questionName, questionTypeID);
+                questionID = quesID;
+                notification.popup(notification.success, "Question " + questionName + " created");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    private void updateQuestion(String questionName, String questionTypeID, String surID){
+        Question question = new Question();
+        questionDB = new QuestionDB();
+        notification = new NotificationHandler();
 
-    //populate list view
+        String quesUpdateID = questionID;
+        question.setQuestionId(quesUpdateID);
+        question.setQuestionName(questionName);
+        question.setTypeID(questionTypeID);
+        question.setSurID(surID);
+        questionDB.updateQuestion(question);
+        notification.popup(notification.success, "Question " + questionName + " update successful");
+    }
+
+    //populate question details
     private void populateQuestions() throws SQLException, ClassNotFoundException {
         sceneHandler = new SceneHandler();
         database = new Database();
@@ -265,8 +276,6 @@ public class QuestionDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -287,6 +296,8 @@ public class QuestionDetailController {
         cb_questionType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.equals("Câu hỏi tự luận")){
                 vbox_createAnswer.setVisible(false);
+            }else{
+                vbox_createAnswer.setVisible(true);
             }
         });
     }
@@ -320,9 +331,29 @@ public class QuestionDetailController {
 
     private void deleteQuestion(){
         database = new Database();
-        database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID, questionID);
-        database = new Database();
-        database.detele(Const.QUESTION_TABLE, Const.QUESTION_ID, questionID);
+        notification = new NotificationHandler();
+
+        try {
+            ResultSet check = database.getSomeID(questionID, Const.SURVEY_DETAIL_TABLE, Const.QUESTION_ID);
+            if(check.next()){
+                notification.popup(notification.error, "This question is being used in another survey");
+            }else{
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Do you want to delete this Question?");
+                alert.setContentText("Please check again!");
+                alert.showAndWait().ifPresent(rs -> {
+                    if (rs == ButtonType.OK) {
+                        database.detele(Const.QUESTION_DETAIL_TABLE, Const.QUESTION_ID, questionID);
+                        database.detele(Const.QUESTION_TABLE, Const.QUESTION_ID, questionID);
+
+                        btn_Back.fire();
+                    }
+                });
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
 

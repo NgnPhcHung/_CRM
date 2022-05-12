@@ -82,8 +82,6 @@ public class BillCellController extends JFXListCell<Bill> {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
             //endregion
             //region PROJECT NAME
@@ -99,8 +97,6 @@ public class BillCellController extends JFXListCell<Bill> {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
             //endregion

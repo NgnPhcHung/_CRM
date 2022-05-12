@@ -4,6 +4,7 @@ import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Survey.SurveyDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Question;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.util.StringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,7 +30,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import org.apache.commons.lang3.StringUtils;
 
 
 public class SurveyDetailController {
@@ -75,9 +76,11 @@ public class SurveyDetailController {
     TableColumn col_Question ;
     TableColumn col_Action;
     private Survey survey;
-    public static String surveyID;
     private SurveyDB surveyDB;
     private boolean testBoolean = false;
+    private NotificationHandler notification;
+    public static String surveyID;
+    public static String surveyName;
 
     @FXML
     void initialize() {
@@ -85,8 +88,11 @@ public class SurveyDetailController {
         filterData();
         cellClickEvent();
         manageCheckBoxEvent();
-        save();
+        btn_Save.setOnAction(e -> {
+            save();
+        });
         back();
+        lbl_Header.setText(surveyName + " Details");
     }
 
     private void manageCheckBoxEvent(){
@@ -116,17 +122,19 @@ public class SurveyDetailController {
     }
 
     private void save(){
-        btn_Save.setOnAction(e -> {
+        notification = new NotificationHandler();
+        if(StringUtils.isNullOrEmpty(cb_Employee.getValue())){
+            notification.popup(notification.error, "Employee is not selected");
+        }else{
+            database = new Database();
             ObservableList<Question> listRemove = FXCollections.observableArrayList();
             for (Question question: questions){
                 if(question.getRemark().isSelected()){
                     listRemove.add(question);
                 }
             }
-
-            database = new Database();
+            database.detele(Const.SURVEY_DETAIL_TABLE, Const.SURVEY_DETAIL_ID, surveyID);
             for(Question item: listRemove){
-                database = new Database();
                 String quesName = item.getQuestionName();
                 String empName = cb_Employee.getValue();
                 try {
@@ -139,25 +147,23 @@ public class SurveyDetailController {
                         surveyDetail.setEmpID(rowEmp.getString(Const.EMPLOYEE_ID));
                     }
                     surveyDetail.setSurveyID(surveyID);
-                    surveyDB = new SurveyDB();
                     ResultSet rowQuestionExist = surveyDB.checkQuestion(surveyDetail);
                     if(rowQuestionExist.next()){
                         continue;
                     }
 
                     surveyDB = new SurveyDB();
-                    database = new Database();
+
                     surveyDB.saveDetail(surveyDetail);
 
-                    questions.removeAll(listRemove);
-
+                    notification.popup(notification.success, "Survey " +surveyName + " saved" );
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (ClassNotFoundException classNotFoundException) {
                     classNotFoundException.printStackTrace();
                 }
             }
-        });
+        }
     }
 
     private void filterData(){

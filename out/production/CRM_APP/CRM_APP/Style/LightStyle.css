@@ -262,3 +262,15 @@
 .btnMin:hover{
     -fx-background-color:  #e0e0e0;
 }
+.bell{
+    -fx-fill: black;
+}
+.bell-hover{
+    -fx-fill: grey;
+}
+
+.bell-num{
+    -fx-background-color: #ff595f;
+    -fx-background-radius: 100%;
+    -fx-text-fill: #ffffff;
+}

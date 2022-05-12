@@ -276,6 +276,7 @@
 }
 .btnExit:hover{
     -fx-background-color: #ff595f;
+    -fx-text-fill: #ffffff;
 }
 .btnMin{
     -fx-background-color: transparent;
@@ -287,4 +288,16 @@
     -fx-background-color: #686868;
     -fx-text-fill: #e0e0e0;
     -fx-fill: #e0e0e0;
+}
+.bell{
+    -fx-fill: black;
+}
+.bell-hover{
+    -fx-fill: grey;
+}
+
+.bell-num{
+    -fx-background-color: #ff595f;
+    -fx-background-radius: 100%;
+    -fx-text-fill: #ffffff;
 }

@@ -14,8 +14,18 @@ public class NotificationHandler {
     public void popup(NotificationType type, String message){
         AnimationType animationType = AnimationType.POPUP;
         tray.setAnimationType(animationType);
-        tray.setTitle(message);
+        switch (type){
+            case ERROR:
+                tray.setTitle("SOMETHING IS NOT RIGHT");
+                break;
+            case SUCCESS:
+                tray.setTitle("SUCCESS");
+            case WARNING:
+                tray.setTitle("WARNING");
+        }
+        tray.setMessage(message);
         tray.setNotificationType(type);
         tray.showAndDismiss(Duration.millis(5000));
+
     }
 }

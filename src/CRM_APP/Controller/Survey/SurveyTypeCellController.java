@@ -67,6 +67,14 @@ public class SurveyTypeCellController extends JFXListCell<SurveyType> {
                 btn_edit.setOnAction(e -> {
                     sceneHandler = new SceneHandler();
                     SurveyTypeCreateController.surID = item.getSurID();
+                    SurveyTypeCreateController.backPane = cellStack;
+
+                    sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyTypeCreate.fxml");
+                });
+                this.setOnMouseClicked(e -> {
+                    sceneHandler = new SceneHandler();
+                    SurveyTypeCreateController.surID = item.getSurID();
+                    SurveyTypeCreateController.backPane = cellStack;
                     sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Survey/surveyTypeCreate.fxml");
                 });
                 setText(null);

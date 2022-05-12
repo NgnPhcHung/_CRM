@@ -251,8 +251,6 @@ public class ProjectDetailsController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -278,10 +276,7 @@ public class ProjectDetailsController {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
-
 
             try {
                 ResultSet rowEmp = database.getSomeID(empName, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
@@ -298,8 +293,6 @@ public class ProjectDetailsController {
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
             project.setId(projectID);
@@ -336,10 +329,7 @@ public class ProjectDetailsController {
                 lbl_noti.setVisible(true);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
-
         }
     }
 
@@ -428,8 +418,6 @@ public class ProjectDetailsController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return emID;
     }
@@ -442,8 +430,6 @@ public class ProjectDetailsController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return cusID;
     }
@@ -458,8 +444,6 @@ public class ProjectDetailsController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return newProjectID;
     }

@@ -140,13 +140,14 @@ public class ModuleController {
     private void populateList(String status) {
         sceneHandler= new SceneHandler();
         database = new Database();
-        ModuleDB moduleDB;
+        ModuleDB moduleDB = new ModuleDB();
         modules = FXCollections.observableArrayList();
         ResultSet row = null;
 
         if(status.equals("nor")){
             try {
-                row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
+//                row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
+                row = moduleDB.getModule();
                 while(row.next()){
                     Module module = new Module();
                     module.setProjectID(projectID);
@@ -158,8 +159,6 @@ public class ModuleController {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }else{
             moduleDB = new ModuleDB();

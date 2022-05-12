@@ -231,8 +231,8 @@ public class HomeController {
     }
 
     //this will get all opened tab
-    private boolean tabManage(String btn) {
-        boolean isOpen = false;
+    private int tabManage(String btn) {
+        int isOpen = 0;
 
         String temp[] = new String[]{};
         String btnName = btn;
@@ -244,8 +244,8 @@ public class HomeController {
             }
         }
 
-        if (check(temp, btnName)) return isOpen = false;
-        else return isOpen = true;
+        if (check(temp, btnName)) return isOpen = 1;
+        else return isOpen = 0;
     }
 
     //set new tab when press button
@@ -254,9 +254,8 @@ public class HomeController {
         Button button = (Button) event.getSource();
         String btnName = button.getText().trim();
 
-        if (tabManage(btnName)) {
-            Tab tab = new Tab(btnName);
-
+        Tab tab = new Tab(btnName);
+        if (tabManage(btnName) == 0) {
             tp_homeMain.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
             tp_homeMain.setStyle("tab-close-button: #cfd8dc");
 
@@ -283,6 +282,15 @@ public class HomeController {
                     "    -fx-font-size: 20;");
 
             tp_homeMain.getTabs().add(tab);
+        }else if (tabManage(btnName) == 1){
+//            tp_homeMain.getSelectionModel().select(tab);
+            SelectionModel<Tab> selectionModel = tp_homeMain.getSelectionModel();
+
+            for (Tab tabs : tp_homeMain.getTabs()) {
+                if(tabs.getText() == btnName){
+                    selectionModel.select(tabs);
+                }
+            }
         }
     }
 
@@ -297,8 +305,6 @@ public class HomeController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
     }

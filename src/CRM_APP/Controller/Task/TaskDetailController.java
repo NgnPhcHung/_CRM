@@ -177,10 +177,7 @@ public class TaskDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
     }
     
     private void manageToggle(){
@@ -207,8 +204,6 @@ public class TaskDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     //Fill data
@@ -256,11 +251,7 @@ public class TaskDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
-
         if (isAdmin) {
             cb_employ.getSelectionModel().select(0);
         }
@@ -293,8 +284,6 @@ public class TaskDetailController {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     //employee action
@@ -374,8 +363,6 @@ public class TaskDetailController {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }else{
             notification.popup(notification.success, "Task or Employee cannot be blank");
@@ -431,8 +418,6 @@ public class TaskDetailController {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
             task.setTaskID(taskId);
@@ -466,8 +451,6 @@ public class TaskDetailController {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
     private void toggleChangeEvent(){

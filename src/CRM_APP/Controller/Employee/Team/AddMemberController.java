@@ -108,8 +108,6 @@ public class AddMemberController {
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
             }
     }

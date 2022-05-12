@@ -5,22 +5,21 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
 import CRM_APP.Database.Survey.SurveyTypeDB;
-import CRM_APP.Handler.OtherHandler;
-import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.ShakerHandler;
-import CRM_APP.Handler.TextFieldHandler;
+import CRM_APP.Handler.*;
 import CRM_APP.Model.Employee;
 import CRM_APP.Model.Survey;
 import CRM_APP.Model.SurveyType;
 import CRM_APP.Model.Team;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.mysql.cj.util.StringUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +54,7 @@ public class SurveyTypeCreateController {
     private ShakerHandler shakerHandler;
     private TextFieldHandler textfieldHandler;
     private SurveyTypeController surveyTypeController;
-
+    private NotificationHandler notificationHandler;
     public static StackPane backPane;
 
     @FXML
@@ -72,7 +71,7 @@ public class SurveyTypeCreateController {
             sceneHandler = new SceneHandler();
             sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
         });
-
+        onClick();
     }
 
     private void onClick() {
@@ -85,14 +84,9 @@ public class SurveyTypeCreateController {
                 }
             });
 
-
             btn_Delete.setOnAction(e -> {
                 try {
-
                     delete();
-                    sceneHandler = new SceneHandler();
-                    sceneHandler.slideScene(btn_Delete, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
-                    lbl_Noti.setVisible(false);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -110,62 +104,77 @@ public class SurveyTypeCreateController {
                 txt_Name.setText(row.getString(Const.SURVEYTYPE_NAME));
                 txt_Des.setText(row.getString(Const.SURVEYTYPE_DES));
             }
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    //region DATABASE PROCESS
     private void save() {
-        //region INITIALIZE
+        notificationHandler = new NotificationHandler();
         surveyTypeController = new SurveyTypeController();
-        String number = OtherHandler.generateNumber();
-        String nameSurType = txt_Name.getText().trim();
-        String des = txt_Des.getText().trim();
-        if (nameSurType.equals("")) {
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Invalid Input");
+        database = new Database();
+        surveyTypeDB = new SurveyTypeDB();
+        sceneHandler = new SceneHandler();
+
+        if (StringUtils.isNullOrEmpty( txt_Name.getText())) {
+            notificationHandler.popup(notificationHandler.error, "Invalid Input");
         } else {
-            lbl_Noti.setVisible(false);
-            String surTypeID = "S" + number;
+            String nameSurType = txt_Name.getText();
+            ResultSet check = database.getSomeID(nameSurType, Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_NAME);
             try {
-                database = new Database();
-                //Regenerate number if user's number exist
-                ResultSet row = database.getSomeID(surID, Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_ID);
-                while (row.next()) {
-                    number = OtherHandler.generateNumber();
-                    surTypeID = "S" + number;
-                    row = database.getSomeID(surTypeID, Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_ID);
+                if(check.next()){
+                    notificationHandler.popup(notificationHandler.warning, "This type Existed");
+                }else{
+                    String number = OtherHandler.generateNumber();
+                    String des = txt_Des.getText();
+                    String surTypeID = "S" + number;
+
+                    //Regenerate number if user's number exist
+                    ResultSet row = database.getSomeID(surID, Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_ID);
+                    while (row.next()) {
+                        number = OtherHandler.generateNumber();
+                        surTypeID = "S" + number;
+                        row = database.getSomeID(surTypeID, Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_ID);
+                    }
+
+                    surveyType = new SurveyType();
+                    surveyType.setSurID(surTypeID);
+                    surveyType.setSurName(nameSurType);
+                    surveyType.setDes(des);
+                    surveyTypeDB.saveSurveyType(surveyType);
+                    notificationHandler.popup(notificationHandler.success, "Survey Type " + nameSurType + " created successful");
+                    btn_Back.fire();
                 }
-            } catch (SQLException | ClassNotFoundException throwables) {
+            } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            surveyTypeDB = new SurveyTypeDB();
-            surveyType = new SurveyType();
-            surveyType.setSurID(surTypeID);
-            surveyType.setSurName(nameSurType);
-            surveyType.setDes(des);
-            surveyTypeDB.saveSurveyType(surveyType);
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, surveyTypeController.main_stack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
         }
-        //endregion
     }
 
     private void delete() {
         database = new Database();
-        database.detele(Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_ID, surID);
+        notificationHandler = new NotificationHandler();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Do you want to delete this Survey Type?");
+        alert.setContentText("Please check again!");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                database.detele(Const.SURVEY_TYPE_TABLE, Const.SURVEYTYPE_ID, surID);
+                notificationHandler.popup(notificationHandler.success, "Survey deleted");
+                btn_Back.fire();
+            }
+        });
     }
 
     private void update() {
         sceneHandler = new SceneHandler();
         surveyType = new SurveyType();
         surveyTypeDB = new SurveyTypeDB();
-
-
-        if (StringUtils.isEmpty(txt_Name.getText()) || StringUtils.isEmpty(txt_Des.getText())) {
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Information can not be null");
+        sceneHandler = new SceneHandler();
+        notificationHandler = new NotificationHandler();
+        if (StringUtils.isNullOrEmpty(txt_Name.getText()) ) {
+            notificationHandler.popup(notificationHandler.error, "Invalid Information");
         } else {
             String name = txt_Name.getText().trim();
             String des = txt_Des.getText().trim();
@@ -174,10 +183,8 @@ public class SurveyTypeCreateController {
             surveyType.setDes(des);
             surveyType.setSurID(surID);
             surveyTypeDB.update(surveyType);
-            sceneHandler = new SceneHandler();
-            sceneHandler.slideScene(btn_Save, SurveyTypeCellController.cellStack, "-X", "/CRM_APP/View/Survey/surveyType.fxml");
+            notificationHandler.popup(notificationHandler.success, "Survey Type " + name + " created successful");
         }
     }
-    //endregion
 
 }

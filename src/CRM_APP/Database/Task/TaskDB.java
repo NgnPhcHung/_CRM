@@ -12,26 +12,25 @@ import java.sql.SQLException;
 
 public class TaskDB {
     private Database db;
-    public void createTask(Task task) throws SQLException, ClassNotFoundException {
-        db= new Database();
-        String query  = "INSERT INTO "+ Const.TASK_TABLE +" ( "
-                        + Const.TASK_ID + ", "
-                        + Const.EMPLOYEE_ID + ", "
-                        + Const.TASK_NAME + ", "
-                        + Const.TASK_STATUS + ", "
-                        + Const.TASK_COLOR + ", "
-                        + Const.TASK_START + ", "
-                        + Const.TASK_END + " ) "
-                        +" VALUES(?,?,?,?,?,?,?) " ;
+
+    public ResultSet getTask(String modID){
+        ResultSet rs = null;
+        db = new Database();
+        String query = "SELECT * FROM " + Const.TASK_TABLE +
+                        " WHERE " + Const.TASK_MOD_ID + " = ?" +
+                        " ORDER BY " + Const.TASK_STATUS + " ASC";
         try {
             PreparedStatement preparedStatement = db.getDbConnection().prepareStatement(query);
-
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        }catch (SQLException e){
-
-        }catch (ClassNotFoundException e){}
+            preparedStatement.setString(1, modID);
+            rs = preparedStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
+
     public ResultSet getSomeID(String id, String tableName, String colName) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
         String query = "SELECT * FROM " + tableName +" WHERE " + colName + " =?";
@@ -55,19 +54,11 @@ public class TaskDB {
     }
     public ResultSet getCountStatus(String modID) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
-        String query = "SELECT COUNT(CASE WHEN Status = \"0\" THEN 1\n" +
-                "                  ELSE NULL\n" +
-                "             END) AS Pending\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"1\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Working\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"2\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Reviewing\n" +
-                "\t\t,COUNT(CASE WHEN Status = \"3\" THEN 1\n" +
-                "                   ELSE NULL\n" +
-                "              END) AS Done\n" +
-                "    FROM "+ Const.TASK_TABLE +" WHERE " + Const.TASK_MOD_ID +"=?";
+        String query = "SELECT COUNT(CASE WHEN status = 0 THEN 1 END ) AS \"Pending\", \n" +
+                    "COUNT(CASE WHEN status = 1 THEN 1 END ) AS \"Working\", \n" +
+                    "COUNT(CASE WHEN status = 2 THEN 1 END ) AS \"Reviewing\", \n" +
+                    "COUNT(CASE WHEN status = 3 THEN 1 END ) AS \"Done\" FROM "
+                + Const.TASK_TABLE +" WHERE " + Const.TASK_MOD_ID +"=?";
         PreparedStatement preparedStatement = Database.dbConnection.prepareStatement(query);
         preparedStatement.setString(1, modID);
         resultSet = preparedStatement.executeQuery();

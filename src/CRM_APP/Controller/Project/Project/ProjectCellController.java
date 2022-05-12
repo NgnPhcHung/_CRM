@@ -97,8 +97,6 @@ public class ProjectCellController extends JFXListCell<Project> {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
             lbl_name.setText(item.getName());
@@ -112,10 +110,7 @@ public class ProjectCellController extends JFXListCell<Project> {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
-
 
             String projectID = item.getId();
             String projectName = item.getName();

@@ -19,7 +19,7 @@ public class Database extends Configs{
 
     //region ALL FUNC IN THIS REGION IS COMMON
     //this is use for get data on condition
-    public ResultSet getSomeID(String id, String tableName, String colName) throws SQLException, ClassNotFoundException {
+    public ResultSet getSomeID(String id, String tableName, String colName){
         ThreadHandler threadHandler = new ThreadHandler();
         Thread thread = new Thread(threadHandler){
             @Override

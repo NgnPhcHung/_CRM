@@ -90,8 +90,6 @@ public class TaskCellController extends JFXListCell<Task> {
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
 
             btn_edit.setOnAction(e -> {

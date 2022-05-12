@@ -105,7 +105,7 @@
             <children>
                 <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <JFXButton fx:id="btn_Delete" text="Delete">
+                        <JFXButton fx:id="btn_Delete" text="Delete" visible="false">
                      <styleClass>
                         <String fx:value="esc" />
                         <String fx:value="hBold" />

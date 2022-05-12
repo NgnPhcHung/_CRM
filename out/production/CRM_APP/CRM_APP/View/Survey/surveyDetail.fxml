@@ -80,7 +80,7 @@
                               <Insets left="15.0" />
                            </HBox.margin>
                         </JFXTextField>
-                        <JFXComboBox fx:id="cb_Employee" focusColor="#95afff" maxWidth="1.7976931348623157E308" unFocusColor="#ff8585" HBox.hgrow="ALWAYS">
+                        <JFXComboBox fx:id="cb_Employee" focusColor="#95afff" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Employee Name" unFocusColor="#ff8585" HBox.hgrow="ALWAYS">
                            <styleClass>
                               <String fx:value="text" />
                               <String fx:value="textInput" />
