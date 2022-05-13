@@ -69,7 +69,7 @@ public class TextFieldHandler {
 
     public boolean checkPhone(String str){
         boolean flag;
-        Pattern phonePattern = Pattern.compile("^0[23456789]{1}\\d{8,9}$");
+        Pattern phonePattern = Pattern.compile("^0[23456789]{1}\\d{0,9}$");
         flag = phonePattern.matcher(str).find();
         return flag;
     }

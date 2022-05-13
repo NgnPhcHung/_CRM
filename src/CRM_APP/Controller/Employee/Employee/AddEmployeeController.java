@@ -4,6 +4,7 @@ import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.TextFieldHandler;
@@ -65,6 +66,7 @@ public class AddEmployeeController {
     private EmployeeDB employeeDB;
     private Employee employee;
     private SceneHandler sceneHandler;
+    private NotificationHandler notificationHandler;
     public static String emID = "";
     public static StackPane backPane;
 
@@ -98,33 +100,32 @@ public class AddEmployeeController {
         });
     }
     private void save(){
-        String password = txt_Password.getText().trim();
+        notificationHandler = new NotificationHandler();
         TextFieldHandler textFieldHandler = new TextFieldHandler();
+
         if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
                 || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())
                 || StringUtils.isNullOrEmpty(txt_Password.getText())){
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Invalid Input");
+            notificationHandler.popup(notificationHandler.error, "Name, Address,Phone,Password,Position " +
+                    "\n Not Allow to Empty");
         }
         else{
-            lbl_Noti.setVisible(false);
             database = new Database();
-
+            sceneHandler = new SceneHandler();
             String number = OtherHandler.generateNumber();
-            String name = txt_Name.getText().trim();
-            String phone = txt_Phone.getText().trim();
-            String address = txt_Address.getText().trim();
-            String position = txt_Position.getText().trim();
+            String name = txt_Name.getText();
+            String phone = txt_Phone.getText();
+            String address = txt_Address.getText();
+            String position = txt_Position.getText();
+            String password = txt_Password.getText();
 
             try {
                 //Regenerate number if user's number exist
                 ResultSet isName = database.getSomeID(name, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
                 if(isName.next()){
-                    lbl_Noti.setVisible(true);
-                    lbl_Noti.setText("This staff already in list");
-                }else if(textFieldHandler.checkPhone(phone)){
-                    lbl_Noti.setVisible(true);
-                    lbl_Noti.setText("Invalid Phone number");
+                    notificationHandler.popup(notificationHandler.error, "This Staff Already in list");
+                }else if(!textFieldHandler.checkPhone(phone)){
+                    notificationHandler.popup(notificationHandler.error, "Invalid Phone number");
                 }
                 else{
                     String prefix = combine();
@@ -145,7 +146,7 @@ public class AddEmployeeController {
                     employee.setPosition(position);
                     employee.setPassword(password);
                     employeeDB.saveEmp(employee);
-                    btn_Back.fire();
+                    sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Employee/Team/addMember.fxml");
                 }
 
             } catch (SQLException throwables) {

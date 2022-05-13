@@ -76,8 +76,10 @@ public class CustomerCellController extends JFXListCell<Customer> {
             lbl_name.setText(item.getCusName());
             lbl_Address.setText(item.getAddress());
             lbl_phone.setText(item.getPhone());
+            lbl_dateAdded.setText((item.getDateAdd()));
             btn_edit.setOnAction(e->{
                 CustomerDetailController.cusID = item.getId();
+                CustomerDetailController.backPane = cellStack;
                 sceneHandler = new SceneHandler();
                 sceneHandler.slideScene(btn_edit, cellStack, "X", "/CRM_APP/View/Customer/customerDetail.fxml");
             });

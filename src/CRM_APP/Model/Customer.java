@@ -6,10 +6,20 @@ public class Customer {
     private String phone;
     private String address;
     private String TIN;
+    private String dateAdd;
+
 
     public Customer(){}
     public Customer(String cusName){
         this.cusName = cusName;
+    }
+
+    public String getDateAdd() {
+        return dateAdd;
+    }
+
+    public void setDateAdd(String dateAdd) {
+        this.dateAdd = dateAdd;
     }
 
     public String getPhone() {

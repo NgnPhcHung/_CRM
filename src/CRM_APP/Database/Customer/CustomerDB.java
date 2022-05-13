@@ -17,7 +17,8 @@ public class CustomerDB {
                         + Const.CUSTOMER_NAME + ", "
                         + Const.CUSTOMER_ADDRESS + ", "
                         + Const.CUSTOMER_PHONE + ", "
-                        + Const.CUSTOMER_TIN + ") VALUES(?, ?, ?, ?, ?)";
+                        + Const.CUSTOMER_TIN + ", "
+                        + Const.CUSTOMER_CREATE + ") VALUES(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
             preparedStatement.setString(1, customer.getId());
@@ -25,6 +26,7 @@ public class CustomerDB {
             preparedStatement.setString(3, customer.getAddress());
             preparedStatement.setString(4, customer.getPhone());
             preparedStatement.setString(5, customer.getTIN());
+            preparedStatement.setString(6, customer.getDateAdd());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {

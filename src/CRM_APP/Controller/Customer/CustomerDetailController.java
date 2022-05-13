@@ -3,6 +3,7 @@ package CRM_APP.Controller.Customer;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Customer.CustomerDB;
 import CRM_APP.Database.Database;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.TextFieldHandler;
@@ -12,12 +13,16 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.util.StringUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
@@ -59,6 +64,7 @@ public class CustomerDetailController {
     private CustomerDB customerDB;
     private Customer customer;
     private TextFieldHandler textFieldHandler;
+    private NotificationHandler notificationHandler;
     public static StackPane backPane;
 
     @FXML
@@ -72,7 +78,6 @@ public class CustomerDetailController {
         }
         btn_Detete.setOnAction(e -> {
             deleteCustomer();
-            btn_Back.fire();
         });
         btn_Save.setOnAction(e ->{
             if(StringUtils.isNullOrEmpty(cusID)){
@@ -105,30 +110,30 @@ public class CustomerDetailController {
         customerDB = new CustomerDB();
         customer = new Customer();
         database = new Database();
-        //check
-        try {
-            String id = OtherHandler.generateId();
-            ResultSet check = database.getSomeID(id, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
-            customer.setId(id);
-            while(check.next()){
-                id = OtherHandler.generateId();
-                check = database.getSomeID(id, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
-                customer.setId(id);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        notificationHandler = new NotificationHandler();
 
         if(!StringUtils.isNullOrEmpty(txt_Name.getText()) && !StringUtils.isNullOrEmpty(txt_Phone.getText())
         && !StringUtils.isNullOrEmpty(txt_Address.getText()) && !StringUtils.isNullOrEmpty(txt_TIN.getText())){
             String name = txt_Name.getText();
+            //check
+            try {
+                String id = OtherHandler.generateId();
+                ResultSet check = database.getSomeID(id, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+                customer.setId(id);
+                while(check.next()){
+                    id = OtherHandler.generateId();
+                    check = database.getSomeID(id, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+                    customer.setId(id);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             ResultSet resultSet = null;
             lbl_Noti.setVisible(false);
             try {
                 resultSet = database.getSomeID(name, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
                 if(resultSet.next()){
-                    lbl_Noti.setVisible(true);
-                    lbl_Noti.setText("This customer already in list");
+                    notificationHandler.popup(notificationHandler.warning, "This customer already in list");
                 }else{
                     textFieldHandler = new TextFieldHandler();
 
@@ -137,31 +142,34 @@ public class CustomerDetailController {
                     String address = txt_Address.getText();
                     String TIN = txt_TIN.getText();
                     if(textFieldHandler.checkPhone(phone)){
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        LocalDateTime now = LocalDateTime.now();
+                        String addTime = dtf.format(now);
 
                         customer.setCusName(name);
                         customer.setPhone(phone);
                         customer.setAddress(address);
                         customer.setTIN(TIN);
+                        customer.setDateAdd(addTime);
+                        notificationHandler.popup(notificationHandler.success, "Customer " + name + " create success");
                         customerDB.create(customer);
-                        lbl_Noti.setVisible(false);
                         btn_Back.fire();
 
                     }else{
-                        lbl_Noti.setVisible(true);
-                        lbl_Noti.setText("Invalid Phone number");
+                        notificationHandler.popup(notificationHandler.error, "Invalid Phone number");
                     }
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }else{
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Invalid Input");
+            notificationHandler.popup(notificationHandler.error, "Input fields current empty Input");
         }
     }
     private void updateCustomer(){
         customerDB = new CustomerDB();
         customer = new Customer();
+        notificationHandler = new NotificationHandler();
         textFieldHandler = new TextFieldHandler();
         if(!StringUtils.isNullOrEmpty(txt_Name.getText()) && !StringUtils.isNullOrEmpty(txt_Phone.getText())
                 && !StringUtils.isNullOrEmpty(txt_Address.getText()) && !StringUtils.isNullOrEmpty(txt_TIN.getText())){
@@ -175,26 +183,35 @@ public class CustomerDetailController {
                 customer.setAddress(address);
                 customer.setTIN(TIN);
                 customer.setId(cusID);
+                notificationHandler.popup(notificationHandler.success, "Customer " + name + " updated");
                 customerDB.update(customer);
-
                 btn_Back.fire();
             }else{
-                lbl_Noti.setVisible(true);
-                lbl_Noti.setText("Invalid Phone number");
+                notificationHandler.popup(notificationHandler.error, "Invalid Phone number");
             }
+        }else{
+            notificationHandler.popup(notificationHandler.error, "Input fields current empty Input");
         }
     }
     private void deleteCustomer(){
         database = new Database();
+        notificationHandler = new NotificationHandler();
         try {
             ResultSet row = database.getSomeID(cusID, Const.PROJECT_TABLE, Const.PROJECT_CUSTOMER);
             if(row.next()){
-                lbl_Noti.setVisible(true);
-                lbl_Noti.setText("This customer have constraint can not delete");
+                notificationHandler.popup(notificationHandler.error, " This customer is on project");
+
             }else{
-                lbl_Noti.setVisible(false);
-                database = new Database();
-                database.detele(Const.CUSTOMER_TABLE, Const.CUSTOMER_ID, cusID);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Do you want to delete this Customer?");
+                alert.setContentText("Please check again!");
+                alert.showAndWait().ifPresent(rs -> {
+                    if (rs == ButtonType.OK) {
+                        notificationHandler.popup(notificationHandler.success, "Customer " + txt_Name.getText() + " deleted");
+                        database.detele(Const.CUSTOMER_TABLE, Const.CUSTOMER_ID, cusID);
+                        btn_Back.fire();
+                    }});
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

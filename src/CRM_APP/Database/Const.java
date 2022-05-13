@@ -96,6 +96,7 @@ public class Const {
     public static final String CUSTOMER_ADDRESS = "Address";
     public static final String CUSTOMER_PHONE = "Phone";
     public static final String CUSTOMER_TIN = "TIN";
+    public static final String CUSTOMER_CREATE = "CreateDate";
 
     //bill
     public static final String BILL_ID = "BillID";
