@@ -90,6 +90,7 @@ public class ProjectDetailsController {
     private String cusID = "";
     private String emID = "";
     private String newProjectID = "";
+    private boolean isTeamSelected = false;
     private NotificationHandler notification;
     public static StackPane backPane;
 
@@ -351,7 +352,8 @@ public class ProjectDetailsController {
                 String end = dp_end.getValue().toString();
                 int amount = Integer.parseInt(txt_amount.getText());
                 if(isProjectExist(projectName)) {
-                    if(isTeamSelected()){
+                    checkTeamSelected();
+                    if(isTeamSelected){
                         project.setId(newProjectID);
                         project.setName(projectName);
                         project.setCusId(customerID);
@@ -406,16 +408,15 @@ public class ProjectDetailsController {
 
     }
 
-    private boolean isTeamSelected(){
+    private void checkTeamSelected(){
         ObservableList<Project> list = tableView.getItems();
         boolean boo = false;
         ObservableList<Project> removeList = FXCollections.observableArrayList();
         for(Project p: list){
             if(p.getRemark().isSelected()){
-                boo = true;
-            }else boo = false;
+                isTeamSelected = true;
+            }else isTeamSelected = false;
         }
-        return boo;
     }
 
     private boolean isProjectExist(String name) throws SQLException, ClassNotFoundException {
