@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -12,9 +12,11 @@
 
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="container" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.Employee.Team.AddMemberController">
   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="10.0" prefWidth="257.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
@@ -22,35 +24,8 @@
     <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contentContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label fx:id="lbl_noti" styleClass="noti" text="notification" visible="false" />
-                  <JFXComboBox fx:id="cb_employee" focusColor="#7b9cff" labelFloat="true" layoutX="10.0" layoutY="101.0" maxWidth="1.7976931348623157E308" promptText="Team" unFocusColor="#ff9191">
-                     <styleClass>
-                        <String fx:value="text" />
-                        <String fx:value="textInput" />
-                        <String fx:value="h4" />
-                     </styleClass></JFXComboBox>
-                  <JFXComboBox fx:id="cb_team" focusColor="#7b9cff" maxWidth="1.7976931348623157E308" promptText="Employee" unFocusColor="#ff9191">
-                     <styleClass>
-                        <String fx:value="text" />
-                        <String fx:value="textInput" />
-                        <String fx:value="h4" />
-                     </styleClass></JFXComboBox>
-                  <JFXButton fx:id="btn_save" text="Save">
-                     <styleClass>
-                        <String fx:value="text" />
-                        <String fx:value="buttonStyle3" />
-                        <String fx:value="h4" />
-                        <String fx:value="hBold" />
-                     </styleClass></JFXButton>
-               </children>
-            </VBox>
-         </children>
-      </VBox>
-      <JFXButton fx:id="btn_back" text="◄" GridPane.rowIndex="2">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contentContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <JFXButton fx:id="btn_back" text="◄" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin>
@@ -59,7 +34,7 @@
             <String fx:value="h4" />
          </styleClass>
       </JFXButton>
-      <VBox alignment="CENTER" GridPane.columnIndex="1">
+      <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
          <children>
             <Label text="Details">
                <styleClass>
@@ -69,5 +44,6 @@
                </styleClass></Label>
          </children>
       </VBox>
+      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
    </children>
 </GridPane>

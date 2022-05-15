@@ -75,16 +75,17 @@ public class TeamCellController extends JFXListCell<Team> {
             }
             lbl_name.setText(item.getTeamName());
             populateDetail(item.getTeamID());
-            btn_edit.setOnAction(e -> {
-                sceneHandler = new SceneHandler();
-                TeamDetailController.teamID = item.getTeamID();
-                TeamDetailController.backPane = cellStack;
-
-                sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Employee/Team/teamDetail.fxml");
-            });
+//            btn_edit.setOnAction(e -> {
+//                sceneHandler = new SceneHandler();
+//                TeamDetailController.teamID = item.getTeamID();
+//                TeamDetailController.backPane = cellStack;
+//
+//                sceneHandler.slideScene(btn_edit, cellStack, "-X", "/CRM_APP/View/Employee/Team/detail.fxml");
+//            });
             btn_details.setOnAction(e -> {
                 sceneHandler = new SceneHandler();
                 CreateTeamController.teamID = item.getTeamID();
+                CreateTeamController.backPane = cellStack;
                 sceneHandler.slideScene(btn_edit, EmployeeCellController.cellStack, "-X", "/CRM_APP/View/Employee/Team/createTeam.fxml");
             });
         }

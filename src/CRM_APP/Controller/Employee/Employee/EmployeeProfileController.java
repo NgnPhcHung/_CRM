@@ -1,9 +1,9 @@
 package CRM_APP.Controller.Employee.Employee;
-import CRM_APP.Controller.Employee.Team.TeamCellController;
 import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Employee.EmployeeDB;
+import CRM_APP.Handler.NotificationHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Handler.ShakerHandler;
 import CRM_APP.Handler.TextFieldHandler;
@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mysql.cj.util.StringUtils;
-import javafx.animation.Animation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -90,6 +89,7 @@ public class EmployeeProfileController {
     private Employee employee;
     private ShakerHandler shakerHandler;
     private ObservableList<Team> teams;
+    private NotificationHandler notificationHandler;
 
     @FXML
     void initialize() {
@@ -111,7 +111,7 @@ public class EmployeeProfileController {
             if(condition.equals("EmployeeList")){
                 sceneHandler.slideScene(btn_Back, EmployeeCellController.cellStack, "-Y", "/CRM_APP/View/Employee/employee.fxml");
             }else if(condition.equals("TeamList")){
-                sceneHandler.slideScene(btn_Back, EmployeeCellController.cellStack, "-Y", "/CRM_APP/View/Employee/Team/teamDetail.fxml");
+                sceneHandler.slideScene(btn_Back, EmployeeCellController.cellStack, "-Y", "/CRM_APP/View/Employee/detail.fxml");
             }
         });
         btn_Edit.setOnAction(e -> {
@@ -140,22 +140,35 @@ public class EmployeeProfileController {
         }
     }
     private void changePassword(){
+        notificationHandler = new NotificationHandler();
         employeeDB = new EmployeeDB();
         employee = new Employee();
+        database = new Database();
+
         String password = txt_Password.getText();
         String rePassword = txt_RePassword.getText();
+
         if(!StringUtils.isNullOrEmpty(password) && !StringUtils.isNullOrEmpty(rePassword)
             && password.equals(rePassword)){
-            employee.setPassword(password);
-            employee.setId(emID);
-            employeeDB.updateEmp(employee);
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Change password success!");
-            txt_Password.clear();
-        }else{
+            ResultSet row = database.getSomeID(password, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_PASSWORD);
+            try {
+                if(row.next()){
+                    employee.setPassword(password);
+                    employee.setId(emID);
+                    employeeDB.updateEmp(employee);
+                    notificationHandler.popup(notificationHandler.success, "Change password success!");
+                    txt_Password.clear();
+                }else{
+                    notificationHandler.popup(notificationHandler.warning, "Password does not correct");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }else if(!password.equals(rePassword)){
             shakerHandler = new ShakerHandler(txt_Password, 2, 50);
             shakerHandler.shake();
-            lbl_Noti.setVisible(false);
+            notificationHandler.popup(notificationHandler.success, "Re-Password and Password does not match");
         }
     }
     private void taskCounter(){

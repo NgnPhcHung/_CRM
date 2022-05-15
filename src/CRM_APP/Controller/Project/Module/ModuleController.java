@@ -147,7 +147,7 @@ public class ModuleController {
         if(status.equals("nor")){
             try {
 //                row = database.getSomeID(projectID, Const.MODULE_TABLE, Const.MODULE_PROJECT_ID);
-                row = moduleDB.getModule();
+                row = moduleDB.getModule(projectID);
                 while(row.next()){
                     Module module = new Module();
                     module.setProjectID(projectID);

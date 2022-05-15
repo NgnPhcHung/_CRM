@@ -153,7 +153,6 @@ public class SurveyDetailController {
                     }
 
                     surveyDB = new SurveyDB();
-
                     surveyDB.saveDetail(surveyDetail);
 
                     notification.popup(notification.success, "Survey " +surveyName + " saved" );

@@ -86,6 +86,9 @@ public class Database extends Configs{
                     String query = "DELETE FROM " + table + " WHERE " + colName + " =?";
                     PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
                     preparedStatement.setString(1, id);
+                    System.out.println(
+                            preparedStatement
+                    );
                     preparedStatement.execute();
                     preparedStatement.close();
                 } catch (SQLException throwables) {

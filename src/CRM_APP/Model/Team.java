@@ -7,6 +7,19 @@ public class Team {
     private String teamName;
     private String status;
     private String emID;
+    private JFXCheckBox remark;
+
+    public Team() {
+        remark = new JFXCheckBox();
+    }
+
+    public JFXCheckBox getRemark() {
+        return remark;
+    }
+
+    public void setRemark(JFXCheckBox remark) {
+        this.remark = remark;
+    }
 
     public String getTeamID() {
         return teamID;

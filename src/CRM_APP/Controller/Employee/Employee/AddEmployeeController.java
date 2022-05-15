@@ -1,5 +1,6 @@
 package CRM_APP.Controller.Employee.Employee;
 
+import CRM_APP.Controller.Employee.DetailController;
 import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
@@ -15,6 +16,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.mysql.cj.util.StringUtils;
@@ -67,6 +69,7 @@ public class AddEmployeeController {
     private Employee employee;
     private SceneHandler sceneHandler;
     private NotificationHandler notificationHandler;
+    private static HashMap<String, String> employeeHM = new HashMap<String, String>();
     public static String emID = "";
     public static StackPane backPane;
 
@@ -136,17 +139,16 @@ public class AddEmployeeController {
                         userID = prefix + number;
                         row = database.getSomeID(userID, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
                     }
-
-                    employeeDB = new EmployeeDB();
-                    employee = new Employee();
-                    employee.setId(userID);
-                    employee.setName(name);
-                    employee.setAddress(address);
-                    employee.setPhone(phone);
-                    employee.setPosition(position);
-                    employee.setPassword(password);
-                    employeeDB.saveEmp(employee);
-                    sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Employee/Team/addMember.fxml");
+                    employeeHM.put("ID", userID);
+                    employeeHM.put("name", name);
+                    employeeHM.put("address", address);
+                    employeeHM.put("phone", phone);
+                    employeeHM.put("position", position);
+                    employeeHM.put("password", password);
+                    setEmployeeHM(employeeHM);
+                    DetailController.condition = "newEm";
+                    DetailController.backPane = backPane;
+                    sceneHandler.slideScene(btn_Save, backPane, "-X", "/CRM_APP/View/Employee/detail.fxml");
                 }
 
             } catch (SQLException throwables) {
@@ -155,23 +157,21 @@ public class AddEmployeeController {
         }
     }
     private void delete(){
+        notificationHandler = new NotificationHandler();
         try {
             if(emID.equals("SAD")){
-                lbl_Noti.setVisible(true);
-                lbl_Noti.setText("This is admin you can not delete him");
+                notificationHandler.popup(notificationHandler.error, "This is admin you can not delete him");
             }else if(emID.equals(HomeController.userId)){
-                lbl_Noti.setVisible(true);
-                lbl_Noti.setText("This is you, you can not your self");
+                notificationHandler.popup(notificationHandler.error, "This is you, you can not your self");
             }else if(!OtherHandler.checkExist(Const.TASK_TABLE, Const.TASK_EMP_ID, emID)
                     && OtherHandler.checkExist(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID)){
-                lbl_Noti.setVisible(true);
-                lbl_Noti.setText("This Staff have constrain, can not delete");
+                notificationHandler.popup(notificationHandler.error, "This Staff have constrain, can not delete");
             }else{
-                lbl_Noti.setVisible(false);
                 database = new Database();
                 database.detele(Const.AUTHEN_TABLE, Const.EMPLOYEE_ID, emID);
                 database.detele(Const.TEAM_DETAIL_TABLE, Const.TEAM_EM_ID, emID);
                 database.detele(Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID, emID);
+                notificationHandler.popup(notificationHandler.success, "Delete Successful");
                 btn_Back.fire();
             }
         } catch (SQLException throwables) {
@@ -211,8 +211,7 @@ public class AddEmployeeController {
         if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
             || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())
             || StringUtils.isNullOrEmpty(txt_Password.getText())){
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Information can not be null");
+            notificationHandler.popup(notificationHandler.error, "Information can not be null");
         }else{
             String name = txt_Name.getText().trim();
             String phone = txt_Phone.getText().trim();
@@ -229,12 +228,21 @@ public class AddEmployeeController {
                 employee.setPassword(password);
                 employee.setId(emID);
                 employeeDB.updateAdmin(employee);
+                notificationHandler.popup(notificationHandler.error, "Employee" +  name +" Update Success");
             }else{
-                lbl_Noti.setVisible(true);
-                lbl_Noti.setText("Invalid Phone number");
+                notificationHandler.popup(notificationHandler.error, "Invalid Phone number");
             }
         }
     }
+
+    public static HashMap<String, String> getEmployeeHM() {
+        return employeeHM;
+    }
+
+    public static void setEmployeeHM(HashMap<String, String> employeeHM) {
+        AddEmployeeController.employeeHM = employeeHM;
+    }
+
     private String combine(){
         String _prefix = cb_Role.getValue();
         String pre = (_prefix.equals("Employee")) ? "EM" : "AD";

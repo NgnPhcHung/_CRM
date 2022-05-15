@@ -69,4 +69,41 @@ public class TeamDB {
         resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+    public ResultSet getManager(Team team){
+        ResultSet resultSet = null;
+        database = new Database();
+        String query = " SELECT * FROM " + Const.TEAM_DETAIL_TABLE +
+                        " INNER JOIN " + Const.EMPLOYEE_TABLE +
+                        " ON " + Const.EMPLOYEE_TABLE + "." + Const.EMPLOYEE_ID +
+                        " = " + Const.TEAM_DETAIL_TABLE + "." + Const.EMPLOYEE_ID +
+                        " WHERE " + Const.TEAM_DETAIL_TABLE + "." + Const.TEAM_ID +
+                        " = ?";
+        try {
+            PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, team.getTeamID());
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
+    public void updateTeam(Team team){
+        database = new Database();
+        String query = " UPDATE " + Const.TEAM_TABLE + " SET " +
+                        Const.TEAM_NAME + " =? WHERE " + Const.TEAM_ID + " =?";
+        try {
+            PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, team.getTeamName());
+            preparedStatement.setString(2, team.getTeamID());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

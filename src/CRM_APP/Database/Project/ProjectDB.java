@@ -24,6 +24,7 @@ public class ProjectDB {
     }
 
     public void insertProject(Project project){
+        database = new Database();
         String query = "INSERT INTO " + Const.PROJECT_TABLE +" ("
                 + Const.PROJECT_ID +", "
                 + Const.CUSTOMER_ID +", "
@@ -34,19 +35,21 @@ public class ProjectDB {
                 + Const.PROJECT_TOTAL_AMOUNT+") "
                 + " VALUES(?,?,?,?,?,?,?)";
         try {
-            PreparedStatement preparedStatement =  Database.dbConnection.prepareStatement(query);
+            PreparedStatement preparedStatement =  database.getDbConnection().prepareStatement(query);
             preparedStatement.setString(1, project.getId());
             preparedStatement.setString(2, project.getCusId());
             preparedStatement.setString(3, project.getName());
             preparedStatement.setString(4, project.getBeginTime());
             preparedStatement.setString(5, project.getEndTime());
             preparedStatement.setString(6, project.getManager());
-            preparedStatement.setString(7, project.getAmount()+"");
+            preparedStatement.setInt(7, project.getAmount());
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -102,6 +105,7 @@ public class ProjectDB {
             PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
             preparedStatement.setString(1, project.getId());
             preparedStatement.setString(2, project.getProjectTeamID());
+            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {

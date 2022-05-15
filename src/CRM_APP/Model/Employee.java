@@ -1,5 +1,7 @@
 package CRM_APP.Model;
 
+import com.jfoenix.controls.JFXCheckBox;
+
 public class Employee {
     private String id;
     private String name;
@@ -7,6 +9,19 @@ public class Employee {
     private String phone;
     private String position;
     private String password;
+    private JFXCheckBox remark;
+
+    public Employee() {
+        remark = new JFXCheckBox();
+    }
+
+    public JFXCheckBox getRemark() {
+        return remark;
+    }
+
+    public void setRemark(JFXCheckBox remark) {
+        this.remark = remark;
+    }
 
     public String getId() {
         return id;

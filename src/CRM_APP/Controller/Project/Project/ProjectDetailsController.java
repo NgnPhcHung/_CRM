@@ -5,10 +5,8 @@ import CRM_APP.Controller.Project.Project.ProjectCellController;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Project.ProjectDB;
-import CRM_APP.Handler.DateTimePickerHandler;
-import CRM_APP.Handler.OtherHandler;
-import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.TextFieldHandler;
+import CRM_APP.Handler.*;
+import CRM_APP.Model.Employee;
 import CRM_APP.Model.Project;
 import CRM_APP.Model.Question;
 import CRM_APP.Model.Team;
@@ -31,10 +29,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 
@@ -95,12 +90,13 @@ public class ProjectDetailsController {
     private String cusID = "";
     private String emID = "";
     private String newProjectID = "";
-
+    private NotificationHandler notification;
     public static StackPane backPane;
 
     @FXML
     void initialize() {
         //region FORMAT ON START
+        fillTable();
         dp_start.setValue(LocalDate.now());
         LocalDate dateStart = dp_start.getValue();
         dp_end.setValue(dateStart);
@@ -127,16 +123,16 @@ public class ProjectDetailsController {
         btn_delete.setOnAction(e->{
             delete();
         });
-        fillTable();
-        btn_AddTeam.setOnAction(e -> {
-            saveTeamDetail();
-        });
         btn_back.setOnAction(e -> {
             changeScene();
         });
+//        btn_AddTeam.setOnAction(e -> {
+//            saveTeamDetail();
+//        });
     }
 
     private void fillTable(){
+        projects = FXCollections.observableArrayList();
         tableView.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
         col_Team = new TableColumn("Team");
         col_Action = new TableColumn("Action");
@@ -155,7 +151,6 @@ public class ProjectDetailsController {
             database = new Database();
             projectDB = new ProjectDB();
             project.setId(projectID);
-            projects = FXCollections.observableArrayList();
             ResultSet resultSet = database.getAllTableValue(Const.TEAM_TABLE);
             ResultSet rowTeam = projectDB.getProjectTeam(project);
             ObservableList<String> teamList = FXCollections.observableArrayList();
@@ -182,7 +177,7 @@ public class ProjectDetailsController {
                 }
 
                 col_Team.setCellValueFactory(new PropertyValueFactory<Project, String>("projectTeamName"));
-                col_Action.setCellValueFactory(new PropertyValueFactory<Question,String>("remark"));
+                col_Action.setCellValueFactory(new PropertyValueFactory<Project,String>("remark"));
                 projects.add(project);
             }
             tableView.setItems(projects);
@@ -227,6 +222,7 @@ public class ProjectDetailsController {
             e.printStackTrace();
         }
     }
+
     private void populateDetails(){
         database = new Database();
         try {
@@ -255,6 +251,7 @@ public class ProjectDetailsController {
     }
 
     private void update(){
+        notification = new NotificationHandler();
         Project project = new Project();
         projectDB = new ProjectDB();
         database = new Database();
@@ -264,10 +261,8 @@ public class ProjectDetailsController {
         cusID = "";
         if(StringUtils.isNullOrEmpty(txt_name.getText()) || StringUtils.isNullOrEmpty(txt_amount.getText())
             || StringUtils.isNullOrEmpty(cb_customer.getValue()) || StringUtils.isNullOrEmpty(cb_manager.getValue())){
-            lbl_noti.setVisible(true);
-            lbl_noti.setText("Invalid Information");
+            notification.popup(notification.error, "Invalid Blank Information");
         }else{
-            lbl_noti.setVisible(false);
             String manager = cb_manager.getValue();
             try {
                 ResultSet row = database.getSomeID(manager, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
@@ -300,12 +295,14 @@ public class ProjectDetailsController {
             project.setBeginTime(dp_start.getValue()+"");
             project.setEndTime(dp_end.getValue()+"");
             project.setAmount(Integer.parseInt(txt_amount.getText()));
+            saveTeamDetail(projectID);
+            notification.popup(notification.success, "Project " + txt_name.getText() + " update Success");
             projectDB.updateProject(project);
             btn_back.fire();
         }
     }
 
-    private void saveTeamDetail(){
+    private void saveTeamDetail(String newProjectID){
         database = new Database();
         projectDB = new ProjectDB();
         ObservableList<Project> listRemove = FXCollections.observableArrayList();
@@ -323,10 +320,8 @@ public class ProjectDetailsController {
                 while(rowTeam.next()){
                     project.setProjectTeamID(rowTeam.getString(Const.TEAM_ID));
                 }
-                project.setId(projectID);
+                project.setId(newProjectID);
                 projectDB.insertProjectTeam(project);
-                lbl_noti.setText("Save Success");
-                lbl_noti.setVisible(true);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -337,34 +332,42 @@ public class ProjectDetailsController {
         projectDB = new ProjectDB();
         database = new Database();
         sceneHandler = new SceneHandler();
+        notification = new NotificationHandler();
         Project project = new Project();
+
 
         if(StringUtils.isNullOrEmpty(txt_name.getText()) || StringUtils.isNullOrEmpty(txt_amount.getText())
             || StringUtils.isNullOrEmpty(cb_customer.getValue()) || StringUtils.isNullOrEmpty(cb_manager.getValue())){
-            lbl_noti.setVisible(true);
-            lbl_noti.setText("Invalid Information");
+            notification.popup(notification.error, "Information Field cannot be blank");
         }else{
             lbl_noti.setVisible(false);
             try {
+
                 String newProjectID = createProjectID();
                 String employeeID = convertToEmID();
                 String customerID = convertToCusID();
                 String projectName = txt_name.getText();
                 String start = dp_start.getValue().toString();
                 String end = dp_end.getValue().toString();
+                int amount = Integer.parseInt(txt_amount.getText());
                 if(isProjectExist(projectName)) {
-                    project.setId(newProjectID);
-                    project.setName(projectName);
-                    project.setCusId(customerID);
-                    project.setManager(employeeID);
-                    project.setBeginTime(start);
-                    project.setEndTime(end);
-                    projectDB.insertProject(project);
-
-                    btn_back.fire();
+                    if(isTeamSelected()){
+                        project.setId(newProjectID);
+                        project.setName(projectName);
+                        project.setCusId(customerID);
+                        project.setManager(employeeID);
+                        project.setBeginTime(start);
+                        project.setEndTime(end);
+                        project.setAmount(amount);
+                        projectDB.insertProject(project);
+                        saveTeamDetail(newProjectID);
+                        notification.popup(notification.success, "Save success project " + projectName );
+                        btn_back.fire();
+                    }else{
+                        notification.popup(notification.warning, "Project must have at least 1 team");
+                    }
                 }else {
-                    lbl_noti.setVisible(true);
-                    lbl_noti.setText("This project already in list");
+                    notification.popup(notification.warning, "This project already in list");
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -372,24 +375,27 @@ public class ProjectDetailsController {
                 e.printStackTrace();
             }
         }
-
-
-
-        //endregion
-
     }
     private void delete(){
         database = new Database();
         sceneHandler = new SceneHandler();
+        notification =  new NotificationHandler();
         try {
             if(!OtherHandler.checkExist(Const.MODULE_TABLE, Const.MODULE_PROJECT_ID, projectID)){
-                database.detele(Const.PROJECT_TABLE, Const.PROJECT_ID, projectID);
-                lbl_noti.setVisible(false);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Do you want to delete this Project?");
+                alert.setContentText("Please check again!");
+                alert.showAndWait().ifPresent(rs -> {
+                    if (rs == ButtonType.OK) {
+                        database.detele(Const.PROJECT_TEAM_DETAIL, Const.PROJECT_ID, projectID);
+                        database.detele(Const.PROJECT_TABLE, Const.PROJECT_ID, projectID);
+                    }});
+                notification.popup(notification.success, "Project deleted");
 
                 btn_back.fire();
             }else{
-                lbl_noti.setVisible(true);
-                lbl_noti.setText("Project have Module inside, can not delete!");
+                notification.popup(notification.warning, "Project have Module inside, can not delete!");
             }
 
         } catch (SQLException throwables) {
@@ -398,6 +404,18 @@ public class ProjectDetailsController {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean isTeamSelected(){
+        ObservableList<Project> list = tableView.getItems();
+        boolean boo = false;
+        ObservableList<Project> removeList = FXCollections.observableArrayList();
+        for(Project p: list){
+            if(p.getRemark().isSelected()){
+                boo = true;
+            }else boo = false;
+        }
+        return boo;
     }
 
     private boolean isProjectExist(String name) throws SQLException, ClassNotFoundException {
@@ -433,7 +451,6 @@ public class ProjectDetailsController {
         }
         return cusID;
     }
-
     private String createProjectID (){
         try {
             newProjectID = OtherHandler.generateId();
@@ -447,7 +464,6 @@ public class ProjectDetailsController {
         }
         return newProjectID;
     }
-
     private void catchStartDateEnd(){
         dp_start.valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
@@ -456,8 +472,6 @@ public class ProjectDetailsController {
             }
         });
     }
-
-
     void changeScene() {
         sceneHandler =  new SceneHandler();
         sceneHandler.slideScene(btn_back, backPane, "X", "/CRM_APP/View/Project/project.fxml");

@@ -11,13 +11,15 @@ import java.sql.SQLException;
 public class ModuleDB {
     Database database = new Database();
 
-    public ResultSet getModule(){
+    public ResultSet getModule(String projectID){
         ResultSet rs = null;
-        String query = " SELECT * FROM " + Const.MODULE_TABLE + " ORDER BY "
+        String query = " SELECT * FROM " + Const.MODULE_TABLE + " WHERE " + Const.MODULE_PROJECT_ID +" =? ORDER BY "
                         + Const.MODULE_STATUS + " ASC";
-        PreparedStatement preparedStatement = null;
         try {
+            PreparedStatement preparedStatement = null;
             preparedStatement = database.getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, projectID);
+
             rs = preparedStatement.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
