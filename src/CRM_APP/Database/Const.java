@@ -102,7 +102,6 @@ public class Const {
     public static final String BILL_ID = "BillID";
     public static final String BILL_CUS_ID = "CusID";
     public static final String BILL_DATE = "BillDate";
-    public static final String BILL_TOTAL_AMOUNT = "TotalAmount";
     public static final String BILL_STATUS = "Status";
     public static final String BILL_PERCENT = "Percent";
     public static final String BILL_DETAIL_AMOUNT = "Amount";

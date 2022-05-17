@@ -3,6 +3,15 @@ package CRM_APP.Model;
 public class BillDetail {
     private String billID;
     private String projectID;
+    private String cusID;
+
+    public String getCusID() {
+        return cusID;
+    }
+
+    public void setCusID(String cusID) {
+        this.cusID = cusID;
+    }
 
     public String getBillID() {
         return billID;

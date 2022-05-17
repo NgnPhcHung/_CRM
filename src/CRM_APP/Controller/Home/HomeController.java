@@ -98,19 +98,22 @@ public class HomeController {
     @FXML
     private Button btn_Logout;
 
+    @FXML
+    private Button btn_History;
+
     //setting style
     private String light = "/CRM_APP/Style/LightStyle.css";
     private String dark = "/CRM_APP/Style/NightStyle.css";
-    public static String styleSheet;
     private LoginDB database = new LoginDB();
-    public static String userId;
     private Database mydb = new Database();
     private HomeDB homeDB;
-    private Thread myThread;
-    private FontAwesomeIcon fontAwesomeIcon;
-    public static Stage primStage;
     private NotificationHandler notification;
     private boolean isFullScreen = false;
+
+    public static String userId;
+    public static Stage primStage;
+    public static String styleSheet;
+    public static String emName = "";
     @FXML
     void initialize() {
         styleSheet = light;
@@ -144,44 +147,30 @@ public class HomeController {
         });
 
         if(userId.equals("SAD")){
-            lbl_Export.setVisible(true);
-            lbl_Export.setOnMouseClicked(event -> {
-                createLogFile();
-            });
+            btn_History.setVisible(true);
         }
         btn_Logout.setOnAction(e -> {
             userLogout();
         });
-    }
-    private void createLogFile(){
-        String fileName = "Log_" + OtherHandler.generateId();
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File selectedDirectory = directoryChooser.showDialog(lbl_Export.getScene().getWindow());
-        try {
-            PrintWriter pw = new PrintWriter(selectedDirectory+"\\"+fileName+".csv");
-            StringBuilder sb = new StringBuilder();
 
-            homeDB = new HomeDB();
-            ResultSet row =  homeDB.getLogAuthen();
-            try {
-                while (row.next()){
-                    sb.append(row.getString(Const.EMPLOYEE_ID));
-                    sb.append(", ");
-                    sb.append(row.getString(Const.AUTHEN_LOGTIME));
-                    sb.append(", ");
-                    sb.append(row.getString(Const.AUTHEN_OUTTIME));
-                    sb.append(", ");
-                    sb.append(row.getString(Const.AUTHEN_DEVICE));
-                    sb.append("\r\n");
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            pw.write(sb.toString());
-            pw.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        btn_History.setOnAction(e -> {
+//            Button button = (Button) e.getSource();
+//            System.out.println(button.getText().trim());
+//            try {
+//                Tab tab = new Tab("History");
+//                StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/History/history.fxml"));
+//                tab.setContent(newPane);
+//                tp_homeMain.getSelectionModel().select(tab);
+//
+//                tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
+//                        "    -fx-font-weight: bold;\n" +
+//                        "    -fx-font-family: Calibri;\n" +
+//                        "    -fx-font-size: 20;");
+//                tp_homeMain.getTabs().add(tab);
+//            } catch (IOException ioException) {
+//                ioException.printStackTrace();
+//            }
+//        });
     }
 
     //region LOGOUT
@@ -253,7 +242,6 @@ public class HomeController {
     void mouseClickEvent(MouseEvent event) throws IOException {
         Button button = (Button) event.getSource();
         String btnName = button.getText().trim();
-
         Tab tab = new Tab(btnName);
         if (tabManage(btnName) == 0) {
             tp_homeMain.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
@@ -300,7 +288,8 @@ public class HomeController {
         try {
             row = db.getSomeID(userId, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
             if (row.next()) {
-                lbl_name.setText("Welcome back, " + row.getString("EmpName"));
+                emName =  row.getString(Const.EMPLOYEE_NAME);
+                lbl_name.setText("Welcome back, " + emName);
                 lbl_position.setText(row.getString("Position"));
             }
         } catch (SQLException throwables) {

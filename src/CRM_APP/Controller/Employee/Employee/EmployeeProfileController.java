@@ -90,24 +90,30 @@ public class EmployeeProfileController {
     private ShakerHandler shakerHandler;
     private ObservableList<Team> teams;
     private NotificationHandler notificationHandler;
-
+    private TextFieldHandler textfieldHandler;
     @FXML
     void initialize() {
+        textfieldHandler = new TextFieldHandler();
+        sceneHandler = new SceneHandler();
         grid_Main.getStylesheets().add(HomeController.styleSheet);
         populateDetail();
         taskCounter();
         populateList();
         if(HomeController.userId.contains("EM")){
             btn_Edit.setVisible(false);
+        }else {
+            txt_Password.setVisible(false);
+            txt_RePassword.setVisible(false);
+            btn_Save.setVisible(false);
         }
+
         if(condition.equals("home")){
             btn_Back.setVisible(false);
         }
-        TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.limitInput(txt_Password, 6);
+        textfieldHandler.limitInput(txt_RePassword, 6);
         //press button back and check where it come from
         btn_Back.setOnAction(e -> {
-            sceneHandler = new SceneHandler();
             if(condition.equals("EmployeeList")){
                 sceneHandler.slideScene(btn_Back, EmployeeCellController.cellStack, "-Y", "/CRM_APP/View/Employee/employee.fxml");
             }else if(condition.equals("TeamList")){
@@ -115,7 +121,6 @@ public class EmployeeProfileController {
             }
         });
         btn_Edit.setOnAction(e -> {
-            sceneHandler = new SceneHandler();
             AddEmployeeController.emID = emID;
             sceneHandler.slideScene(btn_Back, EmployeeCellController.cellStack, "-Y", "/CRM_APP/View/Employee/addEmployee.fxml");
         });
@@ -150,28 +155,18 @@ public class EmployeeProfileController {
 
         if(!StringUtils.isNullOrEmpty(password) && !StringUtils.isNullOrEmpty(rePassword)
             && password.equals(rePassword)){
-            ResultSet row = database.getSomeID(password, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_PASSWORD);
-            try {
-                if(row.next()){
-                    employee.setPassword(password);
-                    employee.setId(emID);
-                    employeeDB.updateEmp(employee);
-                    notificationHandler.popup(notificationHandler.success, "Change password success!");
-                    txt_Password.clear();
-                }else{
-                    notificationHandler.popup(notificationHandler.warning, "Password does not correct");
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
+            employee.setPassword(password);
+            employee.setId(emID);
+            employeeDB.updateEmp(employee);
+            notificationHandler.popup(notificationHandler.success, "Change password success!");
+            txt_Password.clear();
         }else if(!password.equals(rePassword)){
             shakerHandler = new ShakerHandler(txt_Password, 2, 50);
             shakerHandler.shake();
             notificationHandler.popup(notificationHandler.success, "Re-Password and Password does not match");
         }
     }
-    private void taskCounter(){
+    public void taskCounter(){
         //region TOTAL TASK
         try {
             employeeDB = new EmployeeDB();

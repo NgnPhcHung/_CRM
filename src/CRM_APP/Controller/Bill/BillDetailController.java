@@ -4,10 +4,7 @@ import CRM_APP.Controller.Home.HomeController;
 import CRM_APP.Database.Bill.BillDB;
 import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
-import CRM_APP.Handler.DateTimePickerHandler;
-import CRM_APP.Handler.OtherHandler;
-import CRM_APP.Handler.SceneHandler;
-import CRM_APP.Handler.TextFieldHandler;
+import CRM_APP.Handler.*;
 import CRM_APP.Model.Bill;
 import CRM_APP.Model.BillDetail;
 import CRM_APP.Model.Module;
@@ -20,6 +17,9 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import com.mysql.cj.util.StringUtils;
@@ -41,9 +41,6 @@ public class BillDetailController {
 
     @FXML
     private JFXDatePicker datePick_TaskDate;
-
-    @FXML
-    private JFXComboBox<String> cb_Customer;
 
     @FXML
     private JFXComboBox<String> cb_Project;
@@ -85,7 +82,13 @@ public class BillDetailController {
     private JFXListView<Module> lv_Module;
 
     @FXML
-    private Label lbl_Noti;
+    private Label lbl_BillID;
+
+    @FXML
+    private Label lbl_CustomerName;
+
+    @FXML
+    private Label lbl_Employee;
 
     private SceneHandler sceneHandler;
     private Database database;
@@ -97,21 +100,27 @@ public class BillDetailController {
     private String percent;
     private String status;
     public static StackPane backPane;
+    private int projectBudget  = 0;
+    private String id = "";
+    private NotificationHandler notification;
 
     @FXML
     void initialize() {
-        setDetail();
+        settingStart();
         toggleEvent();
-        if(StringUtils.isNullOrEmpty(billID) || !HomeController.userId.contains("AD")){
+        generateBilldID();
+
+        if(StringUtils.isNullOrEmpty(billID) && HomeController.userId.contains("AD")){
             btn_Delete.setVisible(false);
+            lbl_BillID.setText(id);
+            lbl_Employee.setText(HomeController.emName);
         }
         else{
-            cb_Customer.setDisable(true);
+            lbl_BillID.setText(billID);
             cb_Project.setDisable(true);
             tog_30.setDisable(true);
             tog_70.setDisable(true);
             tog_100.setDisable(true);
-            txt_Amount.setDisable(true);
             populateDetailList();
             manageTogglePopulate();
             btn_Delete.setVisible(true);
@@ -124,14 +133,7 @@ public class BillDetailController {
 
         btn_Save.setOnAction(e -> {
                 if(StringUtils.isNullOrEmpty(billID)){
-                    if(StringUtils.isNullOrEmpty(txt_Amount.getText())){
-                        lbl_Noti.setVisible(true);
-                        lbl_Noti.setText("Invalid Input!");
-
-                    }else {
-                        lbl_Noti.setVisible(false);
-                        save();
-                    }
+                    save();
                 }else{
                     update();
                     btn_Back.fire();
@@ -143,44 +145,67 @@ public class BillDetailController {
         });
     }
 
-    private void setDetail(){
-        OtherHandler.populateComboBox(cb_Customer, Const.CUSTOMER_TABLE, Const.CUSTOMER_NAME);
+    private void settingStart(){
         OtherHandler.populateComboBox(cb_Project, Const.PROJECT_TABLE, Const.PROJECT_NAME);
         datePick_TaskDate.setValue(LocalDate.now());
         TextFieldHandler textfieldHandler = new TextFieldHandler();
         textfieldHandler.numberOnly(txt_Amount);
 
+        cb_Project.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                database = new Database();
+                ResultSet row = database.getSomeID(cb_Project.getValue(), Const.PROJECT_TABLE, Const.PROJECT_NAME);
+                try {
+                    if(row.next()){
+                        String budget = row.getString(Const.PROJECT_TOTAL_AMOUNT);
+                        String project = row.getString(Const.PROJECT_ID);
+                        txt_Amount.setText(budget);
+                        projectBudget = Integer.parseInt(budget);
+
+                        ResultSet rsCustomer = database.getSomeID(row.getString(Const.CUSTOMER_ID), Const.CUSTOMER_TABLE, Const.CUSTOMER_ID);
+                        ResultSet rowCell = database.getSomeID(project, Const.MODULE_TABLE, Const.PROJECT_ID);
+
+                        if(rsCustomer.next()){
+                            System.out.println(rsCustomer.getString(Const.CUSTOMER_NAME));
+                            lbl_CustomerName.setText(rsCustomer.getString(Const.CUSTOMER_NAME));
+                        }
+
+                        modules = FXCollections.observableArrayList();
+
+                        while(rowCell.next()){
+                            Module module = new Module();
+                            module.setModName(rowCell.getString(Const.MODULE_NAME));
+                            modules.add(module);
+                        }
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
     }
     private void populateDetailList(){
         sceneHandler= new SceneHandler();
         database = new Database();
-        modules = FXCollections.observableArrayList();
         billDB = new BillDB();
-        ResultSet row = null;
         bill = new Bill();
+        modules = FXCollections.observableArrayList();
+        ResultSet row = null;
 
-        bill.setId(billID);
         try {
+            bill.setId(billID);
             row = billDB.getInformation(bill);
             while(row.next()){
-                //region ADD ITEM TO LIST
-                Module module = new Module();
-                module.setModName(row.getString(Const.MODULE_NAME));
-                modules.add(module);
-                //endregion
-                //region LEFT SIDE DETAIL
                 ResultSet rsProject = database.getSomeID(row.getString(Const.PROJECT_ID), Const.PROJECT_TABLE, Const.PROJECT_ID);
-                ResultSet rsCustomer = database.getSomeID(row.getString(Const.CUSTOMER_ID), Const.CUSTOMER_TABLE, Const.CUSTOMER_ID);
-                while(rsProject.next() && rsCustomer.next()){
+                while(rsProject.next() ){
                     cb_Project.setValue(rsProject.getString(Const.PROJECT_NAME));
-                    cb_Customer.setValue(rsCustomer.getString(Const.CUSTOMER_NAME));
+                    projectBudget = Integer.parseInt(rsProject.getString(Const.PROJECT_TOTAL_AMOUNT));
                 }
-                txt_Amount.setText(row.getString(Const.BILL_TOTAL_AMOUNT));
+                lbl_CustomerName.setText(row.getString(Const.CUSTOMER_NAME));
+                txt_Amount.setText(row.getString(Const.BILL_DETAIL_AMOUNT));;
                 datePick_TaskDate.setValue(DateTimePickerHandler.formatDate(row.getString(Const.BILL_DATE)));
-                //endregion
             }
-            lv_Module.setItems(modules);
-            lv_Module.setCellFactory(BillDetailCellController -> new BillDetailCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -233,6 +258,9 @@ public class BillDetailController {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(groupPercent.getSelectedToggle() != null){
                     percent = groupPercent.getSelectedToggle().getUserData()+"";
+//                    System.out.println(( 1005000 * 30 )/ 100);
+                    txt_Amount.setText((projectBudget * (Integer.parseInt(percent)))/ 100 + "");
+
                 }
             }
         });
@@ -254,26 +282,41 @@ public class BillDetailController {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(groupStatus.getSelectedToggle() != null){
                     status = groupStatus.getSelectedToggle().getUserData()+"";
+
+                    if(status.equals("2") || status.equals("3")){
+                        tog_30.setDisable(true);
+                        tog_70.setDisable(true);
+                        tog_100.setDisable(true);
+                    }else{
+                        tog_30.setDisable(false);
+                        tog_70.setDisable(false);
+                        tog_100.setDisable(false);
+                    }
                 }
             }
         });
         //endregion
     }
+    private void generateBilldID(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String logTime = dtf.format(now);
+        id = logTime;
+        id = id.replaceAll("[^\\d.]", "");
+    }
     private void save(){
-        String id = OtherHandler.generateId();
+        notification = new NotificationHandler();
         LocalDate date = datePick_TaskDate.getValue();
         String projectName = cb_Project.getValue();
-        String customerName = cb_Customer.getValue();
+        String customerName = lbl_CustomerName.getText();
         String amount = txt_Amount.getText();
         database  = new Database();
         billDB = new BillDB();
         try {
             ResultSet row = billDB.checkProjectExist(projectName);
             if(row.next()){
-                lbl_Noti.setText("This project already in list");
-                lbl_Noti.setVisible(true);
+                notification.popup(notification.warning, "This project already in list");
             }else{
-                lbl_Noti.setVisible(false);
                 if(!amount.equals("") ){
                     try {
                         bill = new Bill();
@@ -286,11 +329,12 @@ public class BillDetailController {
                             bill.setTotalAmount(amount);
                             bill.setPercent(percent);
                             bill.setStatus(status);
-                            bill.setCustomer(rowCustomer.getString(Const.CUSTOMER_ID));
-
+                            bill.setEmID(HomeController.userId);
                             billDetail.setBillID(id);
                             billDetail.setProjectID(rowProject.getString(Const.PROJECT_ID));
+                            billDetail.setCusID(rowCustomer.getString(Const.CUSTOMER_ID));
                             billDB.save(bill, billDetail);
+                            notification.popup(notification.success, "Bill create success");
                             btn_Back.fire();
                         }
                     } catch (SQLException throwables) {

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="main_stack" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CRM_APP.Controller.History.HistoryController">
+   <children>
+      <GridPane prefHeight="610.0" prefWidth="1024.0" styleClass="container">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" top="10.0" />
+               </GridPane.margin>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label text="Name" textFill="#686868">
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="h4" />
+                              <String fx:value="hBold" />
+                              <String fx:value="hItalic" />
+                              <String fx:value="text" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" layoutX="41.0" layoutY="10.0" prefWidth="200.0">
+                           <children>
+                              <Label text="ID" textFill="#686868">
+                                 <font>
+                                    <Font name="Calibri Bold" size="20.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+                           <children>
+                              <Label text="Logtime" textFill="#686868">
+                                 <font>
+                                    <Font name="Calibri Bold" size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <children>
+                              <Label alignment="CENTER" text="Outtime" textFill="#686868">
+                                 <font>
+                                    <Font name="Calibri Bold" size="20.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefWidth="220.0">
+                           <children>
+                              <Label text="Devices" textFill="#686868">
+                                 <font>
+                                    <Font name="Calibri Bold" size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="10.0" right="15.0" />
+                                 </padding>
+                                 <styleClass>
+                                    <String fx:value="h4" />
+                                    <String fx:value="hBold" />
+                                    <String fx:value="hItalic" />
+                                    <String fx:value="text" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" styleClass="headerContainer" GridPane.columnSpan="2147483647">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btn_Export" layoutX="25.0" layoutY="19.0" text="Export File" textFill="#515151">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="15.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass>
+                        </JFXButton>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <JFXTextField fx:id="txt_find" focusColor="#90caf9" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Staff Name" unFocusColor="#ff7a51">
+                     <HBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </HBox.margin>
+                     <styleClass>
+                        <String fx:value="text" />
+                        <String fx:value="textInput" />
+                     </styleClass>
+                  </JFXTextField>
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                     <children>
+                        <Label text="Start Date">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="h5" />
+                              <String fx:value="hBold" />
+                           </styleClass>
+                        </Label>
+                        <JFXDatePicker fx:id="dp_Start" defaultColor="#97b9ff" prefWidth="150.0" promptText="Start Date">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="textInput" />
+                           </styleClass></JFXDatePicker>
+                        <Label text="End Date">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="h5" />
+                              <String fx:value="hBold" />
+                           </styleClass>
+                        </Label>
+                        <JFXDatePicker fx:id="dp_End" defaultColor="#97b9ff" prefWidth="150.0" promptText="End Date">
+                           <styleClass>
+                              <String fx:value="text" />
+                              <String fx:value="textInput" />
+                           </styleClass></JFXDatePicker>
+                        <Button fx:id="btn_Find" mnemonicParsing="false" text="Find">
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="h5" />
+                              <String fx:value="hBold" />
+                           </styleClass>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin>
+            </HBox>
+            <JFXListView fx:id="lv_History" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.rowSpan="2147483647">
+               <GridPane.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </GridPane.margin>
+            </JFXListView>
+         </children>
+      </GridPane>
+   </children>
+</StackPane>

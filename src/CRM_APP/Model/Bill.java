@@ -9,6 +9,15 @@ public class Bill {
     private String status;
     private String percent;
     private String totalAmount;
+    private String emID;
+
+    public String getEmID() {
+        return emID;
+    }
+
+    public void setEmID(String emID) {
+        this.emID = emID;
+    }
 
     public String getTotalAmount() {
         return totalAmount;

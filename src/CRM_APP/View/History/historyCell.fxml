@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="main_pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" styleClass="cellContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="lbl_name" text="Name" textFill="#686868">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="text" />
+                  <String fx:value="h4" />
+               </styleClass>
+            </Label>
+         </children>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" layoutX="203.0" layoutY="15.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lbl_ID" text="ID" textFill="#686868" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="369.0" layoutY="15.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lbl_Log" text="logtime" textFill="#686868" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="400.0" layoutY="15.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lbl_Out" text="out time" textFill="#686868" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="408.0" layoutY="15.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lbl_Device" text="device" textFill="#686868" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Calibri" size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="text" />
+                                    <String fx:value="h4" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</HBox>

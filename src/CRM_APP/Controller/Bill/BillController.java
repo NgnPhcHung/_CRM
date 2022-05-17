@@ -112,10 +112,11 @@ public class BillController extends Thread{
     private void populateList(){
         sceneHandler= new SceneHandler();
         database = new Database();
+        billDB = new BillDB();
         bills = FXCollections.observableArrayList();
         ResultSet row = null;
         try {
-            row = database.getAllTableValue(Const.BILL_TABLE);
+            row = billDB.getBillList();
             while(row.next()){
                 Bill bill = new Bill();
                 LocalDate billDate = DateTimePickerHandler.formatDate(row.getString(Const.BILL_DATE));
@@ -124,7 +125,6 @@ public class BillController extends Thread{
                 bill.setDate(billDate);
                 bill.setPercent(row.getString(Const.BILL_PERCENT));
                 bill.setStatus(row.getString(Const.BILL_STATUS));
-                bill.setTotalAmount(row.getString(Const.BILL_TOTAL_AMOUNT));
 
                 BillCellController.cellStack = main_Stack;
                 bills.add(bill);
@@ -134,8 +134,6 @@ public class BillController extends Thread{
             lv_Bill.setCellFactory(BillCellController -> new BillCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -174,7 +172,6 @@ public class BillController extends Thread{
                     bill.setDate(billDate);
                     bill.setPercent(row.getString(Const.BILL_PERCENT));
                     bill.setStatus(row.getString(Const.BILL_STATUS));
-                    bill.setTotalAmount(row.getString(Const.BILL_TOTAL_AMOUNT));
 
                     BillCellController.cellStack = main_Stack;
                     bills.add(bill);

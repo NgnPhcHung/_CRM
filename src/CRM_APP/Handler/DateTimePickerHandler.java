@@ -8,6 +8,7 @@ import javafx.scene.control.DateCell;
 import java.time.LocalDate;
 
 public class DateTimePickerHandler {
+
     public static void disableDate(JFXDatePicker pdate, LocalDate toCheckValue){
         pdate.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
