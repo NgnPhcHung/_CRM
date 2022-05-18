@@ -60,7 +60,25 @@ public class HistoryDB {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(resultSet);
+        return resultSet;
+    }
+
+    public ResultSet getHistory(){
+        database = new Database();
+        ResultSet resultSet = null;
+        String query= "SELECT * FROM " + Const.AUTHEN_TABLE
+                        + " INNER JOIN " + Const.EMPLOYEE_TABLE
+                        + " ON " + Const.EMPLOYEE_TABLE + "." + Const.EMPLOYEE_ID
+                        + " = " + Const.AUTHEN_TABLE + "." + Const.EMPLOYEE_ID+
+                        " LIMIT 20";
+        try {
+            PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return resultSet;
     }
 }

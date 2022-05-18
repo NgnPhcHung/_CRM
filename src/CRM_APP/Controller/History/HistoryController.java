@@ -83,16 +83,13 @@ public class HistoryController {
     private void populateList(){
         database = new Database();
         histories = FXCollections.observableArrayList();
-
+        historyDB = new HistoryDB();
         try {
-            ResultSet row = database.getAllTableValue(Const.AUTHEN_TABLE);
+            ResultSet row = historyDB.getHistory();
             while(row.next()){
                 history = new History();
-                ResultSet rowName = database.getSomeID(row.getString(Const.EMPLOYEE_ID), Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
-                while(rowName.next()){
-                    history.setName(rowName.getString(Const.EMPLOYEE_NAME));
-                }
 
+                history.setName(row.getString(Const.EMPLOYEE_NAME));
                 String startDate = row.getString(Const.AUTHEN_LOGTIME);
                 String endDate = row.getString(Const.AUTHEN_OUTTIME);
 
@@ -112,8 +109,6 @@ public class HistoryController {
             lv_History.setCellFactory(HistoryCellController -> new HistoryCellController());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -185,43 +180,35 @@ public class HistoryController {
             notificationHandler.popup(notificationHandler.error, "Employee to find can not blank");
         }else{
             String name = txt_find.getText();
-            ResultSet row = database.getSomeID(name, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+
             histories = FXCollections.observableArrayList();
             try {
-                if(row.next()){
-                    String id = row.getString(Const.EMPLOYEE_ID);
-                    String start = dp_Start.getValue().toString();
-                    String end = dp_End.getValue().toString();
-                    history.setId(id);
-                    history.setName(name);
-                    history.setStartDate(start);
-                    history.setEndDate(end);
-                    ResultSet rowFiller = historyDB.fillerHistory(history);
-                    while(rowFiller.next()){
-                        history = new History();
-                        ResultSet rowName = database.getSomeID(rowFiller.getString(Const.EMPLOYEE_ID), Const.EMPLOYEE_TABLE, Const.EMPLOYEE_ID);
-                        while(rowName.next()){
-                            history.setName(rowName.getString(Const.EMPLOYEE_NAME));
-                        }
+                String start = dp_Start.getValue().toString();
+                String end = dp_End.getValue().toString();
+                history.setName(name);
+                history.setStartDate(start);
+                history.setEndDate(end);
+                ResultSet rowFiller = historyDB.fillerHistory(history);
+                while(rowFiller.next()){
+                    history = new History();
+                    String startDate = rowFiller.getString(Const.AUTHEN_LOGTIME);
+                    String endDate = rowFiller.getString(Const.AUTHEN_OUTTIME);
 
-                        String startDate = rowFiller.getString(Const.AUTHEN_LOGTIME);
-                        String endDate = rowFiller.getString(Const.AUTHEN_OUTTIME);
-
-                        if(StringUtils.isNullOrEmpty(endDate)){
-                            history.setEndDate(startDate);
-                        }else{
-                            history.setEndDate(endDate);
-                        }
-
-                        history.setId(rowFiller.getString(Const.EMPLOYEE_ID));
-                        history.setStartDate(rowFiller.getString(Const.AUTHEN_LOGTIME));
-
-                        history.setDevice(rowFiller.getString(Const.AUTHEN_DEVICE));
-                        histories.add(history);
+                    if(StringUtils.isNullOrEmpty(endDate)){
+                        history.setEndDate(startDate);
+                    }else{
+                        history.setEndDate(endDate);
                     }
-                    lv_History.setItems(histories);
-                    lv_History.setCellFactory(HistoryCellController -> new HistoryCellController());
+
+                    history.setName(rowFiller.getString(Const.EMPLOYEE_NAME));
+                    history.setId(rowFiller.getString(Const.EMPLOYEE_ID));
+                    history.setStartDate(rowFiller.getString(Const.AUTHEN_LOGTIME));
+
+                    history.setDevice(rowFiller.getString(Const.AUTHEN_DEVICE));
+                    histories.add(history);
                 }
+                lv_History.setItems(histories);
+                lv_History.setCellFactory(HistoryCellController -> new HistoryCellController());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

@@ -8,6 +8,7 @@ import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.OtherHandler;
 import CRM_APP.Handler.SceneHandler;
 import CRM_APP.Model.Task;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -29,9 +30,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -124,40 +123,55 @@ public class FullCalendarView {
         //endregion
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
-        Thread thread = new Thread(myThread){
+        TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                super.run();
-                myThread= new Thread(this::handleThread);
-                myThread.start();
-            }
-            private void handleThread(){
-                while(true){
-                    Platform.runLater(() ->{
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
                         populateCalendar(currentYearMonth);
-                    });
-                    try{
-
-                        Thread.sleep(5000);
-                    }catch(InterruptedException e){
-                        e.printStackTrace();
+                        System.out.println("running");
                     }
-                }
+                });
             }
         };
+        Timer timer = new Timer();
+        timer.schedule(timerTask,  0,1000);
+
+//        Thread thread = new Thread(myThread){
+//            @Override
+//            public void run() {
+//                super.run();
+//                myThread= new Thread(this::handleThread);
+//                myThread.start();
+//            }
+//            private void handleThread(){
+//                while(true){
+//                    Platform.runLater(() ->{
+//
+//                    });
+//                    try{
+//
+//                        Thread.sleep(5000);
+//                    }catch(InterruptedException e){
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        };
 
 
-        view.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene == null) {
-                // not showing...
-                System.out.println("thread interrupted");
-                thread.interrupt();
-            } else {
-                // showing ...
-                System.out.println("thread started");
-                thread.start();
-            }
-        });
+//        view.sceneProperty().addListener((obs, oldScene, newScene) -> {
+//            if (newScene == null) {
+//                // not showing...
+//                System.out.println("thread interrupted");
+//                thread.interrupt();
+//            } else {
+//                // showing ...
+//                System.out.println("thread started");
+//                thread.start();
+//            }
+//        });
         //endregion
     }
 

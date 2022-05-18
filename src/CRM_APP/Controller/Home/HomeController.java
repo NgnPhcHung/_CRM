@@ -1,9 +1,12 @@
 package CRM_APP.Controller.Home;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +14,10 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import CRM_APP.Controller.Employee.Employee.EmployeeProfileController;
 import CRM_APP.Controller.Login.LoginController;
@@ -19,9 +26,7 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Database.Home.HomeDB;
 import CRM_APP.Database.Login.LoginDB;
-import CRM_APP.Handler.NotificationHandler;
-import CRM_APP.Handler.OtherHandler;
-import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Handler.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import de.jensd.fx.glyphs.GlyphIcon;
@@ -29,12 +34,16 @@ import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconName;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -121,6 +130,7 @@ public class HomeController {
         getInfo();
         if (!userId.contains("AD")) {
             btn_project.setVisible(false);
+            btn_History.setVisible(false);
         }
         tog_Style.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             tp_homeMain.getStylesheets().remove(light);
@@ -145,32 +155,75 @@ public class HomeController {
         btn_exit.setOnAction(e -> {
             closeApplication();
         });
-
+        readEmail();
         if(userId.equals("SAD")){
             btn_History.setVisible(true);
         }
         btn_Logout.setOnAction(e -> {
             userLogout();
         });
+    }
 
-//        btn_History.setOnAction(e -> {
-//            Button button = (Button) e.getSource();
-//            System.out.println(button.getText().trim());
-//            try {
-//                Tab tab = new Tab("History");
-//                StackPane newPane = FXMLLoader.load(getClass().getResource("/CRM_APP/View/History/history.fxml"));
-//                tab.setContent(newPane);
-//                tp_homeMain.getSelectionModel().select(tab);
-//
-//                tab.setStyle("-fx-text-fill: #cfd8dc;\n" +
-//                        "    -fx-font-weight: bold;\n" +
-//                        "    -fx-font-family: Calibri;\n" +
-//                        "    -fx-font-size: 20;");
-//                tp_homeMain.getTabs().add(tab);
-//            } catch (IOException ioException) {
-//                ioException.printStackTrace();
-//            }
-//        });
+    private void readEmail(){
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r);
+                thread.setDaemon(true);
+                return thread;
+            }
+        });
+
+        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                final Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        EmailThread et = new EmailThread();
+                        et.start();
+
+                        try{
+                            int count = Integer.parseInt(EmailReader.getEmailHm().get("unReadMsg"));
+                            if (count > 0){
+                                EmailNotification emailNotification = new EmailNotification();
+                                String from = EmailReader.getEmailHm().get("from");
+                                String message = EmailReader.getEmailHm().get("message");
+                                String newMessage = message.replace("</p><p>","");
+                                String newFrom = from.replace("<html lang=\\\"\\\"><body><p>", "");
+                                String newFrom2 = newFrom.replace("<html lang=\"\"><body><p>", "");
+                                System.out.println(from);
+                                System.out.println(message);
+                                emailNotification.popup(newFrom2, newMessage);
+                                Hyperlink hyperlink = new Hyperlink();
+                                hyperlink.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+                                        Desktop desktop = Desktop.getDesktop();
+                                        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                                            try {
+                                                desktop.browse(new URI("https://mail.google.com/mail"));
+                                                EmailReader.getEmailHm().clear();
+                                            } catch (IOException exc) {
+
+                                            } catch (URISyntaxException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                });
+                                hyperlink.fire();
+                            }
+                        }catch(NumberFormatException ex){
+                            //alert box I create to alert user.
+                        }
+
+                    }
+                };
+                Platform.runLater(runnable);
+            }
+        }, 0, 30, TimeUnit.SECONDS);
+
     }
 
     //region LOGOUT
