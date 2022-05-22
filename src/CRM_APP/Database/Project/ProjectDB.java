@@ -105,7 +105,6 @@ public class ProjectDB {
             PreparedStatement preparedStatement = database.getDbConnection().prepareStatement(query);
             preparedStatement.setString(1, project.getId());
             preparedStatement.setString(2, project.getProjectTeamID());
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException throwables) {

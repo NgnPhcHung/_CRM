@@ -123,56 +123,37 @@ public class FullCalendarView {
         //endregion
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
-        TimerTask timerTask = new TimerTask() {
+
+        Thread thread = new Thread(myThread){
             @Override
             public void run() {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        populateCalendar(currentYearMonth);
-                        System.out.println("running");
+                super.run();
+                myThread= new Thread(this::handleThread);
+                myThread.start();
+            }
+            private void handleThread(){
+                while(true){
+                    Platform.runLater(() ->{
+
+                    });
+                    try{
+
+                        Thread.sleep(5000);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
                     }
-                });
+                }
             }
         };
-        Timer timer = new Timer();
-        timer.schedule(timerTask,  0,1000);
-
-//        Thread thread = new Thread(myThread){
-//            @Override
-//            public void run() {
-//                super.run();
-//                myThread= new Thread(this::handleThread);
-//                myThread.start();
-//            }
-//            private void handleThread(){
-//                while(true){
-//                    Platform.runLater(() ->{
-//
-//                    });
-//                    try{
-//
-//                        Thread.sleep(5000);
-//                    }catch(InterruptedException e){
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        };
 
 
-//        view.sceneProperty().addListener((obs, oldScene, newScene) -> {
-//            if (newScene == null) {
-//                // not showing...
-//                System.out.println("thread interrupted");
-//                thread.interrupt();
-//            } else {
-//                // showing ...
-//                System.out.println("thread started");
-//                thread.start();
-//            }
-//        });
-        //endregion
+        view.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene == null) {
+                thread.interrupt();
+            } else {
+                thread.start();
+            }
+        });
     }
 
     //Set the days of the calendar to correspond to the appropriate date

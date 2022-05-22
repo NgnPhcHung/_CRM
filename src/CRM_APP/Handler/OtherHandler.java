@@ -41,7 +41,8 @@ public class OtherHandler {
         }
         catch (UnknownHostException ex)
         {
-            System.out.println("Hostname can not be resolved");
+            NotificationHandler notification = new NotificationHandler();
+            notification.popup(notification.warning, "Hostname can not be resolved" );
         }
         return name;
     }

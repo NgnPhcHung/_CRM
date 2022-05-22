@@ -5,15 +5,21 @@ import CRM_APP.Database.Const;
 import CRM_APP.Database.Database;
 import CRM_APP.Handler.DateTimePickerHandler;
 import CRM_APP.Handler.SceneHandler;
+import CRM_APP.Handler.WriteBillHandler;
 import CRM_APP.Model.Bill;
 import CRM_APP.Model.BillDetail;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+
+import java.io.File;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -24,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
 
 public class BillController extends Thread{
 
@@ -64,6 +71,9 @@ public class BillController extends Thread{
     private JFXButton btn_All;
 
     @FXML
+    private Button btn_Export;
+
+    @FXML
     private Label lbl_All;
 
 
@@ -76,6 +86,7 @@ public class BillController extends Thread{
     ObservableList<Bill> data = FXCollections.observableArrayList();
     private BillDB billDB;
     private Bill bill;
+    private static List<HashMap> billList = new ArrayList<HashMap>();
 
     @FXML
     void initialize() {
@@ -107,6 +118,43 @@ public class BillController extends Thread{
             BillDetailController.billID = "";
             sceneHandler.slideScene(btn_All, main_Stack, "X", "/CRM_APP/View/Bill/billDetail.fxml");
         });
+
+        btn_Export.setOnAction(e ->{
+            WriteBill();
+        });
+    }
+
+    private void WriteBill(){
+
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        billDB = new BillDB();
+        ResultSet resultSet = billDB.getBillDetail();
+        try {
+            while(resultSet.next()){
+                String status = statusToString(resultSet.getString(Const.BILL_STATUS));
+                HashMap hm  = new HashMap();
+                hm.put("Bill ID", resultSet.getString(Const.BILL_ID));
+                hm.put("Customer", resultSet.getString(Const.CUSTOMER_NAME));
+                hm.put("Project", resultSet.getString(Const.PROJECT_NAME));
+                hm.put("Bill Date", resultSet.getString(Const.BILL_DATE));
+                hm.put("Amount", resultSet.getString(Const.PROJECT_TOTAL_AMOUNT));
+                hm.put("Percent", resultSet.getString(Const.BILL_PERCENT));
+                hm.put("Total Amount", resultSet.getString(Const.BILL_DETAIL_AMOUNT));
+                hm.put("Status", status);
+                hm.put("Employee", resultSet.getString(Const.EMPLOYEE_NAME));
+                billList.add(hm);
+            }
+
+            setBillList(billList);
+            WriteBillHandler wb = new WriteBillHandler();
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            File selectedDirectory = directoryChooser.showDialog(btn_Export.getScene().getWindow());
+            wb.createBill(selectedDirectory);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private void populateList(){
@@ -201,6 +249,23 @@ public class BillController extends Thread{
         }
         return in;
     }
+    private String statusToString(String in){
+        switch (in){
+            case"0":
+                in = "Waiting";
+                break;
+            case "1":
+                in = "In Process";
+                break;
+            case "2":
+                in = "Done";
+                break;
+            case "3":
+                in = "Cancel";
+                break;
+        }
+        return in;
+    }
 
     private void fillCard(){
         billDB = new BillDB();
@@ -226,5 +291,13 @@ public class BillController extends Thread{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static List<HashMap> getBillList() {
+        return billList;
+    }
+
+    public static void setBillList(List<HashMap> billList) {
+        BillController.billList = billList;
     }
 }

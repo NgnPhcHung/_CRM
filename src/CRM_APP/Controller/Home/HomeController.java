@@ -155,75 +155,12 @@ public class HomeController {
         btn_exit.setOnAction(e -> {
             closeApplication();
         });
-        readEmail();
         if(userId.equals("SAD")){
             btn_History.setVisible(true);
         }
         btn_Logout.setOnAction(e -> {
             userLogout();
         });
-    }
-
-    private void readEmail(){
-        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                Thread thread = new Thread(r);
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
-
-        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                final Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        EmailThread et = new EmailThread();
-                        et.start();
-
-                        try{
-                            int count = Integer.parseInt(EmailReader.getEmailHm().get("unReadMsg"));
-                            if (count > 0){
-                                EmailNotification emailNotification = new EmailNotification();
-                                String from = EmailReader.getEmailHm().get("from");
-                                String message = EmailReader.getEmailHm().get("message");
-                                String newMessage = message.replace("</p><p>","");
-                                String newFrom = from.replace("<html lang=\\\"\\\"><body><p>", "");
-                                String newFrom2 = newFrom.replace("<html lang=\"\"><body><p>", "");
-                                System.out.println(from);
-                                System.out.println(message);
-                                emailNotification.popup(newFrom2, newMessage);
-                                Hyperlink hyperlink = new Hyperlink();
-                                hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        Desktop desktop = Desktop.getDesktop();
-                                        if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                                            try {
-                                                desktop.browse(new URI("https://mail.google.com/mail"));
-                                                EmailReader.getEmailHm().clear();
-                                            } catch (IOException exc) {
-
-                                            } catch (URISyntaxException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                });
-                                hyperlink.fire();
-                            }
-                        }catch(NumberFormatException ex){
-                            //alert box I create to alert user.
-                        }
-
-                    }
-                };
-                Platform.runLater(runnable);
-            }
-        }, 0, 30, TimeUnit.SECONDS);
-
     }
 
     //region LOGOUT

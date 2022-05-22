@@ -18,7 +18,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -167,7 +166,6 @@ public class BillDetailController {
                         ResultSet rowCell = database.getSomeID(project, Const.MODULE_TABLE, Const.PROJECT_ID);
 
                         if(rsCustomer.next()){
-                            System.out.println(rsCustomer.getString(Const.CUSTOMER_NAME));
                             lbl_CustomerName.setText(rsCustomer.getString(Const.CUSTOMER_NAME));
                         }
 
@@ -258,14 +256,18 @@ public class BillDetailController {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(groupPercent.getSelectedToggle() != null){
                     percent = groupPercent.getSelectedToggle().getUserData()+"";
-//                    System.out.println(( 1005000 * 30 )/ 100);
                     txt_Amount.setText((projectBudget * (Integer.parseInt(percent)))/ 100 + "");
-
+                }
+                if(percent.equals("100")){
+                    tog_Done.setDisable(false);
+                    tog_Done.setSelected(true);
+                }else{
+                    tog_Done.setDisable(true);
                 }
             }
         });
         //endregion
-        //region STATUS
+
         ToggleGroup groupStatus = new ToggleGroup();
         tog_Wait.setUserData(0);
         tog_Process.setUserData(1);
@@ -295,7 +297,7 @@ public class BillDetailController {
                 }
             }
         });
-        //endregion
+
     }
     private void generateBilldID(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");

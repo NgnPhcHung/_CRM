@@ -44,6 +44,13 @@
                               <String fx:value="text" />
                               <String fx:value="hBold" />
                            </styleClass></Button>
+                        <Button fx:id="btn_Export" layoutX="25.0" layoutY="25.0" mnemonicParsing="false" text="Export">
+                           <styleClass>
+                              <String fx:value="buttonStyle1" />
+                              <String fx:value="text" />
+                              <String fx:value="hBold" />
+                           </styleClass>
+                        </Button>
                      </children>
                      <padding>
                         <Insets left="15.0" />

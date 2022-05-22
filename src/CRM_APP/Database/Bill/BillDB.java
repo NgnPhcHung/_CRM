@@ -158,23 +158,24 @@ public class BillDB{
         }
         return rs;
     }
-    public ResultSet getBillDetail(Bill bill){
+    public ResultSet getBillDetail(){
         database = new Database();
         ResultSet resultSet = null;
         String query = " SELECT * FROM " + Const.BILL_TABLE
-                + " INNER JOIN " + Const.PROJECT_TABLE
-                + " ON " + Const.BILL_TABLE + "." + Const.PROJECT_ID
-                + " = " + Const.PROJECT_TABLE + "." + Const.PROJECT_ID
                 + " INNER JOIN " + Const.BILL_DETAIL_TABLE
                 + " ON " + Const.BILL_DETAIL_TABLE + "." + Const.BILL_ID + " = "
                 + Const.BILL_TABLE + "." + Const.BILL_ID
+                + " INNER JOIN " + Const.PROJECT_TABLE
+                + " ON " + Const.BILL_DETAIL_TABLE + "." + Const.PROJECT_ID
+                + " = " + Const.PROJECT_TABLE + "." + Const.PROJECT_ID
                 + " INNER JOIN " + Const.CUSTOMER_TABLE
                 + " ON " + Const.CUSTOMER_TABLE + "." + Const.CUSTOMER_ID + " = "
                 + Const.BILL_DETAIL_TABLE + "." + Const.BILL_CUS_ID
-                + " WHERE " + Const.BILL_TABLE + "." + Const.BILL_ID + " = ?";
+                + " INNER JOIN " + Const.EMPLOYEE_TABLE
+                + " ON " + Const.BILL_TABLE + "." + Const.EMPLOYEE_ID
+                + " = " + Const.EMPLOYEE_TABLE + "." + Const.EMPLOYEE_ID;
         try {
             PreparedStatement preparedStatement  = database.getDbConnection().prepareStatement(query);
-            preparedStatement.setString(1, bill.getId());
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

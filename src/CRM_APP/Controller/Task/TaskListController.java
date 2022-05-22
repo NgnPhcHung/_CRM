@@ -144,8 +144,7 @@ public class TaskListController {
         lv_tasks.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observable, Task oldValue, Task newValue) {
-                System.out.println("ListView selection changed from oldValue = "
-                        + oldValue + " to newValue = " + newValue);
+
             }
         });
     }

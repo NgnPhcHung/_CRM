@@ -11,10 +11,10 @@ import CRM_APP.Model.QuestionType;
 import CRM_APP.Model.SurveyType;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.mysql.cj.util.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -88,14 +88,11 @@ public class QuestionTypeCreateController {
         questionType = new QuestionType();
         questionTypeDB = new QuestionTypeDB();
         notification = new NotificationHandler();
-        if (StringUtils.isEmpty(txt_Name.getText()) || StringUtils.isEmpty(txt_Des.getText())) {
-            lbl_Noti.setVisible(true);
-            lbl_Noti.setText("Information can not be null");
+        if (StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Des.getText())) {
             notification.popup(notification.warning, "Information can not be null");
         } else {
             String name = txt_Name.getText().trim();
             String des = txt_Des.getText().trim();
-            lbl_Noti.setVisible(false);
             questionType.setqTypeName(name);
             questionType.setDes(des);
             questionType.setqTypeID(questionTypeID);

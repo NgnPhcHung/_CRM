@@ -169,7 +169,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefWidth="150.0">
                      <children>
-                        <Label text="Bill Date">
+                        <Label text="Bill Amount">
                            <styleClass>
                               <String fx:value="text" />
                               <String fx:value="h4" />
