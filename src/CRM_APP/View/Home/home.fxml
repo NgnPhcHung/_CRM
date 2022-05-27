@@ -48,19 +48,7 @@
                                           <Insets right="30.0" />
                                        </HBox.margin>
                                     </VBox>
-                                    <AnchorPane>
-                                       <children>
-                                          <FontAwesomeIcon glyphStyleClass="" iconName="BELL" layoutX="7.0" layoutY="55.0" size="1.5em" styleClass="bell" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="25.0" prefHeight="15.0" prefWidth="15.0" text="0">
-                                             <styleClass>
-                                                <String fx:value="text" />
-                                                <String fx:value="bell-num" />
-                                                <String fx:value="h5" />
-                                                <String fx:value="hBold" />
-                                             </styleClass>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
+                                    <AnchorPane />
                                  </children>
                               </HBox>
                               <Button fx:id="btn_History" mnemonicParsing="false" onMouseClicked="#mouseClickEvent" styleClass="buttonNoneStyle" text="History">

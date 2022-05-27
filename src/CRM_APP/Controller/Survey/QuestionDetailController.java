@@ -108,11 +108,16 @@ public class QuestionDetailController {
 
     private QuestionController questionController = new QuestionController();
     private NotificationHandler notification;
+    private int countTemp = 0;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         grid_Main.getStylesheets().add(HomeController.styleSheet);
-
+        if(StringUtils.isNullOrEmpty(questionID)){
+            countTemp = 0;
+        }else{
+            countTemp = 1;
+        }
         comboBoxHandler();
         if(com.mysql.cj.util.StringUtils.isNullOrEmpty(questionID)){
             btn_Delete.setVisible(false);
@@ -164,6 +169,18 @@ public class QuestionDetailController {
                     ansId = OtherHandler.generateId();
                     ansRow = database.getSomeID(ansId, Const.QUESTION_DETAIL_TABLE, Const.QUESTIONDETAIL_ID);
                 }
+
+                if(countTemp == 0){
+                    String questionName = txt_question.getText();
+                    String quesID = OtherHandler.generateId();
+                    String surID = getIdSurveyType(cb_surveyType.getValue());
+                    String questionTypeID = getIdQuestionType(cb_questionType.getValue());
+
+                    saveQuestion(quesID, surID, questionName, questionTypeID);
+                    questionID = quesID;
+                    countTemp++;
+                }
+
                 questionDB.createQuestionDetail(ansId, questionID, ans);
                 try {
                     populateQuestions();

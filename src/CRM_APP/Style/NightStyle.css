@@ -3,13 +3,16 @@
 }
 
 .text{
-    -fx-text-fill: #e0e0e0;
+    /*-fx-text-fill: #e0e0e0;*/
+    -fx-text-fill: #000;
+
     -fx-font-family: Calibri;
 }
 
 .lightText{
     -fx-font-family: Calibri;
-    -fx-text-fill: #dae1e5;
+    /*-fx-text-fill: #dae1e5;*/
+    -fx-text-fill: #000;
 }
 .textInput{
     -fx-prompt-text-fill: #e0e0e0;
@@ -115,7 +118,8 @@
 }
 .buttonStyle1:hover{
     -fx-background-color: #64b5f6;
-    -fx-text-fill: #ffffff;
+    /*-fx-text-fill: #ffffff;*/
+    -fx-text-fill: #000;
 }
 .buttonStyle2{
     -fx-prompt-text-fill: #e0e0e0;
@@ -196,7 +200,8 @@
     -fx-background-color: #cfd8dc;
 }
 .tab-label {
-    -fx-text-fill: #cfd8dc;
+    /*-fx-text-fill: #cfd8dc;*/
+    -fx-text-fill: #000;
     -fx-font-weight: bold;
     -fx-font-family: Calibri;
     -fx-font-size: 20;
@@ -228,7 +233,8 @@
     -fx-background-color: #78909c;
 }
 .label{
-    -fx-text-fill: #e0e0e0;
+    /*-fx-text-fill: #e0e0e0;*/
+    -fx-text-fill: #000;
 }
 .list-view{
     -fx-background-color: #78909c;

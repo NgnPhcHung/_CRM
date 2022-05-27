@@ -85,7 +85,6 @@ public class WriteBillHandler {
             rownum++;
             row = sheet.createRow(rownum);
 
-
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue(item.get("Bill ID").toString());
 

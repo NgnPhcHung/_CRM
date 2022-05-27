@@ -29,8 +29,7 @@ public class QuestionDB {
             preparedStatement.setString(3, name);
             preparedStatement.setString(4, questionTypeId);
             preparedStatement.executeUpdate();
-            db.getDbConnection().close();
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
