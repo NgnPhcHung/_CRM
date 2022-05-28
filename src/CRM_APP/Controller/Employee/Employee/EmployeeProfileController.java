@@ -122,6 +122,7 @@ public class EmployeeProfileController {
         });
         btn_Edit.setOnAction(e -> {
             AddEmployeeController.emID = emID;
+            AddEmployeeController.backPane =  EmployeeCellController.cellStack;
             sceneHandler.slideScene(btn_Back, EmployeeCellController.cellStack, "-Y", "/CRM_APP/View/Employee/addEmployee.fxml");
         });
         btn_Save.setOnAction(e -> {

@@ -199,9 +199,11 @@ public class QuestionDetailController {
             || StringUtils.isNullOrEmpty(cb_surveyType.getValue())
             || StringUtils.isNullOrEmpty( cb_questionType.getValue()) ) {
             notification.popup(notification.warning, "Question & survey/question type can't empty!");
-        }else if(lv_answerList.getItems().stream().count() <2 && !cb_questionType.getValue().equals("Câu hỏi tự luận")){
-            notification.popup(notification.error, cb_questionType.getValue() + " must have at least 2 answers");
-        }else {
+        }
+//        else if(lv_answerList.getItems().stream().count() <2 && !cb_questionType.getValue().equals("Câu hỏi tự luận")){
+//            notification.popup(notification.error, cb_questionType.getValue() + " must have at least 2 answers");
+//        }
+        else {
             String questionName = txt_question.getText();
             String quesID = OtherHandler.generateId();
             String surID = getIdSurveyType(cb_surveyType.getValue());
@@ -224,8 +226,6 @@ public class QuestionDetailController {
             if(rsCheckName.next()) {
                 ShakerHandler shakerHandler = new ShakerHandler(txt_question, 2, 50);
                 shakerHandler.shake();
-                lbl_Notification.setVisible(true);
-                lbl_Notification.setText("This question already exist");
                 txt_question.setText("");
                 notification.popup(notification.warning, "This question already exist");
             }else{

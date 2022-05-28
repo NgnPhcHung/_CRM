@@ -207,7 +207,7 @@ public class AddEmployeeController {
         employee = new Employee();
         employeeDB = new EmployeeDB();
         textfieldHandler = new TextFieldHandler();
-
+        notificationHandler = new NotificationHandler();
         if(StringUtils.isNullOrEmpty(txt_Name.getText()) || StringUtils.isNullOrEmpty(txt_Phone.getText())
             || StringUtils.isNullOrEmpty(txt_Address.getText()) || StringUtils.isNullOrEmpty(txt_Position.getText())
             || StringUtils.isNullOrEmpty(txt_Password.getText())){
@@ -218,7 +218,16 @@ public class AddEmployeeController {
             String address = txt_Address.getText().trim();
             String position = txt_Position.getText().trim();
             String password = txt_Password.getText().trim();
-
+//            ResultSet isName = database.getSomeID(name, Const.EMPLOYEE_TABLE, Const.EMPLOYEE_NAME);
+//            try {
+//                if(isName.next()){
+//                    notificationHandler.popup(notificationHandler.error, "This Staff Already in list");
+//                }else{
+//
+//                }
+//            } catch (SQLException throwables) {
+//                throwables.printStackTrace();
+//            }
             if(textfieldHandler.checkPhone(phone)){
                 lbl_Noti.setVisible(false);
                 employee.setName(name);
@@ -228,7 +237,7 @@ public class AddEmployeeController {
                 employee.setPassword(password);
                 employee.setId(emID);
                 employeeDB.updateAdmin(employee);
-                notificationHandler.popup(notificationHandler.error, "Employee" +  name +" Update Success");
+                notificationHandler.popup(notificationHandler.success, "Employee" +  name +" Update Success");
             }else{
                 notificationHandler.popup(notificationHandler.error, "Invalid Phone number");
             }

@@ -48,7 +48,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="200.0">
                      <children>
-                        <JFXTextField fx:id="txt_Find" focusColor="#597ce4" labelFloat="true" promptText="Customer name" unFocusColor="#ff7e5d">
+                        <JFXTextField fx:id="txt_Find" focusColor="#597ce4" labelFloat="true" promptText="Khach hang" unFocusColor="#ff7e5d">
                            <HBox.margin>
                               <Insets right="25.0" />
                            </HBox.margin>
